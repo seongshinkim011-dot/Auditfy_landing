@@ -263,15 +263,7 @@ p{margin:0}
   .scene svg{width:100%; height:auto; display:block; overflow:visible}
   @media(prefers-reduced-motion:reduce){ .s-sweat,.s-head,.s-zzz text,.s-steam path,.s-p1,.s-p2,.s-p3,.s-star,.s-star2,.s-star3,.s-stack,.s-clock{animation:none} }
   @media(max-width:600px){ .scene{max-width:100%} }
-  @media(max-width:760px){ .probc--wide{grid-column:auto} }
   /* ===== problem ===== */
-  .probgrid{display:grid; grid-template-columns:1fr 1fr; gap:32px 44px; max-width:920px; margin:clamp(44px,6vw,60px) auto 0}
-  .probc{position:relative; text-align:left; padding-top:4px}
-  .probc__n{display:inline-flex; align-items:center; gap:12px; font-size:1.1rem; font-weight:800; color:var(--blue); letter-spacing:.02em}
-  .probc__n::after{content:""; width:26px; height:2px; border-radius:2px; background:#C9D3FF}
-  .probc b{display:block; font-size:1.34rem; letter-spacing:-.02em; margin:12px 0 11px; line-height:1.35}
-  .probc p{font-size:1.06rem; color:var(--mut); font-weight:500; line-height:1.72}
-  @media(max-width:760px){ .probgrid{grid-template-columns:1fr; gap:0} .probc{border-top:1px solid var(--line2); padding:26px 0} .probc:first-child{border-top:0; padding-top:4px} .probc--wide{grid-column:auto} }
   .cause{max-width:740px; margin:0 auto; text-align:center; padding:clamp(30px,4vw,44px) clamp(24px,3.5vw,40px); background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:0 4px 16px -12px rgba(17,24,39,.1)}
   .cause__t{font-size:clamp(1.6rem,3.6vw,2.35rem); font-weight:800; letter-spacing:-.03em; line-height:1.35; color:var(--ink)}
   .cause__t em{font-style:normal; color:var(--blue)}
@@ -579,7 +571,7 @@ vetax-style) ===== */
   </div>
 </section>
 
-<!-- ===== PROBLEM (4 pains, centered scene) ===== -->
+<!-- ===== PROBLEM (반복 사이클 → 원인) ===== -->
 <section class="sec sec--soft" id="problem">
   <div class="wrap">
     <div class="center rv" style="max-width:720px; margin:0 auto">
@@ -680,29 +672,6 @@ vetax-style) ===== */
         </g>
       </svg>
     </div>
-
-      <div class="probgrid stg rv">
-        <div class="probc">
-          <span class="probc__n">01</span>
-          <b>금요일 오후, 도착한 자료 요청 메일</b>
-          <p>감사인의 요청이 와야 비로소 준비가 시작됩니다.<br />미리 준비했다면 요청 목록은 시작점이 아니라, 빠진 자료를 확인하는 체크리스트가 됩니다.</p>
-        </div>
-        <div class="probc">
-          <span class="probc__n">02</span>
-          <b>기록이 없으니, 결국 기억에 의존합니다</b>
-          <p>작년 파일을 찾아도 최종본과 작성 근거를 알기 어렵습니다.<br />담당자가 바뀔 때마다 감사 대응 경험도 처음부터 다시 시작됩니다.</p>
-        </div>
-        <div class="probc">
-          <span class="probc__n">03</span>
-          <b>결산도 바쁜데, 감사자료도 또 따로 만듭니다</b>
-          <p>결산에 사용한 숫자로 감사 대응 자료를 다시 작성합니다.<br />같은 일을 두 번 반복하지만 마감은 정해져 있습니다.</p>
-        </div>
-        <div class="probc">
-          <span class="probc__n">04</span>
-          <b>숫자 하나 바뀌면, 관련 자료를 다시 수정합니다</b>
-          <p>감사 과정에서 숫자가 바뀌면 본문과 주석, 관련 자료를 다시 대조해야 합니다.<br />작은 수정 하나가 몇 시간의 반복 작업으로 이어집니다.</p>
-        </div>
-      </div>
 
     <div class="bridge rv" aria-hidden="true">
       <svg class="bridge__arrow" width="18" height="52" viewBox="0 0 18 52" fill="none" aria-hidden="true">
