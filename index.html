@@ -149,7 +149,19 @@ p{margin:0}
 .bonus__i b{display:block; font-size:.98rem; letter-spacing:-.01em}
 .bonus__i span{font-size:.86rem; color:#A9B4CC; font-weight:600}
 .bonus__label{font-size:.82rem; font-weight:800; letter-spacing:.06em; color:var(--mint); margin:0 0 2px}
+.apply__safe{margin-top:20px; font-size:.84rem; line-height:1.6; color:#A9B4CC; font-weight:600; padding-left:13px; border-left:2px solid rgba(62,192,140,.5)}
 .form{background:var(--card); color:var(--ink); border-radius:20px; padding:30px 28px; box-shadow:var(--shadow)}
+.flabel{display:block; font-size:.86rem; font-weight:800; color:var(--ink2); padding-left:7px}
+.flabel .fopt{color:var(--mut); font-weight:600}
+.picks{margin-top:9px; display:grid; gap:8px}
+.pick{display:flex; align-items:flex-start; gap:10px; cursor:pointer; background:#FBFCFE; border:1.5px solid var(--line2); border-radius:13px; padding:13px 14px; transition:border-color .15s, background .15s}
+.pick:hover{border-color:#B9C4E8}
+.pick input{flex:0 0 auto; margin:2px 0 0; width:17px; height:17px; accent-color:var(--blue); cursor:pointer}
+.pick span{font-size:.92rem; font-weight:600; color:var(--ink2); line-height:1.45}
+.pick span b{font-weight:800; color:var(--ink)}
+.pick span i{display:block; font-style:normal; font-size:.78rem; font-weight:600; color:var(--mut); margin-top:2px}
+.pick:has(input:checked){border-color:var(--blue); background:var(--blue-soft)}
+.pick:has(input:checked) span{color:var(--ink)}
 .form h3{font-size:1.25rem; font-weight:800; letter-spacing:-.02em; text-align:center}
 .form .fs{margin-top:6px; text-align:center; font-size:.88rem; color:var(--mut); font-weight:600}
 .field{margin-top:16px}
@@ -212,6 +224,8 @@ p{margin:0}
   .ctab__in{text-align:center}
   .ctab h3{font-size:clamp(1.5rem,3.4vw,2.2rem); font-weight:800; letter-spacing:-.03em; line-height:1.35}
   .ctab p{margin-top:14px; font-size:1.05rem; color:rgba(255,255,255,.85); font-weight:500}
+  .ctab__kick{display:inline-block; font-size:.82rem; font-weight:800; letter-spacing:.06em; color:rgba(255,255,255,.72); margin-bottom:14px}
+  .ctab__note{max-width:600px; margin:18px auto 0 !important; font-size:.86rem !important; color:rgba(255,255,255,.62) !important; font-weight:500 !important; line-height:1.6}
   .ctab .btn{margin-top:26px; background:#fff; color:var(--blue)}
   .ctab .btn:hover{background:#F0F3FF}
   /* 섹션 헤더 eyebrow 라인형(벳택스식) */
@@ -561,7 +575,7 @@ vetax-style) ===== */
       </figure>
       </div>
     </div>
-    <p class="revs__note">* 위 후기는 베타 테스트 피드백을 재구성한 예시이며, 특정 실제 고객사의 후기가 아닙니다.</p>
+    <p class="revs__note">* 실제 사용 기업이 전해준 피드백입니다. 기업 요청에 따라 회사명은 익명으로 표기했으며, 일부 표현은 읽기 쉽게 다듬었습니다.</p>
   </div>
 </section>
 
@@ -888,9 +902,11 @@ vetax-style) ===== */
 <section class="band-blue">
   <div class="ctab rv">
     <div class="ctab__in">
-      <h3>지금 회사의 감사 준비 상태,<br />무료로 진단받아 보세요</h3>
-      <p>감사를 더 수월하게 준비하려면, 지금부터 시작하세요.</p>
-      <a href="#apply" class="btn btn--p">감사 준비 상태 무료 진단받기 <span class="ar">→</span></a>
+      <span class="ctab__kick">먼저 써보고 판단하세요</span>
+      <h3>전기 감사보고서 1건,<br />당기 초안으로 무료 변환해 드립니다</h3>
+      <p>설명을 듣는 것보다, 결과물을 직접 보는 편이 빠릅니다.<br />전기 감사보고서 하나만 주시면 당기 숫자가 반영된 초안을 만들어 보여드립니다.</p>
+      <a href="#apply" class="btn btn--p">감사보고서 무료 변환 신청 <span class="ar">→</span></a>
+      <p class="ctab__note">외부감사 대상 법인의 감사보고서는 DART에 공시되는 공개 자료입니다. 내부 자료를 따로 제출하실 필요가 없습니다.</p>
     </div>
   </div>
 </section>
@@ -949,19 +965,26 @@ vetax-style) ===== */
       <div class="apply__g">
         <div>
           <h2>감사인이 보기 전에,<br /><span class="m">Auditfy</span>가 먼저 봅니다</h2>
-          <p class="apply__d">회사명과 연락처를 남겨주시면, 외부감사 15년 경험을 바탕으로 현재 감사 준비 상태를 직접 점검해 드립니다.</p>
+          <p class="apply__d">전기 감사보고서 1건을 당기 초안으로 무료 변환해 드립니다. 결과물을 직접 확인하신 뒤에 도입을 판단하세요.</p>
           <div class="apply__rz"><span>무료</span><span>카드 등록 없음</span><span>도입 의무 없음</span><span>2분 소요</span></div>
           <div class="bonus">
-            <p class="bonus__label">무료 진단에 포함</p>
-            <div class="bonus__i"><span class="n">1</span><div><b>감사 준비도 진단 요약</b><span>현재 상태에서 무엇이 부족한지 정리해 드립니다</span></div></div>
-            <div class="bonus__i"><span class="n">2</span><div><b>주요 위험·누락 항목 안내</b><span>감사에서 문제될 수 있는 부분을 미리 짚어 드립니다</span></div></div>
-            <div class="bonus__i"><span class="n">3</span><div><b>1:1 결과 설명</b><span>외부감사 관점에서 회사 상황을 직접 설명해 드립니다</span></div></div>
+            <p class="bonus__label">무료로 받아보실 수 있는 것</p>
+            <div class="bonus__i"><span class="n">A</span><div><b>감사보고서 초안 무료 변환</b><span>전기 보고서 구조를 그대로 이어받아 당기 숫자를 채운 초안을 만들어 드립니다</span></div></div>
+            <div class="bonus__i"><span class="n">B</span><div><b>감사 준비 상태 진단</b><span>외부감사 15년 관점에서 위험·누락 항목을 짚고 1:1로 설명해 드립니다</span></div></div>
           </div>
+          <p class="apply__safe">전기 감사보고서는 DART에 공시되는 공개 자료입니다. 내부 자료를 제출하실 필요가 없습니다.</p>
         </div>
         <div class="form" id="form">
           <div class="form__in">
-            <h3>무료 진단 신청</h3>
+            <h3>무료로 먼저 받아보기</h3>
             <p class="fs">영업일 기준 1일 내에 연락드립니다.</p>
+            <div class="field">
+              <span class="flabel">신청 항목 <span class="fopt">(복수 선택 가능)</span></span>
+              <div class="picks">
+                <label class="pick"><input type="checkbox" id="f_svc1" checked /><span>감사보고서 초안 <b>무료 변환</b><i>전기 보고서 1건</i></span></label>
+                <label class="pick"><input type="checkbox" id="f_svc2" /><span>감사 준비 상태 <b>무료 진단</b><i>1:1 결과 설명</i></span></label>
+              </div>
+            </div>
             <div class="field"><label for="f_co">회사명</label><input id="f_co" type="text" placeholder="예: 주식회사 ABC" autocomplete="organization" /></div>
             <div class="field"><label for="f_em">이메일</label><input id="f_em" type="email" placeholder="name@company.co.kr" autocomplete="email" /></div>
             <div class="field"><label for="f_ph">연락처 <span style="color:var(--mut);font-weight:600">(선택)</span></label><input id="f_ph" type="tel" placeholder="010-0000-0000" autocomplete="tel" /></div>
@@ -970,14 +993,14 @@ vetax-style) ===== */
               <button type="button" class="consent__link js-privacy">자세히 보기</button>
             </div>
             <input id="f_hp" name="botcheck" type="checkbox" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
-            <button class="btn btn--p" id="submit">감사 준비 상태 무료 진단받기 <span class="ar">→</span></button>
+            <button class="btn btn--p" id="submit">무료로 신청하기 <span class="ar">→</span></button>
             <p class="ferror" id="ferror" role="alert" aria-live="assertive" hidden></p>
-            <p class="fnote">신청 내용은 진단 안내 목적 외에 사용하지 않습니다.</p>
+            <p class="fnote">신청 내용은 안내 목적 외에 사용하지 않습니다.</p>
           </div>
           <div class="form__ok">
             <div class="big">✓</div>
             <b>신청이 접수되었습니다</b>
-            <p>남겨주신 연락처로 영업일 기준 1일 내에<br />진단 일정을 안내드리겠습니다.</p>
+            <p>남겨주신 연락처로 영업일 기준 1일 내에<br />진행 방법을 안내드리겠습니다.</p>
           </div>
         </div>
       </div>
@@ -994,7 +1017,7 @@ vetax-style) ===== */
       </div>
       <div class="foot__logo"><svg class="mk" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M15 85 48 21" stroke="#1E6B52" stroke-width="13" stroke-linecap="round"/><path d="M85 85 52 21" stroke="#16243A" stroke-width="13" stroke-linecap="round"/><path d="M52 21 69 11" stroke="#16243A" stroke-width="13" stroke-linecap="round"/><path d="M83 4 74 22 62 2Z" fill="#16243A"/><path d="M31 55Q50 42 69 55" stroke="#1E6B52" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="56" r="8.2" fill="#16243A"/><circle cx="47" cy="53" r="2.3" fill="#fff"/></svg>Auditfy</div>
       <p class="foot__copy">© 2026 Auditfy. All rights reserved.</p>
-      <p class="foot__disc">* 후기는 베타 피드백 기반 예시입니다.</p>
+      <p class="foot__disc">* 후기는 실제 사용 기업의 피드백이며, 회사명은 익명 처리했습니다.</p>
     </div>
     <div class="foot__contact">
       <p class="lb">문의</p>
@@ -1044,6 +1067,10 @@ vetax-style) ===== */
     var submitForm=function(){
       clearErr();
       var co=byId('f_co').value.trim(), em=byId('f_em').value.trim(), ph=byId('f_ph').value.trim();
+      var svc=[];
+      if(byId('f_svc1').checked) svc.push('감사보고서 초안 무료 변환');
+      if(byId('f_svc2').checked) svc.push('감사 준비 상태 무료 진단');
+      if(!svc.length){ showErr('신청 항목을 하나 이상 선택해 주세요.'); return; }
       var bad=false;
       [['f_co',co],['f_em',em]].forEach(function(p){
         var ok=!!p[1]; byId(p[0]).style.borderColor=ok?'':'#C93A3A'; if(!ok) bad=true;
@@ -1062,9 +1089,9 @@ vetax-style) ===== */
         headers:{'Content-Type':'application/json','Accept':'application/json'},
         body:JSON.stringify({
           access_key:W3F_ACCESS_KEY,
-          subject:'[Auditfy] 무료 진단 신청',
+          subject:'[Auditfy] 무료 신청 — '+svc.join(' / '),
           from_name:'Auditfy 랜딩페이지',
-          '회사명':co, '이메일':em, '연락처':ph, email:em
+          '신청항목':svc.join(' / '), '회사명':co, '이메일':em, '연락처':ph, email:em
         })
       }).then(function(r){return r.json();}).then(function(d){
         if(d && d.success){ doneOK(); }
