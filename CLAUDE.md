@@ -23,6 +23,14 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → https:
 2026-09-08 실전송 검증 완료 — 제목 `[Auditfy] 무료 진단 신청`, 발신 `Auditfy 랜딩페이지`,
 한글 필드명(회사명/이메일/연락처) 정상 수신 확인.
 
+## 배포 규칙 (2026-09-08 합의)
+- **로컬 커밋은 작업 단위로 계속 한다.** 이력과 롤백 지점을 남기기 위함
+- **`git push` 는 임의로 하지 않는다.** 푸시 = 즉시 Vercel 배포이므로,
+  자잘한 배포가 쌓이지 않도록 **사용자가 배포를 요청할 때만** 푸시한다
+- 작업을 마칠 때마다 **배포 대기 커밋 수와 내용을 사용자에게 알린다**
+  (`git log --oneline origin/main..HEAD`)
+- 되돌리기: Vercel 대시보드 → Deployments → Instant Rollback (커밋 단위로 복구 가능)
+
 ## 수정 후 검증 체크리스트
 1. 태그 균형 / CSS 중괄호 / JS 괄호 균형
 2. 중복 id 0, 죽은 앵커 0, `href="#"` 0
