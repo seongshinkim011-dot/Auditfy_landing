@@ -358,7 +358,7 @@ seamless marquee) ===== */
   .winshot__bar i{width:10px; height:10px; border-radius:50%}
   .winshot__bar i:nth-child(1){background:#F0A9A0} .winshot__bar i:nth-child(2){background:#F3D08A} .winshot__bar i:nth-child(3){background:#A9D8B0}
   .winshot__bar span{margin-left:8px; font-size:.8rem; color:var(--mut); font-weight:700}
-  .winshot img{width:100%; height:auto; max-height:380px; object-fit:cover; object-position:top; display:block}
+  .winshot video{width:100%; height:auto; max-height:380px; object-fit:cover; object-position:top; display:block; background:#FBFCFE}
   @media(max-width:820px){ .benefit{grid-template-columns:1fr; gap:24px} .benefit--r .benefit__tx{order:1} .benefit--r .benefit__sh{order:2} }
 
   /* ===== founder (redesign) ===== */
@@ -802,9 +802,9 @@ vetax-style) ===== */
       </div>
       <div class="benefit__sh rv">
         <figure class="winshot">
-          <div class="winshot__bar"><i></i><i></i><i></i><span>Auditfy · C2 계정별 명세서</span></div>
-          <span class="winshot__callout">전기·당기 자동 비교</span>
-          <img src="shot-c2-lead-schedule.webp" width="1120" height="703" alt="Auditfy Lead Schedule(계정별 명세서) 화면" loading="lazy" decoding="async" />
+          <div class="winshot__bar"><i></i><i></i><i></i><span>Auditfy · A3 자료 업로드 → C2 리드 스케줄</span></div>
+          <span class="winshot__callout">롤포워드·거래처별 명세 자동 작성</span>
+          <video class="winshot__v" poster="demo-01-lead-schedule-poster.webp" width="1120" height="816" muted loop playsinline preload="none" disablepictureinpicture aria-label="시산표를 올리면 리드 스케줄이 자동 생성되는 화면" data-src="demo-01-lead-schedule.mp4"></video>
         </figure>
       </div>
     </div>
@@ -821,9 +821,9 @@ vetax-style) ===== */
       </div>
       <div class="benefit__sh rv">
         <figure class="winshot">
-          <div class="winshot__bar"><i></i><i></i><i></i><span>Auditfy · D2 감사인 질의</span></div>
-          <span class="winshot__callout">예상 감사질의 자동 생성</span>
-          <img src="shot-d2-queries.webp" width="1120" height="442" alt="Auditfy 예상 감사 질의 자동 도출 화면" loading="lazy" />
+          <div class="winshot__bar"><i></i><i></i><i></i><span>Auditfy · C1 재무제표 분석 → E2 특이사항 증빙</span></div>
+          <span class="winshot__callout">주목할 항목 자동 선별</span>
+          <video class="winshot__v" poster="demo-02-queries-poster.webp" width="1120" height="816" muted loop playsinline preload="none" disablepictureinpicture aria-label="재무제표 분석에서 주목할 항목이 자동 선별되는 화면" data-src="demo-02-queries.mp4"></video>
         </figure>
       </div>
     </div>
@@ -839,9 +839,9 @@ vetax-style) ===== */
       </div>
       <div class="benefit__sh rv">
         <figure class="winshot">
-          <div class="winshot__bar"><i></i><i></i><i></i><span>Auditfy · E1 감사보고서 초안</span></div>
+          <div class="winshot__bar"><i></i><i></i><i></i><span>Auditfy · D1 재무제표 초안</span></div>
           <span class="winshot__callout">당기 숫자 자동 반영</span>
-          <img src="shot-e1-report-draft.webp" width="1500" height="711" alt="Auditfy 감사보고서 초안 자동 작성 화면" loading="lazy" />
+          <video class="winshot__v" poster="demo-03-report-draft-poster.webp" width="1120" height="816" muted loop playsinline preload="none" disablepictureinpicture aria-label="전기 구조에 당기 숫자가 채워진 재무제표 초안 화면" data-src="demo-03-report-draft.mp4"></video>
         </figure>
       </div>
     </div>
@@ -858,9 +858,9 @@ vetax-style) ===== */
       </div>
       <div class="benefit__sh rv">
         <figure class="winshot">
-          <div class="winshot__bar"><i></i><i></i><i></i><span>Auditfy · C4 감사 제출자료</span></div>
-          <span class="winshot__callout">연도별 제출자료 축적</span>
-          <img src="shot-c4-submissions.webp" width="1120" height="593" alt="Auditfy 감사 제출자료 화면" loading="lazy" />
+          <div class="winshot__bar"><i></i><i></i><i></i><span>Auditfy · C5 감사 제출자료 준비</span></div>
+          <span class="winshot__callout">제출 패키지 · 자료 76건 준비도</span>
+          <video class="winshot__v" poster="demo-04-submissions-poster.webp" width="1120" height="816" muted loop playsinline preload="none" disablepictureinpicture aria-label="감사인 제출 패키지와 제출자료 목록 화면" data-src="demo-04-submissions.mp4"></video>
         </figure>
       </div>
     </div>
@@ -1108,6 +1108,42 @@ vetax-style) ===== */
 
 
 
+
+// ── 제품 데모 영상: 지연 로딩 · 화면 안에서만 재생 ──
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('video[data-src]'));
+  if(!vids.length) return;
+  var load=function(v){ if(!v.getAttribute('src')){ v.setAttribute('src', v.dataset.src); v.load(); } };
+  // 자동재생이 막히면(iOS 저전력 모드 등) 재생 컨트롤을 노출해 직접 볼 수 있게 한다
+  var play=function(v){
+    load(v); v.muted=true;
+    var pr=v.play();
+    if(pr&&pr.catch) pr.catch(function(){ v.setAttribute('controls',''); });
+  };
+
+  // 동작 축소 설정이면 자동재생 대신 재생 컨트롤 제공
+  var mq=window.matchMedia('(prefers-reduced-motion: reduce)');
+  if(mq.matches){
+    vids.forEach(function(v){ v.setAttribute('controls',''); v.preload='metadata'; load(v); });
+    return;
+  }
+  if(!('IntersectionObserver' in window)){ vids.forEach(play); return; }
+
+  // 뷰포트 400px 앞에서 미리 내려받기
+  var pre=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ load(e.target); pre.unobserve(e.target); } });
+  },{rootMargin:'400px 0px'});
+  // 실제로 보일 때만 재생, 벗어나면 정지
+  var vis=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting) play(e.target); else e.target.pause(); });
+  },{threshold:.35});
+  vids.forEach(function(v){ pre.observe(v); vis.observe(v); });
+
+  // 백그라운드 탭에서는 정지
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) vids.forEach(function(v){ v.pause(); });
+  });
+})();
 
 // ── privacy modal ──
 (function(){
