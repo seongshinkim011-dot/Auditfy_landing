@@ -97,8 +97,9 @@ p{margin:0}
 .nav__burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 .navmenu{position:fixed; inset:64px 14px auto; z-index:59; background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:12px; display:grid; gap:2px}
 .navmenu[hidden]{display:none !important}
-.navmenu a{text-decoration:none; font-weight:500; color:var(--ink); padding:13px 15px; border-radius:12px; font-size:1rem}
-.navmenu a:hover{background:var(--bg)}
+.navmenu a:not(.btn){text-decoration:none; font-weight:500; color:var(--ink); padding:13px 15px; border-radius:12px; font-size:1rem}
+.navmenu a:not(.btn):hover{background:var(--bg)}
+.navmenu .btn--p{color:#fff}
 .navmenu__cta{margin-top:8px; display:grid; gap:8px}
 @media(max-width:999px){ .nav__links,.nav__cta{display:none} .nav__burger{display:flex; flex:0 0 auto} .nav__in{gap:12px} .nav__tour{margin-left:auto; white-space:nowrap; flex:0 0 auto; padding:11px 15px; font-size:.875rem} }
 @media(max-width:389px){ .nav__in{padding:14px 16px; gap:10px} .nav__tour{display:none} }
