@@ -108,9 +108,9 @@ p{margin:0}
 .hero__g{display:grid; grid-template-columns:minmax(0,max-content) minmax(0,max-content); justify-content:center; gap:clamp(28px,8.3vw,120px); align-items:center}
 .hero h1{font-size:clamp(1.8125rem,3.6vw,3.1875rem); font-weight:700; letter-spacing:-.04em; line-height:1.2; margin:0; max-width:none}
 .hero h1 .j{color:var(--jade); font-size:clamp(2.25rem,4.5vw,4rem)}
-.hero__cta{margin-top:32px; display:flex; gap:10px; justify-content:flex-start; flex-wrap:wrap}
+.hero__cta{margin-top:42px; display:flex; gap:10px; justify-content:flex-start; flex-wrap:wrap}
 .hero__sub{margin:32px 0 0; max-width:none; font-size:1.6875rem; font-weight:400; line-height:1.45; color:var(--ink2)}
-.hero__msg{background:transparent; border:0; border-radius:0; padding:0; display:flex; flex-direction:column}
+.hero__msg{background:transparent; border:0; border-radius:0; padding:0; display:flex; flex-direction:column; align-items:flex-start}
 .hero__checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column}
 .hero__checks li{display:flex; align-items:center; gap:16px; padding:clamp(12px,1.2vw,17px) 0; font-size:clamp(1.125rem,2vw,1.625rem); font-weight:700; color:var(--ink); letter-spacing:-.02em; line-height:1.4}
 .hero__checks li+li{border-top:1px solid var(--line2)}
@@ -508,11 +508,8 @@ vetax-style) ===== */
   <div class="wrap">
     <div class="hero__g">
       <div class="hero__tx rv">
-        <h1>회계팀이<br />더 본질적인 것에<br />집중할 수 있도록,<br /><span class="j">Auditfy</span></h1>
+        <h1>회계팀이<br />본질적인 것에<br />더 집중할 수 있도록,<br /><span class="j">Auditfy</span></h1>
         <p class="hero__sub">회계감사 대응을 체계적으로 관리하는<br />Audit Readiness Platform</p>
-        <div class="hero__cta">
-          <a href="#features" class="btn btn--p btn--sm">3분 제품 둘러보기 <span class="ar">→</span></a>
-        </div>
       </div>
       <div class="hero__msg rv">
         <ul class="hero__checks">
@@ -521,6 +518,9 @@ vetax-style) ===== */
           <li>숫자 변경효과 전체 자동 재검증</li>
           <li>감사 대응 이력 축적</li>
         </ul>
+        <div class="hero__cta">
+          <a href="#features" class="btn btn--p btn--sm">3분 제품 둘러보기 <span class="ar">→</span></a>
+        </div>
       </div>
     </div>
   </div>
