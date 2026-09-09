@@ -12,6 +12,32 @@
 - `<img>`에는 항상 `width`/`height` 속성을 넣어 CLS를 막을 것
 - 후기 마퀴는 가상 예시다. `.revs__note` 고지는 표시광고법상 필수 — **삭제 금지**
 
+## 디자인 원칙 (2026-09-09 확정 — 이걸 어기지 말 것)
+목표: "AI SaaS 템플릿"이 아니라 **깔끔한 B2B 전문 서비스 브랜드**.
+레퍼런스는 heumtax.com/service. 반례(따라하면 안 되는 것)는 coworkcity.co.kr/bookkeeping.
+
+### DO
+- Editorial / Premium B2B · Minimal · Flat
+- 큰 타이포 (섹션 제목 56px) · 넉넉한 여백 (섹션 상하 160px)
+- 얇은 선과 여백으로 구분 (박스가 아니라)
+- 실제 제품 UI 중심 · 화이트 기반 · 제한된 컬러
+- 섹션마다 다른 레이아웃 리듬
+
+### DON'T
+- 과도한 카드 / 둥근 모서리 / 그림자 / 그라데이션
+- glassmorphism · floating blobs · 장식용 AI 이미지
+- 아이콘 남발 · 모든 섹션을 3-card grid 로 · 모든 정보를 박스에 넣기
+- 섹션 배경을 흰색↔연회색으로 계속 교차시키기
+- **모든 강조를 파란색으로 하기**
+
+### 수치 기준
+- radius: 버튼 12px / 카드·영상 16px / 입력·칩 10px / pill 999px. 20px 이상 금지
+- 그림자: 폼·모달·모바일메뉴에만. 나머지는 `border 1px` 또는 여백
+- 자간: 본문 -.02em / 제목 -.04em (한글은 반드시 조여야 함 — 미조정이 AI 느낌의 핵심)
+- 행간: 1.35(제목) / 1.5(조밀) / 1.6(리드) / 1.7(본문)
+- 폰트: 정수만 — 56·44·36·28·24·20·18·17·16·14·13·12·11 (본문 17px)
+- 색: 화이트 + 니어블랙 + 블루(포인트). 초록은 히어로 훅 한 곳만
+
 ## 구조
 단일 `index.html` (CSS/JS 인라인) + 이미지·아이콘 자산.
 섹션 순서: nav → hero(`#top`) → reviews(`#reviews`) → problem(`#problem`) → before/after(`#impact`) → features(`#features`) → CTA배너 → founder(`#founder`) → FAQ(`#faq`) → apply(`#apply`) → footer.
