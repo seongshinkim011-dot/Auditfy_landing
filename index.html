@@ -109,14 +109,15 @@ p{margin:0}
 .hero h1{font-size:clamp(1.8125rem,3.6vw,3.1875rem); font-weight:700; letter-spacing:-.04em; line-height:1.2; margin:0; max-width:none}
 .hero h1 .j{color:var(--jade); font-size:clamp(2.25rem,4.5vw,4rem)}
 .hero__cta{margin-top:36px; display:flex; gap:10px; justify-content:flex-start; flex-wrap:wrap}
-.hero__sub{margin:0 0 43px; max-width:none; font-size:1.5rem; font-weight:400; line-height:1.45; color:var(--ink2)}
+.hero__sub{margin:60px 0 43px; max-width:none; font-size:1.5rem; font-weight:400; line-height:1.45; color:var(--ink2)}
 .hero__msg{background:transparent; border:0; border-radius:0; padding:0; display:flex; flex-direction:column; align-items:flex-start}
 .hero__checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column}
-.hero__checks li{display:flex; align-items:center; gap:14px; padding:clamp(11px,1vw,14px) 0; font-size:clamp(1rem,1.4vw,1.25rem); font-weight:700; color:var(--ink); letter-spacing:-.02em; line-height:1.4}
+.hero__checks li{display:flex; align-items:center; gap:14px; padding:clamp(11px,1vw,14px) 0; font-size:clamp(1rem,1.4vw,1.25rem); font-weight:400; color:var(--ink); letter-spacing:-.02em; line-height:1.4}
 .hero__checks li+li{border-top:1px solid var(--line2)}
 .hero__checks li::before{content:""; flex:0 0 auto; width:clamp(17px,1.3vw,19px); height:clamp(17px,1.3vw,19px); background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231E6B52' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5.4 5.4L20 6.6'/%3E%3C/svg%3E") center/contain no-repeat}
 @media(max-width:900px){
   .hero__g{grid-template-columns:1fr; gap:40px}
+  .hero__sub{margin-top:0}
 }
 .hero__cap .mk{width:16px; height:16px}
 @media(max-width:720px){ .dash{grid-template-columns:1fr} .dash__l{border-right:0; border-bottom:1px solid var(--line)} }
