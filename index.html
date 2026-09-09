@@ -105,14 +105,14 @@ p{margin:0}
 /* ---------- hero ---------- */
 .hero{padding:clamp(60px,7vw,110px) 0 clamp(64px,7vw,110px); text-align:left; background:#FFFFFF}
 .hero .wrap{max-width:1280px}
-.hero__g{display:grid; grid-template-columns:1.22fr .78fr; gap:clamp(5px,0.7vw,10px); align-items:stretch}
+.hero__g{display:grid; grid-template-columns:minmax(0,max-content) minmax(0,max-content); justify-content:center; gap:clamp(24px,3vw,44px); align-items:stretch}
 .hero h1{font-size:clamp(2.5rem,5vw,4.5rem); font-weight:700; letter-spacing:-.04em; line-height:1.2; margin:0; max-width:none}
 .hero h1 .j{color:var(--jade)}
 .hero__cta{margin-top:32px; display:flex; gap:10px; justify-content:flex-start; flex-wrap:wrap}
 .hero__sub{margin:32px 0 0; max-width:none; font-size:1.6875rem; font-weight:400; line-height:1.45; color:var(--ink2)}
-.hero__msg{background:var(--bg-soft); border-radius:0; padding:clamp(32px,3.4vw,44px); display:flex; flex-direction:column}
+.hero__msg{background:transparent; border:1px solid #C9D0DC; border-radius:0; padding:clamp(32px,3.4vw,44px); display:flex; flex-direction:column}
 .hero__checks{list-style:none; margin:0; padding:0; flex:1; display:flex; flex-direction:column; justify-content:center; gap:clamp(18px,3.5vw,50px)}
-.hero__checks li{display:flex; align-items:baseline; gap:14px; font-size:clamp(1.125rem,2vw,1.625rem); font-weight:400; color:var(--ink2); letter-spacing:-.02em; line-height:1.4}
+.hero__checks li{display:flex; align-items:baseline; gap:14px; font-size:clamp(1.125rem,2vw,1.625rem); font-weight:700; color:var(--ink); letter-spacing:-.02em; line-height:1.4}
 .hero__checks li::before{content:"\2713"; color:var(--blue); font-size:.9em; line-height:1; flex:0 0 auto}
 @media(max-width:900px){
   .hero__g{grid-template-columns:1fr; gap:40px}
