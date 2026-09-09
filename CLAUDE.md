@@ -14,7 +14,7 @@
 
 ## 구조
 단일 `index.html` (CSS/JS 인라인) + 이미지·아이콘 자산.
-섹션 순서: nav → hero(`#top`) → reviews(`#reviews`) → problem(`#problem`) → before/after(`#impact`) → features(`#features`) → CTA배너 → founder(`#founder`) → FAQ(`#faq`) → apply(`#apply`) → footer.
+섹션 순서: nav → hero(`#top`) → reviews(`#reviews`) → problem(`#problem`) → features(`#features`) → modules(`#modules`) → before/after(`#impact`) → CTA배너 → founder(`#founder`) → FAQ(`#faq`) → apply(`#apply`) → footer.
 Pricing 섹션은 삭제됨.
 
 ## 배포
@@ -46,6 +46,10 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → https:
 `python3 -m http.server 8899` 후 http://127.0.0.1:8899
 
 ## 열려있는 항목
+- FAQ 답변을 2026-09-09 전면 축약(각 1~2문장). 외감법 금액·인원 기준 목록은 이때 삭제되어
+  '외감 기준 회계사 검토' 항목은 해소됨. Q3 보안 답변에서도 미검증 문구
+  ('회사별로 분리된 작업 공간')를 제거했고, 남은 문구는 '접근 통제와 암호화를 전제로 처리·저장'.
+  실제 인프라와 맞는지 제작자 확인 필요
 - **[확인 필요] 03번 블록 문구** — 2026-09-09 제작자 요청으로
   '전기 감사보고서 기반 당기 양식 제시'로 변경(제목도 '초안 제시'로 완화).
   D 섹션과 「감사보고서 변환」의 연결 여부는 여전히 미확인이므로,
