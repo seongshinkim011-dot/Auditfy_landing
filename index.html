@@ -257,6 +257,8 @@ p{margin:0}
 
   /* ===== section background rhythm ===== */
   .sec--soft{background:var(--bg-soft); border-top:1px solid var(--line)}
+  section + section{border-top:1px solid var(--line)}
+  .band-blue, .band-navy, .band-blue + section, .band-navy + section, .sec--soft + section{border-top:0}
   .band-blue{background:linear-gradient(120deg,var(--blue),#5D70F7 60%,#7C4DFF); color:#fff; padding:clamp(60px,7vw,92px) 0}
   /* 중간 CTA 배너 */
   .ctab{max-width:var(--maxw); margin:0 auto; padding:0 22px}
@@ -300,7 +302,7 @@ p{margin:0}
   .hero__sub2 .j{color:var(--jade); font-weight:500}
   /* ===== problem ===== */
   .cause{max-width:740px; margin:0 auto; text-align:center; padding:clamp(30px,4vw,44px) clamp(24px,3.5vw,40px); background:var(--card);border:1px solid var(--line2); border-radius:var(--r)}
-  .cause__t{font-size:clamp(1.5rem,3.6vw,2.25rem); font-weight:500; letter-spacing:-.04em; line-height:1.35; color:var(--ink)}
+  .cause__t{font-size:clamp(1.5rem,3.6vw,2.25rem); font-weight:700; letter-spacing:-.04em; line-height:1.35; color:var(--ink)}
   .cause__t em{font-style:normal; color:var(--blue)}
   .cause__d{margin-top:16px; font-size:clamp(1.0625rem,1.6vw,1.25rem); color:var(--ink2); line-height:1.7}
   .bridge{display:flex; justify-content:center; align-items:center; margin:clamp(28px,4vw,42px) 0 clamp(24px,3.2vw,34px)}
@@ -442,10 +444,10 @@ vetax-style) ===== */
   @media(max-width:760px){ .foot__in{grid-template-columns:1fr; gap:30px} .foot__contact{min-width:0} }
 
   /* ===== problem: refined process flow (redesign) ===== */
-  .pflow{display:flex; align-items:stretch; justify-content:center; gap:clamp(4px,0.8vw,10px); max-width:1060px; margin:clamp(44px,5.5vw,64px) auto 0}
-  .pcard{flex:1 1 0; min-width:0; background:#F2F4F8; border:0; border-radius:16px; padding:24px 18px 26px; display:flex; flex-direction:column; gap:14px; text-align:left}
-  .pcard__n{color:var(--blue); font-weight:700; font-size:1.375rem; line-height:1; letter-spacing:-.02em}
-  .pcard__t{font-size:1.0625rem; font-weight:500; color:var(--ink); line-height:1.5; letter-spacing:-.02em; word-break:keep-all}
+  .pflow{display:flex; align-items:stretch; justify-content:center; gap:clamp(4px,0.8vw,10px); max-width:1120px; margin:clamp(44px,5.5vw,64px) auto 0}
+  .pcard{flex:1 1 0; min-width:0; background:#F2F4F8; border:0; border-radius:16px; padding:26px 16px 28px; display:flex; flex-direction:column; gap:14px; text-align:left}
+  .pcard__n{color:var(--ink); font-weight:700; font-size:1.375rem; line-height:1; letter-spacing:-.02em}
+  .pcard__t{font-size:clamp(1.0625rem,1.8vw,1.625rem); font-weight:500; color:var(--ink); line-height:1.5; letter-spacing:-.02em; word-break:keep-all}
   .pflow__ar{align-self:center; flex:0 0 auto; width:11px; height:11px; border-top:2.5px solid var(--mut); border-right:2.5px solid var(--mut); transform:rotate(45deg); margin:0 clamp(2px,0.6vw,6px)}
   .pflow__caption{display:flex; align-items:center; justify-content:center; gap:10px; max-width:1060px; margin:clamp(26px,3.2vw,38px) auto 0; text-align:center; font-size:clamp(1.125rem,2.1vw,1.5rem); font-weight:500; color:var(--ink2)}
   .pflow__ic{flex:0 0 auto; width:clamp(24px,2.6vw,32px); height:clamp(24px,2.6vw,32px); color:var(--blue); display:grid; place-items:center}
@@ -605,10 +607,10 @@ vetax-style) ===== */
 
 
     <div class="bridge rv" aria-hidden="true">
-      <svg class="bridge__arrow" width="18" height="52" viewBox="0 0 18 52" fill="none" aria-hidden="true">
-        <path d="M9 3 V19" stroke="#A6B4F2" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M3 27 L9 34 L15 27" stroke="#A6B4F2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M3 38 L9 45 L15 38" stroke="#A6B4F2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg class="bridge__arrow" width="24" height="62" viewBox="0 0 24 62" fill="none" aria-hidden="true">
+        <path d="M12 3 V22" stroke="#181D27" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M4 31 L12 40 L20 31" stroke="#181D27" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M4 45 L12 54 L20 45" stroke="#181D27" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
 
