@@ -268,7 +268,7 @@ p{margin:0}
   .ctab p{margin-top:14px; font-size:1.0625rem; color:rgba(255,255,255,.85); font-weight:500}
   .ctab__kick{display:inline-block; font-size:1.25rem; font-weight:500; letter-spacing:.04em; color:rgba(255,255,255,.72); margin-bottom:14px}
   .ctab__note{max-width:600px; margin:18px auto 0 !important; font-size:.875rem !important; color:rgba(255,255,255,.62) !important; font-weight:500 !important; line-height:1.6}
-  .ctab .btn{margin-top:28px; background:#fff; color:var(--blue); font-size:1.3125rem; height:64px; padding:0 32px}
+  .ctab .btn{margin-top:30px; background:#fff; color:var(--blue); font-size:1.5625rem; height:72px; padding:0 36px}
   .ctab .btn:hover{background:#F0F3FF}
   /* 섹션 헤더 eyebrow 라인형(벳택스식) */
   .kick{display:inline-flex; align-items:center; gap:11px; font-size:1.25rem; font-weight:500; letter-spacing:.06em; color:var(--blue); text-transform:uppercase}
@@ -325,15 +325,6 @@ p{margin:0}
   .pair__ar i::after{content:""; width:11px; height:11px; border-right:2.8px solid var(--blue); border-top:2.8px solid var(--blue); transform:rotate(45deg) translate(-1px,1px)}
   /* mini visuals */
   @media(max-width:860px){ .pair__row{grid-template-columns:1fr} .pair__ar{padding:4px 0} .pair__ar i{transform:rotate(90deg); width:36px; height:36px} .pair__b,.pair__a{padding:22px} }
-  .pairhead{display:grid; grid-template-columns:1fr auto 1.12fr; gap:clamp(10px,1.6vw,18px); max-width:1060px; margin:clamp(44px,6vw,60px) auto 0; align-items:end}
-  .pairhead__b,
-.pairhead__a{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center}
-  .pairhead__tag{font-size:1rem; font-weight:500; letter-spacing:.14em; color:var(--mut)}
-  .pairhead__tag--a{color:var(--blue)}
-  .pairhead__ko{font-size:clamp(1.0625rem,1.9vw,1.25rem); font-weight:500; letter-spacing:-.02em; color:var(--ink2)}
-  .pairhead__a .pairhead__ko{color:var(--ink)}
-  .pairhead__gap{width:38px}
-  @media(max-width:860px){ .pairhead{display:none} }
   /* ===== reviews (vetax-style,
 seamless marquee) ===== */
   .revsec{padding:clamp(26px,3.5vw,44px) 0 clamp(56px,7vw,88px); background:var(--bg); overflow:hidden}
@@ -732,18 +723,6 @@ vetax-style) ===== */
       <h2 class="h2" style="margin-top:16px; font-weight:700">감사를 두려워하는 회사와<br />활용하는 회사의 차이는 <span class="j">준비</span>입니다.</h2>
     </div>
 
-    <div class="pairhead rv">
-      <div class="pairhead__b">
-        <span class="pairhead__tag">BEFORE</span>
-        <span class="pairhead__ko">지금의 문제</span>
-      </div>
-      <span class="pairhead__gap" aria-hidden="true"></span>
-      <div class="pairhead__a">
-        <span class="pairhead__tag pairhead__tag--a">AFTER</span>
-        <span class="pairhead__ko">Auditfy 도입 후</span>
-      </div>
-    </div>
-
     <div class="pair rv stg">
 
       <div class="pair__row">
@@ -822,7 +801,7 @@ vetax-style) ===== */
           <!-- 정식 출범 시 <img src="founder.jpg" alt="창업자" /> 로 교체 -->
           <svg viewBox="0 0 100 100"><circle cx="50" cy="38" r="17" fill="#A9B8D8"/><path d="M20 85c0-17 13-28 30-28s30 11 30 28z" fill="#A9B8D8"/></svg>
         </div>
-        <h2 class="founder2__hl">회계팀이 야근으로 버티는 구조를,<br />바꾸고 싶었습니다.</h2>
+        <h2 class="founder2__hl">회계팀이 야근으로 버티는 구조를,<br />바꾸고 싶습니다.</h2>
         <p class="founder2__cred">공인회계사 · 빅4 회계법인 외부감사 15년</p>
       </div>
       <div class="founder2__r rv">
