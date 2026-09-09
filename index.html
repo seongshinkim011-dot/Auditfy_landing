@@ -137,7 +137,7 @@ p{margin:0}
 
 /* ---------- apply ---------- */
 .apply{background:var(--navy); border-radius:clamp(22px,3vw,34px); max-width:1080px; margin:0 auto; padding:clamp(44px,6vw,72px) clamp(22px,5vw,64px); color:#fff}
-.apply__g{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(30px,5vw,60px); align-items:start}
+.apply__g{display:grid; grid-template-columns:.82fr 1.18fr; gap:clamp(28px,4vw,52px); align-items:start}
 .apply h2{font-size:clamp(1.6rem,3.2vw,2.35rem); font-weight:800}
 .apply h2 .m{color:var(--mint)}
 .apply__d{margin-top:16px; font-size:1.05rem; color:#C4CCE0; line-height:1.75}
@@ -985,14 +985,14 @@ vetax-style) ===== */
       <div class="apply__g">
         <div>
           <h2>감사인이 보기 전에,<br /><span class="m">Auditfy</span>가 먼저 봅니다</h2>
-          <p class="apply__d">전기 감사보고서 1건을 당기 초안으로 무료 변환해 드립니다. 결과물을 직접 확인하신 뒤에 도입을 판단하세요.</p>
+          <p class="apply__d">전기 감사보고서를 당기 양식으로 롤포워드해 무료로 전달드립니다.</p>
           <div class="apply__rz"><span>무료</span><span>카드 등록 없음</span><span>도입 의무 없음</span><span>2분 소요</span></div>
           <div class="bonus">
             <p class="bonus__label">무료로 받아보실 수 있는 것</p>
-            <div class="bonus__i"><span class="n">A</span><div><b>감사보고서 초안 무료 변환</b><span>전기 보고서 구조를 그대로 이어받아 당기 숫자를 채운 초안을 만들어 드립니다</span></div></div>
-            <div class="bonus__i"><span class="n">B</span><div><b>감사 준비 상태 진단</b><span>외부감사 15년 관점에서 위험·누락 항목을 짚고 1:1로 설명해 드립니다</span></div></div>
+            <div class="bonus__i"><span class="n">A</span><div><b>감사보고서 양식 무료 롤포워드</b><span>전기 보고서 구조를 그대로 이어받아 당기 양식으로 만들어 드립니다</span></div></div>
+            <div class="bonus__i"><span class="n">B</span><div><b>감사 준비 상태 진단</b><span>외부감사 15년 관점에서 위험·누락 항목을 1:1로 짚어 드립니다</span></div></div>
           </div>
-          <p class="apply__safe">전기 감사보고서는 DART에 공시되는 공개 자료입니다. 내부 자료를 제출하실 필요가 없습니다.</p>
+          <p class="apply__safe">전기 감사보고서는 DART 공시 자료입니다. 내부 자료 제출이 필요 없습니다.</p>
         </div>
         <div class="form" id="form">
           <div class="form__in">
@@ -1001,7 +1001,7 @@ vetax-style) ===== */
             <div class="field">
               <span class="flabel">신청 항목 <span class="fopt">(복수 선택 가능)</span></span>
               <div class="picks">
-                <label class="pick"><input type="checkbox" id="f_svc1" checked /><span>감사보고서 초안 <b>무료 변환</b><i>전기 보고서 1건</i></span></label>
+                <label class="pick"><input type="checkbox" id="f_svc1" checked /><span>감사보고서 양식 <b>무료 롤포워드</b><i>전기 보고서 1건</i></span></label>
                 <label class="pick"><input type="checkbox" id="f_svc2" /><span>감사 준비 상태 <b>무료 진단</b><i>1:1 결과 설명</i></span></label>
               </div>
             </div>
@@ -1088,7 +1088,7 @@ vetax-style) ===== */
       clearErr();
       var co=byId('f_co').value.trim(), em=byId('f_em').value.trim(), ph=byId('f_ph').value.trim();
       var svc=[];
-      if(byId('f_svc1').checked) svc.push('감사보고서 초안 무료 변환');
+      if(byId('f_svc1').checked) svc.push('감사보고서 양식 무료 롤포워드');
       if(byId('f_svc2').checked) svc.push('감사 준비 상태 무료 진단');
       if(!svc.length){ showErr('신청 항목을 하나 이상 선택해 주세요.'); return; }
       var bad=false;
