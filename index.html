@@ -154,14 +154,15 @@ p{margin:0}
 .flabel{display:block; font-size:.86rem; font-weight:800; color:var(--ink2); padding-left:7px}
 .flabel .fopt{color:var(--mut); font-weight:600}
 .picks{margin-top:9px; display:grid; gap:8px}
-.pick{display:flex; align-items:flex-start; gap:10px; cursor:pointer; background:#FBFCFE; border:1.5px solid var(--line2); border-radius:13px; padding:13px 14px; transition:border-color .15s, background .15s}
-.pick:hover{border-color:#B9C4E8}
-.pick input{flex:0 0 auto; margin:2px 0 0; width:17px; height:17px; accent-color:var(--blue); cursor:pointer}
-.pick span{font-size:.92rem; font-weight:600; color:var(--ink2); line-height:1.45}
-.pick span b{font-weight:800; color:var(--ink)}
-.pick span i{display:block; font-style:normal; font-size:.78rem; font-weight:600; color:var(--mut); margin-top:2px}
-.pick:has(input:checked){border-color:var(--blue); background:var(--blue-soft)}
-.pick:has(input:checked) span{color:var(--ink)}
+/* .field label / .field input 보다 명시도를 높여야 함 — 아래에 정의돼 덮어씀 */
+.picks .pick{display:flex; align-items:flex-start; gap:10px; margin:0; cursor:pointer; background:#FBFCFE; border:1.5px solid var(--line2); border-radius:13px; padding:13px 14px; font-size:1rem; font-weight:600; transition:border-color .15s, background .15s}
+.picks .pick:hover{border-color:#B9C4E8}
+.picks .pick input{flex:0 0 auto; width:17px; height:17px; margin:2px 0 0; padding:0; border:0; border-radius:0; background:none; accent-color:var(--blue); cursor:pointer}
+.picks .pick span{font-size:.92rem; font-weight:600; color:var(--ink2); line-height:1.45}
+.picks .pick span b{font-weight:800; color:var(--ink)}
+.picks .pick span i{display:block; font-style:normal; font-size:.78rem; font-weight:600; color:var(--mut); margin-top:2px}
+.picks .pick:has(input:checked){border-color:var(--blue); background:var(--blue-soft)}
+.picks .pick:has(input:checked) span{color:var(--ink)}
 .form h3{font-size:1.25rem; font-weight:800; letter-spacing:-.02em; text-align:center}
 .form .fs{margin-top:6px; text-align:center; font-size:.94rem; color:var(--mut); font-weight:600}
 .field{margin-top:16px}
