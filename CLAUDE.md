@@ -30,6 +30,8 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → https:
 - 작업을 마칠 때마다 **배포 대기 커밋 수와 내용을 사용자에게 알린다**
   (`git log --oneline origin/main..HEAD`)
 - 되돌리기: Vercel 대시보드 → Deployments → Instant Rollback (커밋 단위로 복구 가능)
+- **배포를 마치면 답변 끝에 라이브 링크를 항상 함께 전달한다**
+  https://auditfy-landing.vercel.app/ — 사용자가 바로 눌러서 확인할 수 있도록
 
 ## 수정 후 검증 체크리스트
 1. 태그 균형 / CSS 중괄호 / JS 괄호 균형
