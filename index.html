@@ -107,14 +107,15 @@ p{margin:0}
 .hero .wrap{max-width:1280px}
 .hero__g{display:grid; grid-template-columns:1.22fr .78fr; gap:clamp(36px,4.5vw,64px); align-items:start}
 .hero h1{font-size:clamp(2.5rem,5vw,4.5rem); font-weight:700; letter-spacing:-.04em; line-height:1.2; margin:0; max-width:none}
+.hero h1 .j{color:var(--jade)}
 .hero__cta{margin-top:32px; display:flex; gap:10px; justify-content:flex-start; flex-wrap:wrap}
 .hero__sub{margin:30px 0 0; max-width:none; font-size:1.125rem; font-weight:400; line-height:1.5; color:var(--ink2)}
-.hero__msg{background:var(--bg-soft); border-radius:0; padding:clamp(28px,3vw,36px)}
-.hero__lead{font-size:clamp(1.375rem,2.2vw,1.75rem); font-weight:500; letter-spacing:-.04em; line-height:1.4; color:var(--ink)}
+.hero__msg{background:var(--bg-soft); border-radius:0; padding:clamp(32px,3.4vw,44px); margin-top:clamp(24px,4.5vw,64px)}
+.hero__lead{font-size:clamp(1.75rem,3.2vw,2.625rem); font-weight:500; letter-spacing:-.04em; line-height:1.35; color:var(--ink)}
 .hero__lead .j{color:var(--jade)}
-.hero__checks{list-style:none; margin:28px 0 0; padding:0; display:grid; gap:11px}
-.hero__checks li{display:flex; align-items:center; gap:10px; font-size:1.0625rem; font-weight:400; color:var(--ink2); letter-spacing:-.02em}
-.hero__checks li::before{content:""; width:4px; height:4px; border-radius:50%; background:var(--blue); flex:0 0 auto}
+.hero__checks{list-style:none; margin:34px 0 0; padding:0; display:grid; gap:16px}
+.hero__checks li{display:flex; align-items:baseline; gap:12px; font-size:clamp(1.125rem,2vw,1.625rem); font-weight:400; color:var(--ink2); letter-spacing:-.02em; line-height:1.4}
+.hero__checks li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--blue); flex:0 0 auto; transform:translateY(-6px)}
 @media(max-width:900px){
   .hero__g{grid-template-columns:1fr; gap:40px}
 }
@@ -508,14 +509,14 @@ vetax-style) ===== */
   <div class="wrap">
     <div class="hero__g">
       <div class="hero__tx rv">
-        <h1>회계팀이 더 본질적인 것에<br />집중할 수 있도록,<br />Auditfy</h1>
+        <h1>회계팀이<br />더 본질적인 것에<br />집중할 수 있도록,<br /><span class="j">Auditfy</span></h1>
         <p class="hero__sub">회계감사 대응을 체계적으로 관리하는<br />Audit Readiness Platform</p>
         <div class="hero__cta">
           <a href="#features" class="btn btn--p btn--sm">3분 제품 둘러보기 <span class="ar">→</span></a>
         </div>
       </div>
       <div class="hero__msg rv">
-        <p class="hero__lead">감사 자료 준비,<br />또 야근으로 버티실 건가요?<br /><span class="j">올해부턴 바꿉시다.</span></p>
+        <p class="hero__lead">감사 자료 준비,<br />또 야근으로<br />버티실 건가요?<br /><span class="j">올해부턴 바꿉시다.</span></p>
         <ul class="hero__checks">
           <li>요청자료 사전 준비</li>
           <li>감사보고서 초안 자동 완성</li>
