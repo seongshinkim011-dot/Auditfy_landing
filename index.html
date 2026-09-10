@@ -108,13 +108,13 @@ p{margin:0}
 /* ---------- hero ---------- */
 .hero{padding:clamp(60px,7vw,110px) 0 clamp(64px,7vw,110px); text-align:left; background:#FFFFFF}
 .hero .wrap{max-width:1280px}
-.hero__g{display:grid; grid-template-columns:minmax(0,max-content) minmax(0,max-content); justify-content:center; gap:clamp(28px,11.2vw,162px); align-items:end}
+.hero__g{display:grid; grid-template-columns:minmax(0,max-content) minmax(0,max-content); justify-content:center; gap:clamp(28px,11.2vw,162px); align-items:start}
 .hero__lead{margin:0 0 clamp(16px,1.6vw,22px); font-size:clamp(1.0625rem,1.5vw,1.3125rem); font-weight:500; letter-spacing:-.02em; line-height:1.5; color:var(--blue-d)}
 .hero h1{font-size:clamp(1.8125rem,4.86vw,4.3125rem); font-weight:700; letter-spacing:-.015em; line-height:1.32; margin:0; max-width:none}
 .hero h1 .j{color:var(--jade); font-size:clamp(2.25rem,6.08vw,5.375rem)}
 .hero__cta{margin-top:49px; display:flex; gap:10px; justify-content:flex-start; flex-wrap:wrap}
 .hero__cta .btn{height:clamp(44px,4.1vw,59px); font-size:clamp(.9375rem,1.4vw,1.25rem); padding:0 clamp(20px,1.9vw,27px); border-radius:12px}
-.hero__sub{margin:81px 0 18px; max-width:none; font-size:1.9375rem; font-weight:700; line-height:1.45; color:var(--ink2)}
+.hero__sub{margin:0 0 18px; max-width:none; font-size:1.9375rem; font-weight:700; line-height:1.45; color:var(--ink2)}
 .hero__msg{background:transparent; border:0; border-radius:0; padding:0; display:flex; flex-direction:column; align-items:flex-start}
 .hero__checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column}
 .hero__checks li{display:flex; align-items:center; gap:19px; padding:clamp(11px,1.35vw,19px) 0; font-size:clamp(1rem,1.89vw,1.6875rem); font-weight:400; color:var(--ink); letter-spacing:-.02em; line-height:1.4}
@@ -122,7 +122,6 @@ p{margin:0}
 .hero__checks li::before{content:""; flex:0 0 auto; width:clamp(17px,1.76vw,26px); height:clamp(17px,1.76vw,26px); background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231E6B52' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5.4 5.4L20 6.6'/%3E%3C/svg%3E") center/contain no-repeat}
 @media(max-width:900px){
   .hero__g{grid-template-columns:1fr; gap:40px}
-  .hero__sub{margin-top:0}
 }
 .hero__cap .mk{width:16px; height:16px}
 @media(max-width:720px){ .dash{grid-template-columns:1fr} .dash__l{border-right:0; border-bottom:1px solid var(--line)} }
@@ -464,9 +463,6 @@ vetax-style) ===== */
       <div class="hero__tx rv">
         <p class="hero__lead">매년 반복되는 회계감사 준비,<br />이제 처음부터 다시 하지 마세요.</p>
         <h1>회계팀이<br />본질적인 것에<br />더 집중할 수 있도록,<br /><span class="j">Auditfy</span></h1>
-        <div class="hero__cta">
-          <a href="#features" class="btn btn--p btn--sm">3분 제품 둘러보기 <span class="ar">→</span></a>
-        </div>
       </div>
       <div class="hero__msg rv">
         <p class="hero__sub">회계감사 대응을 체계적으로 관리하는<br />Audit Readiness Platform</p>
@@ -476,6 +472,9 @@ vetax-style) ===== */
           <li>숫자 변경효과 전체 자동 재검증</li>
           <li>감사 대응 이력 축적</li>
         </ul>
+        <div class="hero__cta">
+          <a href="#features" class="btn btn--p btn--sm">3분 제품 둘러보기 <span class="ar">→</span></a>
+        </div>
       </div>
     </div>
   </div>
