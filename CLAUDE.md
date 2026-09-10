@@ -47,6 +47,10 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → https:
 `python3 -m http.server 8899` 후 http://127.0.0.1:8899
 
 ## 열려있는 항목
+- **Vercel 커스텀 이벤트는 Pro 플랜에서만 기록된다.** 2026-09-10 이벤트 6종(cta_click,
+  section_view, demo_play, faq_open, form_submit, form_error) 삽입 완료. Hobby 플랜이면
+  전송은 되나 대시보드에 안 쌓이므로 플랜 확인 필요. 이벤트에는 개인정보(회사명·이메일·연락처)를
+  절대 넣지 않는다 — form_submit은 선택한 신청 항목명만 보낸다
 - **후기 고지 문구가 현재 페이지에 하나도 없다** (2026-09-09 제작자 요청으로 2건 모두 삭제).
   삭제한 문구: 푸터 "* 후기는 실제 사용 기업의 피드백이며, 회사명은 익명 처리했습니다",
   후기 섹션 "* 기업 요청에 따라 회사명은 익명으로 표기했으며, 일부 표현은 읽기 쉽게 다듬었습니다".

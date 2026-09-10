@@ -973,16 +973,23 @@ vetax-style) ===== */
     var subBtn=document.getElementById('submit');
     var errEl=document.getElementById('ferror');
     var byId=function(id){return document.getElementById(id);};
-    var showErr=function(m){ if(errEl){errEl.textContent=m; errEl.hidden=false;} };
+    var showErr=function(m){
+      if(window.afTrack) window.afTrack('form_error', {reason:m});
+      if(errEl){errEl.textContent=m; errEl.hidden=false;}
+    };
     var clearErr=function(){ if(errEl){errEl.hidden=true;} };
     var emailOK=function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); };
-    var doneOK=function(){ form.classList.add('sent'); form.scrollIntoView({behavior:'smooth',block:'center'}); };
+    var doneOK=function(){
+      if(window.afTrack) window.afTrack('form_submit', {items:(window.__afItems||'')});
+      form.classList.add('sent'); form.scrollIntoView({behavior:'smooth',block:'center'});
+    };
     var submitForm=function(){
       clearErr();
       var co=byId('f_co').value.trim(), em=byId('f_em').value.trim(), ph=byId('f_ph').value.trim();
       var svc=[];
       if(byId('f_svc1').checked) svc.push('감사보고서 양식 롤포워드 (무료)');
       if(byId('f_svc2').checked) svc.push('감사 준비 상태 진단 (무료)');
+      window.__afItems = svc.join(' / ');
       if(!svc.length){ showErr('신청 항목을 하나 이상 선택해 주세요.'); return; }
       var bad=false;
       [['f_co',co],['f_em',em]].forEach(function(p){
@@ -1109,5 +1116,68 @@ vetax-style) ===== */
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+
+<!-- 커스텀 이벤트 — 개인정보(회사명·이메일·연락처)는 절대 전송하지 않음 -->
+<script>
+(function(){
+  // 공통 전송 함수. 애널리틱스가 없거나 차단돼도 페이지 동작에 영향 없음
+  function track(name, data){
+    try{ if(typeof window.va === 'function'){ window.va('event', data ? {name:name, data:data} : {name:name}); } }catch(e){}
+  }
+  window.afTrack = track;
+
+  // 1) CTA 클릭 — 어느 위치의 어떤 버튼인지 구분
+  var CTA = [
+    ['.nav__cta a[href="#apply"]',        'nav',        'apply'],
+    ['.nav__cta a[href="#features"]',     'nav',        'tour'],
+    ['.nav__tour',                        'nav_mobile', 'tour'],
+    ['.navmenu__cta a[href="#apply"]',    'menu',       'apply'],
+    ['.navmenu__cta a[href="#features"]', 'menu',       'tour'],
+    ['.hero__cta a',                      'hero',       'tour'],
+    ['.ctab .btn',                        'banner',     'apply']
+  ];
+  CTA.forEach(function(c){
+    document.querySelectorAll(c[0]).forEach(function(el){
+      el.addEventListener('click', function(){ track('cta_click', {place:c[1], target:c[2]}); });
+    });
+  });
+
+  // 2) 섹션 도달 — 어디까지 읽고 이탈했는지 (각 1회만)
+  var SECT = {problem:'문제', impact:'before_after', features:'기능', modules:'제품구성', reviews:'후기', faq:'faq', apply:'신청폼'};
+  if('IntersectionObserver' in window){
+    var seen = {};
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        var id = en.target.id;
+        if(en.isIntersecting && !seen[id]){ seen[id] = 1; track('section_view', {section:SECT[id]}); }
+      });
+    }, {threshold:0.25});
+    Object.keys(SECT).forEach(function(id){ var el=document.getElementById(id); if(el) io.observe(el); });
+  }
+
+  // 3) 데모 영상 재생 — 어느 기능에 관심이 있는지 (각 1회만)
+  document.querySelectorAll('.winshot__v').forEach(function(v, i){
+    var fired = false;
+    v.addEventListener('playing', function(){
+      if(fired) return; fired = true;
+      track('demo_play', {demo:(v.getAttribute('data-src')||('demo'+(i+1))).replace(/^demo-|\.mp4$/g,'')});
+    });
+  });
+
+  // 4) FAQ 열람 — 어떤 질문이 걸림돌인지 (영업 대응에 직결)
+  document.querySelectorAll('details.qa').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      if(!d.open) return;
+      var n = d.querySelector('.qa__n'), q = d.querySelector('.qa__q');
+      track('faq_open', {q:(n?n.textContent.trim():'') + ' ' + (q?q.textContent.trim():'')});
+    });
+  });
+
+  // 5) 개인정보 안내 열람
+  document.querySelectorAll('.js-privacy').forEach(function(b){
+    b.addEventListener('click', function(){ track('privacy_view'); });
+  });
+})();
+</script>
 </body>
 </html>
