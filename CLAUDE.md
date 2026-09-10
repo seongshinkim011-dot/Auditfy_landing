@@ -14,7 +14,8 @@
 
 ## 구조
 단일 `index.html` (CSS/JS 인라인) + 이미지·아이콘 자산.
-섹션 순서: nav → hero(`#top`) → reviews(`#reviews`) → problem(`#problem`) → features(`#features`) → modules(`#modules`) → before/after(`#impact`) → CTA배너 → founder(`#founder`) → FAQ(`#faq`) → apply(`#apply`) → footer.
+섹션 순서: nav → hero(`#top`) → problem(`#problem`) → before/after(`#impact`) → features(`#features`) → modules(`#modules`) → reviews(`#reviews`) → CTA배너 → founder(`#founder`) → FAQ(`#faq`) → apply(`#apply`) → footer.
+2026-09-10 재배치: 방문자가 문제 공감 → 해결(Before&After) → 제품 설명 순으로 읽도록 Before&After를 앞으로 승격, 후기는 제품 설명 뒤로 이동.
 Pricing 섹션은 삭제됨.
 
 ## 배포

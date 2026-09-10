@@ -109,6 +109,7 @@ p{margin:0}
 .hero{padding:clamp(60px,7vw,110px) 0 clamp(64px,7vw,110px); text-align:left; background:#FFFFFF}
 .hero .wrap{max-width:1280px}
 .hero__g{display:grid; grid-template-columns:minmax(0,max-content) minmax(0,max-content); justify-content:center; gap:clamp(28px,11.2vw,162px); align-items:end}
+.hero__lead{margin:0 0 clamp(16px,1.6vw,22px); font-size:clamp(1.0625rem,1.5vw,1.3125rem); font-weight:500; letter-spacing:-.02em; line-height:1.5; color:var(--blue-d)}
 .hero h1{font-size:clamp(1.8125rem,4.86vw,4.3125rem); font-weight:700; letter-spacing:-.015em; line-height:1.32; margin:0; max-width:none}
 .hero h1 .j{color:var(--jade); font-size:clamp(2.25rem,6.08vw,5.375rem)}
 .hero__cta{margin-top:49px; display:flex; gap:10px; justify-content:flex-start; flex-wrap:wrap}
@@ -431,9 +432,9 @@ vetax-style) ===== */
     </a>
     <nav class="nav__links" aria-label="주 메뉴">
       <a href="#problem">문제</a>
+      <a href="#impact">해결</a>
       <a href="#features">기능</a>
       <a href="#modules">구성</a>
-      <a href="#impact">해결</a>
       <a href="#founder">만든 사람</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -447,9 +448,9 @@ vetax-style) ===== */
   </div>
   <nav class="navmenu" id="navMenu" aria-label="모바일 메뉴" hidden>
     <a href="#problem">문제</a>
+    <a href="#impact">해결</a>
     <a href="#features">기능</a>
     <a href="#modules">구성</a>
-    <a href="#impact">해결</a>
     <a href="#founder">만든 사람</a>
     <a href="#faq">FAQ</a>
     <div class="navmenu__cta"><a href="#apply" class="btn btn--p">무료 진단 신청 <span class="ar">→</span></a><a href="#features" class="btn btn--o">3분 제품 둘러보기</a></div>
@@ -461,6 +462,7 @@ vetax-style) ===== */
   <div class="wrap">
     <div class="hero__g">
       <div class="hero__tx rv">
+        <p class="hero__lead">매년 반복되는 회계감사 준비,<br />이제 처음부터 다시 하지 마세요.</p>
         <h1>회계팀이<br />본질적인 것에<br />더 집중할 수 있도록,<br /><span class="j">Auditfy</span></h1>
         <div class="hero__cta">
           <a href="#features" class="btn btn--p btn--sm">3분 제품 둘러보기 <span class="ar">→</span></a>
@@ -474,66 +476,6 @@ vetax-style) ===== */
           <li>숫자 변경효과 전체 자동 재검증</li>
           <li>감사 대응 이력 축적</li>
         </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== REVIEWS (vetax-style, seamless marquee) ===== -->
-<section class="revsec" id="reviews">
-  <div class="revwrap">
-    <div class="revrow">
-      <div class="revtrack revtrack--l">
-      <figure class="rev">
-        <p class="rev__ti">감사 준비 시간이 확 줄었어요</p>
-        <blockquote>매년 요청자료를 처음부터 만들었는데, 이제는 준비된 자료를 확인만 하면 됩니다. 밤새 엑셀 붙잡던 시간이 사라졌어요.</blockquote>
-        <figcaption>제조업 A사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev">
-        <p class="rev__ti">작년 기록이 남아 있어 든든합니다</p>
-        <blockquote>감사인이 "작년엔 어떻게 하셨죠?" 물어도 검색 한 번이면 끝. 담당자가 바뀌어도 대응이 흔들리지 않습니다.</blockquote>
-        <figcaption>중견기업 B사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev">
-        <p class="rev__ti">결산과 감사 준비가 한 번에</p>
-        <blockquote>1~3월이 늘 지옥이었는데, 결산하면서 감사 자료가 같이 만들어지니 야근이 눈에 띄게 줄었습니다.</blockquote>
-        <figcaption>서비스업 C사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev">
-        <p class="rev__ti">숫자가 바뀌어도 다시 안 만듭니다</p>
-        <blockquote>수정사항이 나올 때마다 처음부터 다시 하던 게 번거로웠는데, 연결된 자료가 알아서 갱신되니 한결 수월합니다.</blockquote>
-        <figcaption>유통업 D사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev">
-        <p class="rev__ti">비회계사도 충분히 씁니다</p>
-        <blockquote>팀에 회계사가 없어 불안했는데, 화면이 감사 순서대로 안내해주니 무엇을 준비할지 명확해졌습니다.</blockquote>
-        <figcaption>IT기업 E사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev" aria-hidden="true">
-        <p class="rev__ti">감사 준비 시간이 확 줄었어요</p>
-        <blockquote>매년 요청자료를 처음부터 만들었는데, 이제는 준비된 자료를 확인만 하면 됩니다. 밤새 엑셀 붙잡던 시간이 사라졌어요.</blockquote>
-        <figcaption>제조업 A사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev" aria-hidden="true">
-        <p class="rev__ti">작년 기록이 남아 있어 든든합니다</p>
-        <blockquote>감사인이 "작년엔 어떻게 하셨죠?" 물어도 검색 한 번이면 끝. 담당자가 바뀌어도 대응이 흔들리지 않습니다.</blockquote>
-        <figcaption>중견기업 B사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev" aria-hidden="true">
-        <p class="rev__ti">결산과 감사 준비가 한 번에</p>
-        <blockquote>1~3월이 늘 지옥이었는데, 결산하면서 감사 자료가 같이 만들어지니 야근이 눈에 띄게 줄었습니다.</blockquote>
-        <figcaption>서비스업 C사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev" aria-hidden="true">
-        <p class="rev__ti">숫자가 바뀌어도 다시 안 만듭니다</p>
-        <blockquote>수정사항이 나올 때마다 처음부터 다시 하던 게 번거로웠는데, 연결된 자료가 알아서 갱신되니 한결 수월합니다.</blockquote>
-        <figcaption>유통업 D사 · 회계팀</figcaption>
-      </figure>
-      <figure class="rev" aria-hidden="true">
-        <p class="rev__ti">비회계사도 충분히 씁니다</p>
-        <blockquote>팀에 회계사가 없어 불안했는데, 화면이 감사 순서대로 안내해주니 무엇을 준비할지 명확해졌습니다.</blockquote>
-        <figcaption>IT기업 E사 · 회계팀</figcaption>
-      </figure>
       </div>
     </div>
   </div>
@@ -573,6 +515,69 @@ vetax-style) ===== */
       <p class="cause__t">문제는 사람이 아니라, <em>체계의 부재</em>.</p>
       <p class="cause__d">담당자의 기억으로 엑셀을 만드는 구조에서는 경험이 쌓이지 않지만,<br />Auditfy가 있다면 감사 대응은 회사의 자산이 됩니다.</p>
     </div>
+  </div>
+</section>
+
+<!-- ===== SOLUTION (dramatic before/after) ===== -->
+<section class="sec sec--tight" id="impact">
+  <div class="wrap">
+    <div class="center rv" style="max-width:760px; margin:0 auto">
+      <span class="kick">Before &amp; After</span>
+      <h2 class="h2" style="margin-top:16px; font-weight:700">감사를 두려워하는 회사와<br />활용하는 회사의 차이는 <span class="j">준비</span>입니다.</h2>
+    </div>
+
+    <div class="pair rv stg">
+
+      <div class="pair__row">
+        <div class="pair__b">
+          <b>금요일 오후, 요청 메일이 와야 움직입니다</b>
+          <p>리스트를 받고 나서야 자료를 만들기 시작합니다.</p>
+        </div>
+        <div class="pair__ar" aria-hidden="true"><i></i></div>
+        <div class="pair__a">
+          <b>요청 메일이 오기 전에, 체크리스트가 준비됩니다</b>
+          <p>회사 상황에 맞는 요청자료가 미리 구성됩니다. 감사인의 자료 요청 메일이 오면 빠진 항목만 확인하면 끝입니다.</p>
+        </div>
+      </div>
+
+      <div class="pair__row">
+        <div class="pair__b">
+          <b>기록이 없으니, 기억에 의존합니다</b>
+          <p>작년 파일은 찾는 데 반나절, 이해하는 데 또 반나절입니다.</p>
+        </div>
+        <div class="pair__ar" aria-hidden="true"><i></i></div>
+        <div class="pair__a">
+          <b>작년 대응이 그대로 남아 있습니다</b>
+          <p>요청자료·질의·답변이 연도별로 쌓여 검색 한 번으로 확인됩니다.</p>
+        </div>
+      </div>
+
+      <div class="pair__row">
+        <div class="pair__b">
+          <b>결산 따로, 감사 준비 따로</b>
+          <p>같은 숫자로 두 번 일합니다.</p>
+        </div>
+        <div class="pair__ar" aria-hidden="true"><i></i></div>
+        <div class="pair__a">
+          <b>결산과 동시에 감사 준비가 진행됩니다.</b>
+          <p>결산 자료를 등록하는 것만으로 감사 대응 자료가 함께 만들어집니다.</p>
+        </div>
+      </div>
+
+      <div class="pair__row">
+        <div class="pair__b">
+          <b>숫자 하나 바뀌면, 처음부터 다시</b>
+          <p>수정사항이 나올 때마다 관련 자료를 다시 만듭니다.</p>
+        </div>
+        <div class="pair__ar" aria-hidden="true"><i></i></div>
+        <div class="pair__a">
+          <b>숫자가 바뀌면, 연결된 자료가 함께 바뀝니다</b>
+          <p>본문·주석·관련 산출물이 연결되어 반복 입력과 재대조가 사라집니다.</p>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </section>
 
@@ -694,66 +699,63 @@ vetax-style) ===== */
   </div>
 </section>
 
-<!-- ===== SOLUTION (dramatic before/after) ===== -->
-<section class="sec sec--tight" id="impact">
-  <div class="wrap">
-    <div class="center rv" style="max-width:760px; margin:0 auto">
-      <span class="kick">Before &amp; After</span>
-      <h2 class="h2" style="margin-top:16px; font-weight:700">감사를 두려워하는 회사와<br />활용하는 회사의 차이는 <span class="j">준비</span>입니다.</h2>
+<!-- ===== REVIEWS (vetax-style, seamless marquee) ===== -->
+<section class="revsec" id="reviews">
+  <div class="revwrap">
+    <div class="revrow">
+      <div class="revtrack revtrack--l">
+      <figure class="rev">
+        <p class="rev__ti">감사 준비 시간이 확 줄었어요</p>
+        <blockquote>매년 요청자료를 처음부터 만들었는데, 이제는 준비된 자료를 확인만 하면 됩니다. 밤새 엑셀 붙잡던 시간이 사라졌어요.</blockquote>
+        <figcaption>제조업 A사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev">
+        <p class="rev__ti">작년 기록이 남아 있어 든든합니다</p>
+        <blockquote>감사인이 "작년엔 어떻게 하셨죠?" 물어도 검색 한 번이면 끝. 담당자가 바뀌어도 대응이 흔들리지 않습니다.</blockquote>
+        <figcaption>중견기업 B사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev">
+        <p class="rev__ti">결산과 감사 준비가 한 번에</p>
+        <blockquote>1~3월이 늘 지옥이었는데, 결산하면서 감사 자료가 같이 만들어지니 야근이 눈에 띄게 줄었습니다.</blockquote>
+        <figcaption>서비스업 C사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev">
+        <p class="rev__ti">숫자가 바뀌어도 다시 안 만듭니다</p>
+        <blockquote>수정사항이 나올 때마다 처음부터 다시 하던 게 번거로웠는데, 연결된 자료가 알아서 갱신되니 한결 수월합니다.</blockquote>
+        <figcaption>유통업 D사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev">
+        <p class="rev__ti">비회계사도 충분히 씁니다</p>
+        <blockquote>팀에 회계사가 없어 불안했는데, 화면이 감사 순서대로 안내해주니 무엇을 준비할지 명확해졌습니다.</blockquote>
+        <figcaption>IT기업 E사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev" aria-hidden="true">
+        <p class="rev__ti">감사 준비 시간이 확 줄었어요</p>
+        <blockquote>매년 요청자료를 처음부터 만들었는데, 이제는 준비된 자료를 확인만 하면 됩니다. 밤새 엑셀 붙잡던 시간이 사라졌어요.</blockquote>
+        <figcaption>제조업 A사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev" aria-hidden="true">
+        <p class="rev__ti">작년 기록이 남아 있어 든든합니다</p>
+        <blockquote>감사인이 "작년엔 어떻게 하셨죠?" 물어도 검색 한 번이면 끝. 담당자가 바뀌어도 대응이 흔들리지 않습니다.</blockquote>
+        <figcaption>중견기업 B사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev" aria-hidden="true">
+        <p class="rev__ti">결산과 감사 준비가 한 번에</p>
+        <blockquote>1~3월이 늘 지옥이었는데, 결산하면서 감사 자료가 같이 만들어지니 야근이 눈에 띄게 줄었습니다.</blockquote>
+        <figcaption>서비스업 C사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev" aria-hidden="true">
+        <p class="rev__ti">숫자가 바뀌어도 다시 안 만듭니다</p>
+        <blockquote>수정사항이 나올 때마다 처음부터 다시 하던 게 번거로웠는데, 연결된 자료가 알아서 갱신되니 한결 수월합니다.</blockquote>
+        <figcaption>유통업 D사 · 회계팀</figcaption>
+      </figure>
+      <figure class="rev" aria-hidden="true">
+        <p class="rev__ti">비회계사도 충분히 씁니다</p>
+        <blockquote>팀에 회계사가 없어 불안했는데, 화면이 감사 순서대로 안내해주니 무엇을 준비할지 명확해졌습니다.</blockquote>
+        <figcaption>IT기업 E사 · 회계팀</figcaption>
+      </figure>
+      </div>
     </div>
-
-    <div class="pair rv stg">
-
-      <div class="pair__row">
-        <div class="pair__b">
-          <b>금요일 오후, 요청 메일이 와야 움직입니다</b>
-          <p>리스트를 받고 나서야 자료를 만들기 시작합니다.</p>
-        </div>
-        <div class="pair__ar" aria-hidden="true"><i></i></div>
-        <div class="pair__a">
-          <b>요청 메일이 오기 전에, 체크리스트가 준비됩니다</b>
-          <p>회사 상황에 맞는 요청자료가 미리 구성됩니다. 감사인의 자료 요청 메일이 오면 빠진 항목만 확인하면 끝입니다.</p>
-        </div>
-      </div>
-
-      <div class="pair__row">
-        <div class="pair__b">
-          <b>기록이 없으니, 기억에 의존합니다</b>
-          <p>작년 파일은 찾는 데 반나절, 이해하는 데 또 반나절입니다.</p>
-        </div>
-        <div class="pair__ar" aria-hidden="true"><i></i></div>
-        <div class="pair__a">
-          <b>작년 대응이 그대로 남아 있습니다</b>
-          <p>요청자료·질의·답변이 연도별로 쌓여 검색 한 번으로 확인됩니다.</p>
-        </div>
-      </div>
-
-      <div class="pair__row">
-        <div class="pair__b">
-          <b>결산 따로, 감사 준비 따로</b>
-          <p>같은 숫자로 두 번 일합니다.</p>
-        </div>
-        <div class="pair__ar" aria-hidden="true"><i></i></div>
-        <div class="pair__a">
-          <b>결산과 동시에 감사 준비가 진행됩니다.</b>
-          <p>결산 자료를 등록하는 것만으로 감사 대응 자료가 함께 만들어집니다.</p>
-        </div>
-      </div>
-
-      <div class="pair__row">
-        <div class="pair__b">
-          <b>숫자 하나 바뀌면, 처음부터 다시</b>
-          <p>수정사항이 나올 때마다 관련 자료를 다시 만듭니다.</p>
-        </div>
-        <div class="pair__ar" aria-hidden="true"><i></i></div>
-        <div class="pair__a">
-          <b>숫자가 바뀌면, 연결된 자료가 함께 바뀝니다</b>
-          <p>본문·주석·관련 산출물이 연결되어 반복 입력과 재대조가 사라집니다.</p>
-        </div>
-      </div>
-
-    </div>
-
   </div>
 </section>
 
