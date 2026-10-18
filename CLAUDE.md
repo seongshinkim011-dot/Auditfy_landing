@@ -19,12 +19,15 @@
 Pricing 섹션은 삭제됨.
 
 ### /free — 감사보고서 무료 변환 퍼널 (2026-10-18)
-`free/` 에 컨셉 일곱 장(index 심플이 대표 · fancy · retro · gungseo · newspaper · terminal · receipt — 나머지 여섯은 noindex, canonical 은 /free/).
-원본은 「감사보고서 변환」 저장소에서 만들었다. 신청은 Web3Forms 가 아니라 **Apps Script → 사장님 구글 시트 「감사보고서 변환 신청」**(주소는 `free/config.js` 한 곳), 숨은 `page` 칸으로 컨셉을 구분한다.
+`free/` 에 컨셉 일곱 장(index 심플이 대표 · fancy · retro · gungseo · newspaper · terminal · receipt — 나머지 여섯은 noindex, canonical 은 /free/)과
+디자인 모음 `free/all.html`(noindex · 공유용). 주소는 `vercel.json` cleanUrls 로 `.html` 없이 — /free/retro, /free/all.
+신청은 Web3Forms 가 아니라 **Apps Script → 사장님 구글 시트 「감사보고서 변환 신청」**(주소는 `free/config.js` 한 곳), 숨은 `page` 칸으로 컨셉을 구분한다.
+스크립트 원본·운영 안내는 `docs/free/`(`.vercelignore` 로 배포 제외).
 링크드인 버튼은 익명 원칙 때문에 뺐다. 메뉴 「무료 변환」·배너 「받으실 엑셀 파일 미리 보기」가 /free 로, /free 바닥글이 / 로 잇는다.
 ⚠ 본 페이지 #apply(Web3Forms)와 /free(Apps Script) 두 곳에서 신청을 받는다 — 하나로 모을지 미정.
 
 ## 배포
+로컬 상설 사본: `~/Claude/Projects/랜딩페이지/` — 랜딩(메인·/free) 수정은 여기서만 한다(2026-10-18 사장님 지시).
 GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **https://www.auditfy.co.kr** (2026-10-18 연결 · 가비아 DNS: A `@` 216.198.79.1 · CNAME `www` 166c97bc31a85d92.vercel-dns-017.com. · auditfy.co.kr 은 www 로 308 · 예전 주소 auditfy-landing.vercel.app 도 계속 열림)
 폼 전송: Web3Forms (access key는 `index.html` 내 `W3F_ACCESS_KEY`)
 2026-09-08 실전송 검증 완료 — 제목 `[Auditfy] 무료 진단 신청`, 발신 `Auditfy 랜딩페이지`,
