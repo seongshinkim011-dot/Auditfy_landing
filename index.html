@@ -919,8 +919,10 @@ vetax-style) ===== */
               </div>
             </div>
             <div class="field"><label for="f_co">회사명</label><input id="f_co" type="text" placeholder="예: 주식회사 ABC" autocomplete="organization" /></div>
+            <div class="field"><label for="f_nm">담당자</label><input id="f_nm" type="text" placeholder="예: 김민수" autocomplete="name" /></div>
+            <div class="field"><label for="f_ti">직책</label><input id="f_ti" type="text" placeholder="예: 회계팀장" autocomplete="organization-title" /></div>
             <div class="field"><label for="f_em">이메일</label><input id="f_em" type="email" placeholder="name@company.co.kr" autocomplete="email" /></div>
-            <div class="field"><label for="f_ph">연락처 <span style="color:var(--mut);font-weight:500">(선택)</span></label><input id="f_ph" type="tel" placeholder="010-0000-0000" autocomplete="tel" /></div>
+            <div class="field"><label for="f_ph">연락처</label><input id="f_ph" type="tel" placeholder="010-0000-0000" autocomplete="tel" /></div>
             <div class="consent">
               <label class="consent__box"><input type="checkbox" id="f_agree" /><span><i class="req">[필수]</i> 개인정보 수집·이용에 동의합니다.</span></label>
               <button type="button" class="consent__link js-privacy">자세히 보기</button>
@@ -976,13 +978,13 @@ vetax-style) ===== */
 
 <script>
 (function(){
-  // ── 진단 신청 폼 → Web3Forms 전송 ──
-  // 알림이 도착하는 메일함은 Access Key에 묶여 있다 — 폼 필드로는 바꿀 수 없고,
-  // 추가 수신(ccemail)은 Web3Forms 유료 플랜 전용이다.
-  // 수신처를 옮기려면 그 주소로 Access Key를 새로 발급받아 아래 한 줄만 교체한다.
-  // 현재 수신함: seongshinkim011@gmail.com
-  var W3F_ACCESS_KEY = "074699da-f81a-43b8-8410-0f420d395643";
-  var CONTACT_MAIL   = "hello@auditfy.co.kr";
+  // ── 진단 신청 폼 → Apps Script(구글 시트) 전송 ──
+  // /free 퍼널과 같은 엔드포인트를 쓴다. 신청은 시트「신청」에 쌓이고 접수 메일이 자동 발송된다.
+  // ★ 주소를 바꾸면 free/config.js 의 endpoint 도 반드시 같이 고칠 것.
+  // 서버가 요구하는 필수 항목: company, name, title, email, phone(숫자 9자 이상), agree=yes
+  // page 가 '메인'으로 시작하면 Apps Script 가 메인 랜딩용 접수 메일로 분기한다.
+  var ENDPOINT     = 'https://script.google.com/macros/s/AKfycbypZyUrwwd5VQ8cjIvS2PhTZItQfD8hQB63uRkhJtlbdV7nt3A5Kl8k88-3rHp91Qo/exec';
+  var CONTACT_MAIL = "hello@auditfy.co.kr";
   var form=document.getElementById('form');
   if(form){
     var subBtn=document.getElementById('submit');
@@ -1013,44 +1015,42 @@ vetax-style) ===== */
     };
     var submitForm=function(){
       clearErr();
-      var co=byId('f_co').value.trim(), em=byId('f_em').value.trim(), ph=byId('f_ph').value.trim();
+      var co=byId('f_co').value.trim(), nm=byId('f_nm').value.trim(), ti=byId('f_ti').value.trim(),
+          em=byId('f_em').value.trim(), ph=byId('f_ph').value.trim();
       var svc=[];
-      if(byId('f_svc1').checked) svc.push('감사보고서 양식 롤포워드 (무료)');
-      if(byId('f_svc2').checked) svc.push('감사 준비 상태 진단 (무료)');
-      window.__afItems = svc.join(' / ');
+      if(byId('f_svc1').checked) svc.push('롤포워드');
+      if(byId('f_svc2').checked) svc.push('진단');
+      window.__afItems = svc.join('+');
       if(!svc.length){ showErr('신청 항목을 하나 이상 선택해 주세요.'); return; }
       var bad=false;
-      [['f_co',co],['f_em',em]].forEach(function(p){
+      [['f_co',co],['f_nm',nm],['f_ti',ti],['f_em',em],['f_ph',ph]].forEach(function(p){
         var ok=!!p[1]; byId(p[0]).style.borderColor=ok?'':'#C93A3A'; if(!ok) bad=true;
       });
-      if(bad){ showErr('회사명과 이메일을 입력해 주세요.'); return; }
+      if(bad){ showErr('회사명·담당자·직책·이메일·연락처를 모두 입력해 주세요.'); return; }
       if(!emailOK(em)){ byId('f_em').style.borderColor='#C93A3A'; showErr('이메일 형식을 확인해 주세요.'); return; }
+      if((ph.match(/\d/g)||[]).length < 9){ byId('f_ph').style.borderColor='#C93A3A'; showErr('연락처를 확인해 주세요.'); return; }
       if(!byId('f_agree').checked){ showErr('개인정보 수집·이용에 동의해 주세요.'); return; }
-      var hp=byId('f_hp'); if(hp && hp.checked){ doneOK(); return; }
-      if(W3F_ACCESS_KEY==="YOUR_ACCESS_KEY"){
-        console.warn('[Auditfy] Web3Forms Access Key 미설정 — 실제 전송 없이 접수 화면만 표시합니다.');
-        doneOK(); return;
-      }
+
+      var hp=byId('f_hp');
       var orig=subBtn.innerHTML; subBtn.disabled=true; subBtn.textContent='전송 중…';
-      fetch('https://api.web3forms.com/submit',{
+      fetch(ENDPOINT,{
         method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body:JSON.stringify({
-          access_key:W3F_ACCESS_KEY,
-          subject:'[Auditfy] 무료 신청 — '+svc.join(' / '),
-          from_name:'Auditfy 랜딩페이지',
-          replyto:em,
-          '신청항목':svc.join(' / '), '회사명':co, '이메일':em, '연락처':ph, email:em
+        body:new URLSearchParams({
+          company:co, name:nm, title:ti, email:em, phone:ph,
+          page:'메인 · '+svc.join('+'),          // Apps Script 가 이 값으로 접수 메일을 분기한다
+          website:(hp && hp.checked) ? 'bot' : '', // 스팸 봇이 채우는 숨은 칸
+          agree:'yes'
         })
       }).then(function(r){return r.json();}).then(function(d){
-        if(d && d.success){ doneOK(); }
-        else { subBtn.disabled=false; subBtn.innerHTML=orig; showSendErr('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.'); }
+        if(d && d.ok){ doneOK(); }
+        else { subBtn.disabled=false; subBtn.innerHTML=orig; showSendErr('신청을 보내지 못했습니다. 입력 내용을 확인해 주세요.'); }
       }).catch(function(){
         subBtn.disabled=false; subBtn.innerHTML=orig; showSendErr('네트워크 오류로 전송하지 못했습니다. 잠시 후 다시 시도해 주세요.');
       });
     };
+
     subBtn.addEventListener('click', submitForm);
-    ['f_co','f_em','f_ph'].forEach(function(id){
+    ['f_co','f_nm','f_ti','f_em','f_ph'].forEach(function(id){
       var el=byId(id); if(el) el.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submitForm(); } });
     });
   }
