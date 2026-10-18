@@ -57,6 +57,17 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **http
 `python3 -m http.server 8899` 후 http://127.0.0.1:8899
 
 ## 열려있는 항목
+- **검색·AI 노출 자산** (2026-10-18 추가).
+  `index.html` 과 `free/index.html` 에 JSON-LD(@graph) — Organization·WebSite·WebPage·Service,
+  메인에는 FAQPage 8문항까지. **FAQ 문구를 고치면 JSON-LD 의 FAQPage 도 같이 고칠 것**
+  (본문과 구조화 데이터가 다르면 구글이 리치 결과를 내리거나 수동 조치를 줄 수 있다).
+  `robots.txt` 는 GPTBot·ClaudeBot·PerplexityBot·Google-Extended 등 AI 크롤러를 **명시적으로 허용**한다.
+  차단하려면 해당 그룹의 Allow 를 Disallow 로 바꾼다. Google AI Overviews 는 일반 Googlebot 소관이라
+  Google-Extended 를 막아도 계속 노출된다.
+  `llms.txt` 는 제안 단계 규약이라 채택률이 낮다 — 비용이 0이라 넣어 둔 것이지 효과를 기대한 게 아니다.
+  `404.html` 은 Vercel 정적 배포가 자동으로 집어간다.
+  **사이트맵 lastmod 는 큰 수정 때 같이 갱신할 것** (현재 2026-10-18).
+  `/free` 변형 7개는 `noindex, follow` + canonical `/free/` 라 사이트맵에서 일부러 뺐다.
 - **메일: ImprovMX 무료 포워딩** (2026-10-18 설정). hello@auditfy.co.kr →
   seongshinkim011@gmail.com 으로 전달. catch-all(*@auditfy.co.kr)이라 모든 주소가 전달됨.
   **무료 플랜은 수신 전용** — 발신은 여전히 개인 Gmail에서 나간다.

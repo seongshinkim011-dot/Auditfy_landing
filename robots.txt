@@ -1,4 +1,56 @@
+# ── 일반 검색엔진 ──
 User-agent: *
+Allow: /
+
+# ── AI 검색·답변 엔진 ──
+# 아래는 모두 명시적 허용이다. 인지도를 쌓는 단계이므로 노출을 우선한다.
+# 참고: Google AI Overviews 노출은 일반 Googlebot 이 담당하며 Google-Extended 와 무관하다.
+#       Google-Extended 를 막아도 AI Overviews 에는 계속 노출된다(학습에만 영향).
+# 차단으로 돌리려면 해당 그룹의 Allow 를 Disallow 로 바꾼다.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://www.auditfy.co.kr/sitemap.xml
