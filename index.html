@@ -208,6 +208,7 @@ p{margin:0}
 .consent__link{background:none; border:0; padding:0; color:var(--blue); font:inherit; font-weight:500; text-decoration:underline; text-underline-offset:2px; cursor:pointer; white-space:nowrap}
 .form .btn{width:100%; margin-top:16px}
 .ferror{color:var(--red); font-size:.875rem; font-weight:500; text-align:center; margin:12px 0 0}
+.ferror__mail{color:var(--red); font-weight:700; text-decoration:underline; text-underline-offset:2px}
 .fnote{font-size:.8125rem; color:var(--mut); text-align:center; margin-top:12px; font-weight:500}
 .form__ok{display:none; text-align:center; padding:30px 0 22px}
 .form__ok .big{width:64px; height:64px; border-radius:50%; background:var(--green-soft); color:var(--green); display:grid; place-items:center; font-size:1.5rem; font-weight:500; margin:0 auto 18px}
@@ -976,7 +977,12 @@ vetax-style) ===== */
 <script>
 (function(){
   // ── 진단 신청 폼 → Web3Forms 전송 ──
+  // 알림이 도착하는 메일함은 Access Key에 묶여 있다 — 폼 필드로는 바꿀 수 없고,
+  // 추가 수신(ccemail)은 Web3Forms 유료 플랜 전용이다.
+  // 수신처를 옮기려면 그 주소로 Access Key를 새로 발급받아 아래 한 줄만 교체한다.
+  // 현재 수신함: seongshinkim011@gmail.com
   var W3F_ACCESS_KEY = "074699da-f81a-43b8-8410-0f420d395643";
+  var CONTACT_MAIL   = "hello@auditfy.co.kr";
   var form=document.getElementById('form');
   if(form){
     var subBtn=document.getElementById('submit');
@@ -987,6 +993,19 @@ vetax-style) ===== */
       if(errEl){errEl.textContent=m; errEl.hidden=false;}
     };
     var clearErr=function(){ if(errEl){errEl.hidden=true;} };
+    // 전송 자체가 실패한 경우엔 막다른 길로 두지 않고 메일 주소를 함께 띄운다
+    var showSendErr=function(m){
+      if(window.afTrack) window.afTrack('form_error', {reason:m});
+      if(!errEl) return;
+      errEl.textContent='';
+      errEl.appendChild(document.createTextNode(m+' 계속 안 되면 '));
+      var a=document.createElement('a');
+      a.href='mailto:'+CONTACT_MAIL+'?subject='+encodeURIComponent('[Auditfy] 무료 신청');
+      a.className='ferror__mail'; a.textContent=CONTACT_MAIL;
+      errEl.appendChild(a);
+      errEl.appendChild(document.createTextNode('로 보내 주셔도 됩니다.'));
+      errEl.hidden=false;
+    };
     var emailOK=function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); };
     var doneOK=function(){
       if(window.afTrack) window.afTrack('form_submit', {items:(window.__afItems||'')});
@@ -1020,13 +1039,14 @@ vetax-style) ===== */
           access_key:W3F_ACCESS_KEY,
           subject:'[Auditfy] 무료 신청 — '+svc.join(' / '),
           from_name:'Auditfy 랜딩페이지',
+          replyto:em,
           '신청항목':svc.join(' / '), '회사명':co, '이메일':em, '연락처':ph, email:em
         })
       }).then(function(r){return r.json();}).then(function(d){
         if(d && d.success){ doneOK(); }
-        else { subBtn.disabled=false; subBtn.innerHTML=orig; showErr('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.'); }
+        else { subBtn.disabled=false; subBtn.innerHTML=orig; showSendErr('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.'); }
       }).catch(function(){
-        subBtn.disabled=false; subBtn.innerHTML=orig; showErr('네트워크 오류로 전송하지 못했습니다. 잠시 후 다시 시도해 주세요.');
+        subBtn.disabled=false; subBtn.innerHTML=orig; showSendErr('네트워크 오류로 전송하지 못했습니다. 잠시 후 다시 시도해 주세요.');
       });
     };
     subBtn.addEventListener('click', submitForm);

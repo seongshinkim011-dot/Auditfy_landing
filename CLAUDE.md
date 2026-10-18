@@ -64,6 +64,35 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **http
   또는 메일함 서비스 + Gmail "다른 주소에서 메일 보내기").
   가비아 DNS: MX 2개(mx1/mx2.improvmx.com) · SPF · DMARC(p=none) 설정 완료.
   DKIM은 발신을 안 하므로 미설정. 웹용 A(216.198.79.1)·CNAME(www→vercel)은 그대로 유지.
+- **Gmail 분류 체계** (2026-10-18 설정, seongshinkim011@gmail.com).
+  라벨 4종: `Auditfy` / `Auditfy/01 문의`(초록) / `Auditfy/02 무료진단 신청`(주황) /
+  `Auditfy/03 운영·인프라`(회색).
+  Gmail 필터 3개 — 모두 소급 적용함:
+  1. `to:(hello@auditfy.co.kr)` → 01 문의 라벨 + 중요 표시
+  2. `from:(improvmx.com OR vercel.com OR sc-noreply@google.com)` → 03 운영·인프라 라벨
+  3. `subject:([감사보고서 변환])` → 02 무료진단 신청 라벨 + 별표
+  4. `from:(web3forms.com)` → 02 무료진단 신청 라벨 + 별표 + 중요 표시 +
+     **절대 스팸으로 신고하지 않음** + **기본(Primary) 카테고리로 강제 분류**
+  3번은 /free 퍼널의 Apps Script 자동응답 제목 접두사에 의존한다 —
+  **Apps Script에서 제목 형식을 바꾸면 필터가 깨지므로 같이 수정할 것.**
+  MCP로는 필터를 만들 수 없어 브라우저(Chrome)로 직접 설정했다.
+  받은편지함은 건너뛰지 않게 뒀다(ImprovMX 장애 알림을 놓치면 hello@가 조용히 죽기 때문).
+- **[중요] 랜딩페이지 폼 리드는 web3forms.com에서 온다.** index.html의 폼은
+  `api.web3forms.com/submit`으로 전송되고(W3F_ACCESS_KEY), 알림은
+  `notify+<랜덤>@web3forms.com` 발신으로 도착한다. 발신 주소가 매번 달라서
+  주소 단위 필터로는 못 잡고 도메인으로 잡아야 한다.
+  **2026-09-08 신청 건이 실제로 '프로모션' 카테고리로 분류돼 있었다** —
+  진짜 리드가 묻힐 수 있는 경로였다. 위 4번 필터가 이걸 막는다.
+  Web3Forms 계정이나 Access Key를 바꾸면 필터도 같이 점검할 것.
+  (현재까지 들어온 폼 제출 6건은 전부 제작자 본인 테스트: 회사명 '테스트/가나다/오딧파이')
+- **받은편지함 대청소** (2026-10-18). 소셜 490개 + 프로모션 245개 대화를 보관 처리.
+  대화 1,159개·미읽음 637 → 대화 424개·미읽음 1. **삭제가 아니라 보관**이므로
+  전체보관함에 그대로 있고 검색도 된다. 남은 424개는 대부분 '업데이트' 카테고리(381개).
+- **발신 표시 이름은 아직 안 바꿨다** (2026-10-18 제작자가 보류). Gmail 표시 이름은
+  계정 전체에 적용되므로 개인 메일 발신자명까지 바뀐다. 다만 현재는 실명이 노출되는 상태라
+  겸업금지·독립성 때문에 익명 유지가 필요한 원칙과 어긋난다. 표시 이름만 바꿔도
+  주소는 개인 Gmail이라 `Auditfy <seongshinkim011@gmail.com>` 불일치가 남는다 —
+  아웃바운드 전에 발신 주소까지 함께 해결할 것
 - **Vercel 커스텀 이벤트는 Pro 플랜에서만 기록된다.** 2026-09-10 이벤트 6종(cta_click,
   section_view, demo_play, faq_open, form_submit, form_error) 삽입 완료. Hobby 플랜이면
   전송은 되나 대시보드에 안 쌓이므로 플랜 확인 필요. 이벤트에는 개인정보(회사명·이메일·연락처)를
