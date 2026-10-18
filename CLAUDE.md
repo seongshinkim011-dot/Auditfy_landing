@@ -81,8 +81,10 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **http
   MCP로는 필터를 만들 수 없어 브라우저(Chrome)로 직접 설정했다.
   받은편지함은 건너뛰지 않게 뒀다(ImprovMX 장애 알림을 놓치면 hello@가 조용히 죽기 때문).
 - **[중요] 신청 폼은 메인·/free 모두 같은 Apps Script 하나로 모인다** (2026-10-18 통합).
-  엔드포인트는 `free/config.js` 의 endpoint 와 `index.html` 의 ENDPOINT **두 곳에 같은 값**이 들어있다 —
-  주소를 바꾸면 반드시 둘 다 고칠 것.
+  **엔드포인트는 루트 `/config.js` 한 곳에만 있다** (2026-10-18 통합). 메인 `index.html` 과
+  `/free` 일곱 페이지가 모두 `<script src="/config.js">` 로 같은 파일을 읽는다 —
+  주소가 바뀌면 이 한 줄만 고치면 된다. 반대로 **이 파일이 안 열리면 여덟 페이지의 폼이 전부 멈춘다.**
+  `vercel.json` 의 cleanUrls 는 .js 에 영향 없음. 주소가 비면 폼이 조용히 실패하지 않고 안내 문구를 띄운다.
   신청은 구글 시트「신청」에 행으로 쌓이고(HEADER: 신청일시·회사명·담당자·직책·이메일·연락처·유입 페이지·상태·발송일·메모),
   신청자에게 접수 메일이, 제작자에게 `[새 신청]` 알림이 자동 발송된다.
   **서버 필수 항목: company, name, title, email, phone(숫자 9자 이상), agree=yes** — 하나라도 비면 `{ok:false,error:'invalid'}`.

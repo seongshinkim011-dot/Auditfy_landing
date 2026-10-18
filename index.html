@@ -976,14 +976,15 @@ vetax-style) ===== */
   </div>
 </div>
 
+<script src="/config.js"></script>
 <script>
 (function(){
   // ── 진단 신청 폼 → Apps Script(구글 시트) 전송 ──
-  // /free 퍼널과 같은 엔드포인트를 쓴다. 신청은 시트「신청」에 쌓이고 접수 메일이 자동 발송된다.
-  // ★ 주소를 바꾸면 free/config.js 의 endpoint 도 반드시 같이 고칠 것.
+  // 주소는 /config.js 한 곳에만 있다 (/free 일곱 페이지도 같은 파일을 읽는다).
+  // 신청은 시트「신청」에 쌓이고 신청자에게 접수 메일이 자동 발송된다.
   // 서버가 요구하는 필수 항목: company, name, title, email, phone(숫자 9자 이상), agree=yes
   // page 가 '메인'으로 시작하면 Apps Script 가 메인 랜딩용 접수 메일로 분기한다.
-  var ENDPOINT     = 'https://script.google.com/macros/s/AKfycbypZyUrwwd5VQ8cjIvS2PhTZItQfD8hQB63uRkhJtlbdV7nt3A5Kl8k88-3rHp91Qo/exec';
+  var ENDPOINT     = (window.LANDING_CONFIG || {}).endpoint || '';
   var CONTACT_MAIL = "hello@auditfy.co.kr";
   var form=document.getElementById('form');
   if(form){
@@ -1030,6 +1031,8 @@ vetax-style) ===== */
       if(!emailOK(em)){ byId('f_em').style.borderColor='#C93A3A'; showErr('이메일 형식을 확인해 주세요.'); return; }
       if((ph.match(/\d/g)||[]).length < 9){ byId('f_ph').style.borderColor='#C93A3A'; showErr('연락처를 확인해 주세요.'); return; }
       if(!byId('f_agree').checked){ showErr('개인정보 수집·이용에 동의해 주세요.'); return; }
+
+      if(!ENDPOINT){ showSendErr('신청 주소가 연결되지 않았습니다.'); return; }
 
       var hp=byId('f_hp');
       var orig=subBtn.innerHTML; subBtn.disabled=true; subBtn.textContent='전송 중…';
