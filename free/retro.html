@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>감사보고서 무료 변환 — Auditfy</title>
+<meta name="description" content="2025년 감사보고서 검증 엑셀과 2026년 재무제표 및 주석 엑셀 초안을 무료로 만들어 드립니다.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@2.39.3/dist/galmuri.css">
+<style>
+  :root {
+    --desk: #008080;
+    --face: #c0c0c0;
+    --light: #dfdfdf;
+    --hi: #ffffff;
+    --shadow: #808080;
+    --dark: #000000;
+    --navy: #000080;
+    --navy2: #1084d0;
+    --ink: #000;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--desk); color: var(--ink);
+    font-family: Galmuri11, "Apple SD Gothic Neo", "Malgun Gothic", monospace;
+    font-size: 16px; line-height: 1.6; word-break: keep-all; padding-bottom: 64px;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 44px 0; }
+  h1, h2, h3 { margin: 0; font-weight: 700; }
+  a { color: inherit; }
+
+  /* ── 입체 테두리 ── */
+  .raised { background: var(--face); border: 2px solid; border-color: var(--hi) var(--dark) var(--dark) var(--hi); box-shadow: inset -1px -1px var(--shadow), inset 1px 1px var(--light); }
+  .sunken { border: 2px solid; border-color: var(--shadow) var(--hi) var(--hi) var(--shadow); box-shadow: inset 1px 1px var(--dark), inset -1px -1px var(--light); }
+  .btn {
+    font-family: inherit; font-size: 16px; font-weight: 700; color: #000; cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 10px 22px; background: var(--face);
+    border: 2px solid; border-color: var(--hi) var(--dark) var(--dark) var(--hi); box-shadow: inset -1px -1px var(--shadow), inset 1px 1px var(--light);
+  }
+  .btn:active { border-color: var(--dark) var(--hi) var(--hi) var(--dark); box-shadow: inset 1px 1px var(--shadow); padding: 11px 21px 9px 23px; }
+  .btn:focus-visible { outline: 1px dotted #000; outline-offset: -6px; }
+  .btn.big { font-size: 20px; padding: 14px 30px; }
+
+  /* ── 창 ── */
+  .win { background: var(--face); border: 2px solid; border-color: var(--light) var(--dark) var(--dark) var(--light); box-shadow: inset -1px -1px var(--shadow), inset 1px 1px var(--hi), 6px 6px 0 rgba(0,0,0,.35); padding: 3px; }
+  .title {
+    display: flex; align-items: center; gap: 6px; padding: 4px 4px 4px 8px;
+    background: linear-gradient(90deg, var(--navy), var(--navy2)); color: #fff; font-weight: 700; font-size: 15px;
+  }
+  .title .t { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .title .ctl { display: flex; gap: 2px; }
+  .title .ctl span {
+    width: 20px; height: 18px; display: grid; place-items: center; font-size: 12px; line-height: 1; color: #000; font-weight: 700;
+    background: var(--face); border: 2px solid; border-color: var(--hi) var(--dark) var(--dark) var(--hi); box-shadow: inset -1px -1px var(--shadow);
+  }
+  .title .ctl span:last-child { margin-left: 2px; }
+  .menu { display: flex; gap: 16px; padding: 3px 8px; font-size: 14px; flex-wrap: wrap; }
+  .menu u { text-decoration: underline; }
+  .body { padding: 22px 24px 24px; }
+
+  /* ── 첫 화면 ── */
+  .desk { display: grid; grid-template-columns: 96px 1fr; gap: 28px; align-items: start; padding-top: 36px; }
+  .desk > *, .two > *, .stats > * { min-width: 0; }
+  .icons { display: flex; flex-direction: column; gap: 22px; }
+  .ico { text-align: center; color: #fff; font-size: 13px; line-height: 1.3; text-decoration: none; }
+  .ico svg { width: 44px; height: 44px; display: block; margin: 0 auto 6px; image-rendering: pixelated; }
+  .ico span { padding: 1px 3px; }
+  .ico:hover span { background: var(--navy); outline: 1px dotted #fff; }
+  .hero h1 { font-size: clamp(32px, 5.6vw, 60px); line-height: 1.25; letter-spacing: -0.01em; }
+  .hero h1 em { font-style: normal; color: var(--navy); background: #ffff00; padding: 0 6px; }
+  .hero p { font-size: clamp(17px, 2vw, 21px); margin: 20px 0 28px; }
+  .new { display: inline-block; background: #ff0000; color: #ffff00; font-weight: 700; font-size: 14px; padding: 2px 8px; margin-bottom: 18px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { visibility: hidden; } }
+  .marquee { background: #000; color: #00ff00; overflow: hidden; white-space: nowrap; padding: 6px 0; margin-top: 26px; font-size: 16px; }
+  .marquee div { display: inline-block; padding-left: 100%; animation: mq 22s linear -7s infinite; }
+  @keyframes mq { to { transform: translateX(-100%); } }
+
+  /* ── 받으시는 것 ── */
+  .h2 { font-size: clamp(24px, 3.6vw, 36px); color: #fff; text-shadow: 3px 3px 0 #000; margin-bottom: 22px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .two h3 { font-size: clamp(21px, 2.6vw, 26px); line-height: 1.35; margin: 4px 0 12px; }
+  .two p { margin: 0 0 18px; }
+  .tag { display: inline-block; background: var(--navy); color: #fff; font-size: 13px; padding: 1px 8px; }
+  .prog { height: 26px; padding: 3px; background: #fff; }
+  .prog i { display: block; height: 100%; width: 100%; background: repeating-linear-gradient(90deg, var(--navy) 0 14px, transparent 14px 17px); animation: fill 2.4s steps(20) 1; }
+  @keyframes fill { from { width: 0; } }
+  .prog-l { font-size: 13px; margin-top: 6px; display: flex; justify-content: space-between; }
+
+  /* ── 엑셀 97 ── */
+  .toolbar { display: flex; gap: 4px; padding: 4px 6px; border-top: 1px solid var(--hi); border-bottom: 1px solid var(--shadow); }
+  .toolbar span { width: 24px; height: 22px; display: grid; place-items: center; font-size: 12px; }
+  .fbar { display: flex; align-items: center; gap: 6px; padding: 4px 6px; }
+  .namebox { width: 70px; background: #fff; padding: 2px 6px; font-size: 14px; }
+  .fxl { font-style: italic; font-weight: 700; padding: 0 6px; }
+  .fbar code { flex: 1; background: #fff; padding: 2px 8px; font-family: Galmuri11, monospace; font-size: 14px; overflow-x: auto; white-space: nowrap; }
+  .grid-scroll { overflow-x: auto; background: #fff; margin: 0 6px; }
+  table.xl { border-collapse: collapse; width: 100%; min-width: 980px; table-layout: fixed; font-size: 14px; font-variant-numeric: tabular-nums; background: #fff; }
+  .xl td, .xl th { border: 1px solid #c0c0c0; padding: 6px 8px; white-space: nowrap; overflow: hidden; }
+  .xl th.ch, .xl td.rh { background: var(--face); font-weight: 400; text-align: center; border-color: var(--hi) var(--shadow) var(--shadow) var(--hi); color: #000; }
+  .xl td.rh { width: 36px; }
+  .xl tr.hd td { background: #404040; color: #fff; font-weight: 700; text-align: center; }
+  .xl tr.hd td.v { background: #1f4e78; }
+  .xl td.num { text-align: right; }
+  .xl tr.sub td:not(.rh) { background: #d9d9d9; font-weight: 700; }
+  .xl tr.sub td.chk, .xl td.chk { background: #c6efce; color: #006100; font-weight: 700; text-align: center; }
+  .xl td.empty { background: #ffff99; }
+  .xl td[data-f] { cursor: cell; }
+  .xl td.sel { outline: 2px solid #000; outline-offset: -2px; }
+  .xl tr.block td:not(.rh) { font-weight: 700; border-top: 2px solid #808080; }
+  .sheets { display: flex; gap: 0; padding: 0 6px 4px; align-items: flex-start; }
+  .sheets .nav { padding: 2px 8px; font-size: 12px; color: #404040; }
+  .tab {
+    font-family: inherit; font-size: 14px; cursor: pointer; padding: 3px 16px; margin-right: -1px; color: #000;
+    background: var(--face); border: 1px solid #000; border-top: 0;
+  }
+  .tab[aria-selected="true"] { background: #fff; font-weight: 700; position: relative; top: -1px; padding-top: 4px; }
+  .status { display: flex; gap: 4px; padding: 3px 6px 2px; font-size: 13px; }
+  .status div { padding: 1px 8px; }
+  .status div:first-child { flex: 1; }
+  .note { color: #fff; margin: 14px 0 0; text-shadow: 1px 1px 0 #000; }
+
+  /* ── 카운터 ── */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .stat { padding: 18px 18px 16px; text-align: center; }
+  .odo { display: inline-flex; gap: 3px; background: #000; padding: 6px; border: 2px solid; border-color: var(--shadow) var(--hi) var(--hi) var(--shadow); }
+  .odo b { font-family: Galmuri11, monospace; font-size: clamp(26px, 3.6vw, 40px); color: #ff3b3b; background: #1a0000; padding: 2px 6px; line-height: 1.1; min-width: 1em; text-shadow: 0 0 6px #ff0000; }
+  .odo.g b { color: #39ff14; background: #001a00; text-shadow: 0 0 6px #39ff14; }
+  .odo.y b { color: #ffd800; background: #1a1400; text-shadow: 0 0 6px #ffd800; }
+  .stat span { display: block; margin-top: 10px; font-weight: 700; }
+
+  /* ── 메모장 ── */
+  .pad { background: #fff; margin: 0 4px 4px; padding: 20px 22px; min-height: 180px; }
+  .pad h3 { font-size: clamp(20px, 2.6vw, 26px); line-height: 1.4; }
+  .pad .cred { display: inline-block; background: var(--navy); color: #fff; padding: 2px 10px; margin: 14px 0; }
+  .pad p { margin: 0; }
+  .cursor { display: inline-block; width: 9px; height: 1.1em; background: #000; vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+  .links { display: flex; gap: 10px; flex-wrap: wrap; padding: 12px 6px 6px; }
+  .links a[hidden] { display: none; }
+  .links svg { width: 18px; height: 18px; flex: none; }
+
+  /* ── 신청 대화상자 ── */
+  .dialog { max-width: 620px; margin: 0 auto; }
+  .dialog .body { display: grid; grid-template-columns: 48px 1fr; gap: 18px; }
+  .dialog .qi { width: 44px; height: 44px; }
+  .dialog h2 { font-size: clamp(22px, 3vw, 28px); }
+  .dialog .lead { margin: 6px 0 18px; }
+  label.f { display: grid; grid-template-columns: 150px 1fr; align-items: center; gap: 10px; margin-bottom: 10px; }
+  label.f span em { font-style: normal; font-size: 12px; color: #404040; display: block; }
+  input[type=text], input[type=email], input[type=tel] {
+    width: 100%; font-family: inherit; font-size: 16px; padding: 6px 8px; background: #fff; color: #000;
+    border: 2px solid; border-color: var(--shadow) var(--hi) var(--hi) var(--shadow); box-shadow: inset 1px 1px var(--dark); border-radius: 0;
+  }
+  input:focus { outline: 1px dotted #000; outline-offset: 2px; }
+  input::placeholder { color: #808080; }
+  .agree { display: flex; gap: 8px; align-items: center; margin: 16px 0 4px; }
+  .agree input { width: 18px; height: 18px; accent-color: var(--navy); margin: 0; }
+  details { font-size: 13px; margin: 4px 0 18px 26px; }
+  details summary { cursor: pointer; color: var(--navy); text-decoration: underline; }
+  details table { border-collapse: collapse; margin-top: 8px; }
+  details td { padding: 2px 10px 2px 0; vertical-align: top; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .actions { display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--shadow); box-shadow: 0 1px 0 var(--hi) inset; padding-top: 16px; }
+  .msg { margin-top: 12px; font-weight: 700; min-height: 1.6em; }
+  .msg.ok { color: #006100; }
+  .msg.err { color: #c00000; }
+  .done h3 { font-size: 22px; margin-bottom: 8px; }
+
+  /* ── 바닥 ── */
+  footer { text-align: center; color: #fff; font-size: 13px; padding: 10px 0 30px; text-shadow: 1px 1px 0 #000; }
+  .badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .badge { width: 88px; height: 31px; display: grid; place-items: center; font-size: 12px; font-weight: 700; border: 1px solid #000; text-shadow: none; }
+
+  /* ── 작업 표시줄 ── */
+  .taskbar { position: fixed; left: 0; right: 0; bottom: 0; height: 44px; display: flex; align-items: center; gap: 6px; padding: 4px 6px; z-index: 10; border-top: 2px solid var(--hi); }
+  .start { padding: 4px 10px; font-size: 15px; }
+  .start svg { width: 20px; height: 20px; }
+  .task { flex: 0 1 260px; padding: 4px 10px; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: #d4d4d4; border: 2px solid; border-color: var(--dark) var(--hi) var(--hi) var(--dark); box-shadow: inset 1px 1px var(--shadow); }
+  .tray { margin-left: auto; padding: 4px 12px; font-size: 14px; white-space: nowrap; }
+
+  @media (max-width: 760px) {
+    body { font-size: 15px; }
+    .wrap { padding: 0 12px; }
+    .desk { grid-template-columns: 1fr; padding-top: 16px; }
+    .icons { display: none; }
+    .body { padding: 18px 16px; }
+    .two, .stats { grid-template-columns: 1fr; }
+    .menu { display: none; }
+    .toolbar { display: none; }
+    .dialog .body { grid-template-columns: 1fr; }
+    .dialog .qi { display: none; }
+    label.f { grid-template-columns: 1fr; gap: 4px; }
+    .task { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; }
+  }
+</style>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://auditfy.co.kr/free/">
+<meta property="og:title" content="감사보고서 무료 변환 — Auditfy">
+<meta property="og:description" content="2025년 감사보고서 검증 엑셀과 2026년 재무제표 및 주석 엑셀 초안을 무료로 만들어 드립니다.">
+<meta property="og:image" content="https://auditfy.co.kr/auditfy-og.png">
+<meta property="og:url" content="https://auditfy.co.kr/free/">
+<link rel="icon" href="/favicon-32.png">
+</head>
+<body>
+
+<!-- ── 첫 화면: 바탕화면 ── -->
+<section class="hero">
+  <div class="wrap desk">
+    <nav class="icons" aria-hidden="true">
+      <a class="ico" href="#files"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="1" y="2" width="14" height="10" fill="#c0c0c0"/><rect x="2" y="3" width="12" height="8" fill="#000080"/><rect x="5" y="12" width="6" height="2" fill="#808080"/><rect x="3" y="14" width="10" height="1" fill="#c0c0c0"/></svg><span>내 컴퓨터</span></a>
+      <a class="ico" href="#files"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="3" y="1" width="10" height="14" fill="#fff"/><rect x="3" y="1" width="10" height="14" fill="none" stroke="#000" stroke-width=".6"/><rect x="5" y="4" width="6" height="1" fill="#008000"/><rect x="5" y="6" width="6" height="1" fill="#008000"/><rect x="5" y="8" width="6" height="1" fill="#008000"/><rect x="1" y="9" width="7" height="6" fill="#008000"/><rect x="3" y="11" width="3" height="2" fill="#fff"/></svg><span>2025_검증.xls</span></a>
+      <a class="ico" href="#files"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="3" y="1" width="10" height="14" fill="#fff"/><rect x="3" y="1" width="10" height="14" fill="none" stroke="#000" stroke-width=".6"/><rect x="5" y="4" width="6" height="1" fill="#008000"/><rect x="5" y="6" width="6" height="1" fill="#ffff00"/><rect x="5" y="8" width="6" height="1" fill="#ffff00"/><rect x="1" y="9" width="7" height="6" fill="#008000"/><rect x="3" y="11" width="3" height="2" fill="#fff"/></svg><span>2026_초안.xls</span></a>
+      <a class="ico" href="#apply"><svg viewBox="0 0 16 16" shape-rendering="crispEdges"><rect x="2" y="2" width="12" height="12" fill="#ffff00"/><rect x="2" y="2" width="12" height="12" fill="none" stroke="#000" stroke-width=".6"/><rect x="4" y="5" width="8" height="1" fill="#000"/><rect x="4" y="7" width="8" height="1" fill="#000"/><rect x="4" y="9" width="5" height="1" fill="#000"/></svg><span>신청서.txt</span></a>
+    </nav>
+
+    <div class="win">
+      <div class="title"><span class="t">감사보고서변환.exe</span><span class="ctl"><span>_</span><span>□</span><span>×</span></span></div>
+      <div class="menu"><span><u>파</u>일(F)</span><span><u>편</u>집(E)</span><span><u>보</u>기(V)</span><span><u>도</u>움말(H)</span></div>
+      <div class="body sunken" style="background:#fff;margin:0 4px 4px">
+        <div class="new">NEW! 무료</div>
+        <h1>감사보고서 엑셀 작업,<br><em>저희가 대신 해 드립니다.</em></h1>
+        <p>회사명만 알려 주시면 됩니다. 비용은 없습니다.</p>
+        <a class="btn big" href="#apply">▶ 무료로 받아 보기</a>
+        <div class="marquee sunken"><div>★ 무료 ★ 250개사 이상 검증 완료 ★ 2025년 감사보고서 검증 엑셀 ★ 2026년 재무제표 및 주석 엑셀 초안 ★ 3영업일 안에 메일로 보내 드립니다 ★</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 받으시는 것 ── -->
+<section id="files">
+  <div class="wrap">
+    <h2 class="h2">두 개의 엑셀 파일을 보내 드립니다.</h2>
+    <div class="two">
+      <div class="win">
+        <div class="title"><span class="t">파일 1 — 2025_검증.xls</span><span class="ctl"><span>_</span><span>□</span><span>×</span></span></div>
+        <div class="body">
+          <span class="tag">파일 1</span>
+          <h3>2025년 감사보고서<br>검증 엑셀</h3>
+          <p>합계와 대사를 엑셀 산식으로 검증했습니다. 맞으면 초록, 다르면 빨강으로 표시됩니다.</p>
+          <div class="prog sunken"><i></i></div>
+          <div class="prog-l"><span>검증 완료</span><span>100%</span></div>
+        </div>
+      </div>
+      <div class="win">
+        <div class="title"><span class="t">파일 2 — 2026_초안.xls</span><span class="ctl"><span>_</span><span>□</span><span>×</span></span></div>
+        <div class="body">
+          <span class="tag">파일 2</span>
+          <h3>2026년 재무제표 및 주석<br>엑셀 초안</h3>
+          <p>전기 숫자와 합계 산식을 미리 넣었습니다. 당기 숫자만 채우시면 됩니다.</p>
+          <div class="prog sunken"><i></i></div>
+          <div class="prog-l"><span>전기 숫자 · 합계 산식</span><span>100%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 엑셀 97 ── -->
+<section>
+  <div class="wrap">
+    <h2 class="h2">모든 검증은 엑셀 산식으로 남습니다.</h2>
+    <div class="win">
+      <div class="title"><span class="t" id="wtitle">Microsoft Excel - 2025_검증.xls</span><span class="ctl"><span>_</span><span>□</span><span>×</span></span></div>
+      <div class="menu"><span><u>파</u>일(F)</span><span><u>편</u>집(E)</span><span><u>보</u>기(V)</span><span><u>삽</u>입(I)</span><span><u>서</u>식(O)</span><span><u>도</u>구(T)</span><span><u>데</u>이터(D)</span><span><u>창</u>(W)</span><span><u>도</u>움말(H)</span></div>
+      <div class="toolbar" aria-hidden="true"><span class="raised">□</span><span class="raised">▤</span><span class="raised">✂</span><span class="raised">Σ</span><span class="raised">ƒ</span><span class="raised">%</span></div>
+      <div class="fbar"><div class="namebox sunken" id="ref">G9</div><span class="fxl">=</span><code class="sunken" id="fx"></code></div>
+      <div class="grid-scroll sunken"><table class="xl" id="xl"></table></div>
+      <div class="sheets"><span class="nav">◀ ▶</span>
+        <button class="tab" role="tab" aria-selected="true" data-t="y25">2025_검증</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="y26">2026_초안</button>
+      </div>
+      <div class="status"><div class="sunken" id="note"></div><div class="sunken">NUM</div></div>
+    </div>
+    <p class="note">아래 시트 탭을 눌러 두 파일을 바꿔 보십시오. 칸을 누르시면 산식이 보입니다.</p>
+  </div>
+</section>
+
+<!-- ── 카운터 ── -->
+<section>
+  <div class="wrap stats">
+    <div class="stat raised"><div class="odo"><b>2</b><b>5</b><b>0</b><b>+</b></div><span>검증 완료 회사 수</span></div>
+    <div class="stat raised"><div class="odo g"><b>₩</b><b>0</b></div><span>비용 없음</span></div>
+    <div class="stat raised"><div class="odo y"><b>3</b><b>일</b></div><span>영업일 이내 메일 발송</span></div>
+  </div>
+</section>
+
+<!-- ── 메모장 ── -->
+<section>
+  <div class="wrap">
+    <div class="win">
+      <div class="title"><span class="t">만든사람.txt - 메모장</span><span class="ctl"><span>_</span><span>□</span><span>×</span></span></div>
+      <div class="menu"><span><u>파</u>일(F)</span><span><u>편</u>집(E)</span><span><u>서</u>식(O)</span><span><u>도</u>움말(H)</span></div>
+      <div class="pad sunken">
+        <h3>매년 감사보고서를 처음부터 다시 만드는 일,<br>줄이고 싶었습니다.</h3>
+        <div class="cred">공인회계사 · 빅4 회계법인 외부감사 15년</div>
+        <p>15년 동안 감사 현장에서 회사마다 같은 작업이 반복되는 것을 보았습니다. 작년 보고서를 엑셀로 옮기고, 합계를 맞추고, 주석을 대사하는 일입니다. 이 반복을 코드로 대신하도록 만들었습니다.<span class="cursor"></span></p>
+      </div>
+      <div class="links">
+        <a class="btn" href="https://blog.naver.com/castle_god" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" fill="#03C75A"/><text x="12" y="16.4" text-anchor="middle" font-size="8.4" font-weight="700" fill="#fff" font-family="monospace">blog</text></svg>블로그</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 신청 대화상자 ── -->
+<section id="apply">
+  <div class="wrap">
+    <div class="win dialog">
+      <div class="title"><span class="t">무료로 받아 보기</span><span class="ctl"><span>?</span><span>×</span></span></div>
+      <div class="body" id="dbody">
+        <svg class="qi" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="#000080"/><rect x="7" y="3" width="2" height="2" fill="#fff"/><rect x="7" y="6" width="2" height="7" fill="#fff"/></svg>
+        <div>
+          <h2>무료로 받아 보기</h2>
+          <p class="lead">파일을 받으실 곳만 적어 주십시오.</p>
+          <form id="form" novalidate>
+            <label class="f"><span>회사명</span>
+              <input type="text" name="company" required autocomplete="organization" placeholder="예: 주식회사 ○○"></label>
+            <label class="f"><span>담당자 성명</span>
+              <input type="text" name="name" required autocomplete="name"></label>
+            <label class="f"><span>직책</span>
+              <input type="text" name="title" required autocomplete="organization-title" placeholder="예: 회계팀장"></label>
+            <label class="f"><span>이메일<em>파일을 받으실 주소</em></span>
+              <input type="email" name="email" required autocomplete="email"></label>
+            <label class="f"><span>연락처</span>
+              <input type="tel" name="phone" required autocomplete="tel" placeholder="예: 010-1234-5678"></label>
+            <label class="hp" aria-hidden="true">웹사이트 <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <input type="hidden" name="page" value="03 복고">
+
+            <label class="agree"><input type="checkbox" name="agree" value="yes" required>
+              <span>개인정보 수집·이용에 동의합니다. (필수)</span></label>
+            <details>
+              <summary>내용 보기</summary>
+              <table>
+                <tr><td>수집 항목</td><td>회사명, 담당자 성명, 직책, 이메일, 연락처</td></tr>
+                <tr><td>이용 목적</td><td>변환 파일 발송 및 관련 안내</td></tr>
+                <tr><td>보유 기간</td><td>신청일로부터 1년 (동의 철회 시 즉시 파기)</td></tr>
+              </table>
+              <p style="margin:6px 0 0">동의를 거부하실 수 있으며, 이 경우 파일을 보내 드릴 수 없습니다.</p>
+            </details>
+
+            <div class="actions">
+              <button class="btn" type="submit" id="submit">무료로 받아 보기</button>
+            </div>
+            <div class="msg" id="msg" role="status"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="badges" aria-hidden="true">
+    <span class="badge" style="background:#ffff00">K-GAAP</span>
+    <span class="badge" style="background:#00ffff">K-IFRS</span>
+    <span class="badge" style="background:#ff00ff;color:#fff">DART</span>
+    <span class="badge" style="background:#c0c0c0">800×600</span>
+  </div>
+  DART에 공시된 감사보고서를 기준으로 작업합니다. 일반기업회계기준과 K-IFRS 모두 가능합니다.
+
+  <p style="margin:14px 0 0;font-size:14px"><a href="/" style="color:inherit;font-weight:700">Auditfy가 만든 서비스입니다 · Auditfy 소개 보기 →</a></p>
+</footer>
+
+<!-- ── 작업 표시줄 ── -->
+<div class="taskbar raised">
+  <a class="btn start" href="#apply"><svg viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="2" width="6" height="5" fill="#ff0000"/><rect x="8" y="2" width="6" height="5" fill="#00a000"/><rect x="1" y="8" width="6" height="5" fill="#0000ff"/><rect x="8" y="8" width="6" height="5" fill="#ffd800"/></svg>시작</a>
+  <div class="task">감사보고서변환.exe</div>
+  <div class="tray sunken" id="clock"></div>
+</div>
+
+<script src="config.js"></script>
+<script>
+  // Apps Script 웹 앱 주소 — 설치안내.md 2단계에서 받은 주소를 넣는다(index.html 과 같은 값).
+  const ENDPOINT = (window.LANDING_CONFIG || {}).endpoint || '';
+
+  // 링크드인 주소 — 비어 있으면 버튼을 숨긴다.
+  const LINKEDIN = '';
+  if (LINKEDIN) { const a = document.getElementById('linkedin'); a.href = LINKEDIN; a.hidden = false; }
+
+  // 작업 표시줄 시계
+  const clock = document.getElementById('clock');
+  const tick = () => { const d = new Date(), h = d.getHours();
+    clock.textContent = `${h < 12 ? '오전' : '오후'} ${(h % 12) || 12}:${String(d.getMinutes()).padStart(2, '0')}`; };
+  tick(); setInterval(tick, 10000);
+
+  // ── 산식 예시(숫자는 예시) ──
+  const SHEETS = {
+    y25: {
+      file: '2025_검증.xls',
+      note: '예시 화면 · 차이가 있으면 「일치」 대신 차이 금액이 빨간색으로 표시됩니다.',
+      head: ['과 목', '제 28(당) 기', '', '제 27(전) 기', '', '검증(당기)', '검증(전기)'],
+      rows: [
+        { cls: 'sub', cells: ['(1) 당좌자산', '', 5_062_000_000, '', 4_729_000_000,
+          { v: '일치', f: '=IF(ROUND(D9-SUM(C10:C13),0)=0,"일치",D9-SUM(C10:C13))', chk: 1 },
+          { v: '일치', f: '=IF(ROUND(F9-SUM(E10:E13),0)=0,"일치",F9-SUM(E10:E13))', chk: 1 }] },
+        { cells: ['현금및현금성자산', 2_223_000_000, '', 1_519_000_000, '', '', ''] },
+        { cells: ['단기금융상품', 280_000_000, '', 375_000_000, '', '', ''] },
+        { cells: ['매출채권', 2_582_000_000, '', 2_859_000_000, '', '', ''] },
+        { cells: ['대손충당금', -23_000_000, '', -24_000_000, '', '', ''] },
+        { cls: 'block', cells: ['■ 주석 대사', '', '', '', '', '', ''] },
+        { cells: ['매출채권 ↔ 주석5', '', '', '', '',
+          { v: '일치', f: "=IF(ROUND(C12-'05'!D8,0)=0,\"일치\",C12-'05'!D8)", chk: 1 },
+          { v: '일치', f: "=IF(ROUND(E12-'05'!E8,0)=0,\"일치\",E12-'05'!E8)", chk: 1 }] },
+      ],
+      sel: [0, 5],
+    },
+    y26: {
+      file: '2026_초안.xls',
+      note: '예시 화면 · 당기 칸(노란색)은 비워 두었습니다. 숫자를 채우시면 합계와 검증이 바로 계산됩니다.',
+      head: ['과 목', '제 29(당) 기', '', '제 28(전) 기', '', '검증(당기)', '검증(전기)'],
+      rows: [
+        { cls: 'sub', cells: ['(1) 당좌자산', '', { v: 0, f: '=SUM(C10:C13)' }, '', 5_062_000_000,
+          { v: '일치', f: '=IF(ROUND(D9-SUM(C10:C13),0)=0,"일치",D9-SUM(C10:C13))', chk: 1 },
+          { v: '일치', f: '=IF(ROUND(F9-SUM(E10:E13),0)=0,"일치",F9-SUM(E10:E13))', chk: 1 }] },
+        { cells: ['현금및현금성자산', { empty: 1 }, '', 2_223_000_000, '', '', ''] },
+        { cells: ['단기금융상품', { empty: 1 }, '', 280_000_000, '', '', ''] },
+        { cells: ['매출채권', { empty: 1 }, '', 2_582_000_000, '', '', ''] },
+        { cells: ['대손충당금', { empty: 1 }, '', -23_000_000, '', '', ''] },
+      ],
+      sel: [0, 2],
+    },
+  };
+
+  const COLS = ['B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const fmt = n => n === 0 ? '-' : (n < 0 ? '(' + Math.abs(n).toLocaleString('ko-KR') + ')' : n.toLocaleString('ko-KR'));
+  const xl = document.getElementById('xl'), fx = document.getElementById('fx'), ref = document.getElementById('ref');
+
+  function select(td) {
+    xl.querySelectorAll('td.sel').forEach(c => c.classList.remove('sel'));
+    td.classList.add('sel');
+    ref.textContent = td.dataset.ref;
+    fx.textContent = td.dataset.f;
+  }
+
+  function render(key) {
+    const s = SHEETS[key];
+    const [h0, hc, , hp, , hv1, hv2] = s.head;
+    let html = '<colgroup><col style="width:4%"><col style="width:19%"><col span="4" style="width:14.5%"><col span="2" style="width:9.5%"></colgroup>'
+      + '<tr><th class="ch"></th>' + COLS.map(c => `<th class="ch">${c}</th>`).join('') + '</tr>'
+      + `<tr class="hd"><td class="rh">8</td><td>${h0}</td><td colspan="2">${hc}</td><td colspan="2">${hp}</td><td class="v">${hv1}</td><td class="v">${hv2}</td></tr>`;
+    s.rows.forEach((r, ri) => {
+      html += `<tr class="${r.cls || ''}"><td class="rh">${9 + ri}</td>` + r.cells.map((c, ci) => {
+        const at = COLS[ci] + (9 + ri);
+        if (c && typeof c === 'object') {
+          if (c.empty) return `<td class="num empty" data-ref="${at}" data-f=" "></td>`;
+          const val = typeof c.v === 'number' ? fmt(c.v) : c.v;
+          return `<td class="${c.chk ? 'chk' : 'num'}" data-ref="${at}" data-f='${c.f.replace(/'/g, '&#39;')}'>${val}</td>`;
+        }
+        if (typeof c === 'number') return `<td class="num" data-ref="${at}" data-f="${c}">${fmt(c)}</td>`;
+        return `<td>${c}</td>`;
+      }).join('') + '</tr>';
+    });
+    xl.innerHTML = html;
+    document.getElementById('note').textContent = s.note;
+    document.getElementById('wtitle').textContent = 'Microsoft Excel - ' + s.file;
+    const [r, c] = s.sel;
+    select(xl.rows[r + 2].cells[c + 1]);
+  }
+
+  xl.addEventListener('click', e => { const td = e.target.closest('td[data-f]'); if (td) select(td); });
+  document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', x === b));
+    render(b.dataset.t);
+  }));
+  render('y25');
+
+  // ── 신청 ──
+  const form = document.getElementById('form'), msg = document.getElementById('msg'), btn = document.getElementById('submit');
+  const show = (t, ok) => { msg.textContent = (ok ? '' : '⚠ ') + t; msg.className = 'msg ' + (ok ? 'ok' : 'err'); };
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form));
+    if (!d.company.trim()) return show('회사명을 적어 주십시오.');
+    if (!d.name.trim()) return show('담당자 성명을 적어 주십시오.');
+    if (!d.title.trim()) return show('직책을 적어 주십시오.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())) return show('이메일 주소를 확인해 주십시오.');
+    if ((d.phone.match(/\d/g) || []).length < 9) return show('연락처를 확인해 주십시오.');
+    if (!d.agree) return show('개인정보 수집·이용에 동의해 주십시오.');
+    if (!ENDPOINT) return show('미리보기 화면입니다. 신청 주소가 아직 연결되지 않았습니다.');
+
+    btn.disabled = true; btn.textContent = '보내는 중…';
+    try {
+      const res = await fetch(ENDPOINT, { method: 'POST', body: new URLSearchParams(d) });
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error || 'fail');
+      form.outerHTML = `<div class="done"><h3>신청되었습니다.</h3><p>3영업일 안에 ${d.email.trim().replace(/[<>&"]/g, '')}(으)로 파일을 보내 드립니다. 접수 확인 메일을 먼저 보내 드렸습니다.</p></div>`;
+    } catch (err) {
+      btn.disabled = false; btn.textContent = '무료로 받아 보기';
+      show('신청을 보내지 못했습니다. 잠시 뒤 다시 시도해 주십시오.');
+    }
+  });
+</script>
+</body>
+</html>

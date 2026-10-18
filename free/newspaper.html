@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>감사보고서 무료 변환 — Auditfy</title>
+<meta name="description" content="2025년 감사보고서 검증 엑셀과 2026년 재무제표 및 주석 엑셀 초안을 무료로 만들어 드립니다.">
+<meta name="color-scheme" content="light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+  :root {
+    --paper: #ece1c3;
+    --paper-hi: #f4ecd6;
+    --paper-lo: #dccda6;
+    --ink: #1b1712;
+    --ink-2: #4b4136;
+    --rule: #1b1712;
+    --red: #b02a20;
+    --ok-bg: #cfe2bd;
+    --ok-ink: #1e4a17;
+    --empty: #f2d97e;
+    --total: #d3c39a;
+    --cell-line: #a8996f;
+    --mono: "Courier New", ui-monospace, Menlo, Consolas, monospace;
+    --head-font: "Black Han Sans", "Do Hyeon", "Apple SD Gothic Neo", sans-serif;
+    --label-font: "Do Hyeon", "Apple SD Gothic Neo", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; background: var(--paper); }
+  body {
+    margin: 0; color: var(--ink);
+    font-family: "Nanum Myeongjo", "AppleMyungjo", "Batang", serif;
+    font-size: 18px; line-height: 1.7; word-break: keep-all;
+    background-color: var(--paper);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .27 0 0 0 0 .12 0 0 0 .10 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse 60% 40% at 88% 6%, rgba(150,110,40,.16), transparent 70%),
+      radial-gradient(ellipse 50% 35% at 6% 62%, rgba(150,110,40,.12), transparent 70%),
+      linear-gradient(90deg, rgba(120,90,40,.14), transparent 6%, transparent 94%, rgba(120,90,40,.14));
+  }
+  .paper { max-width: 1080px; margin: 0 auto; padding: 0 24px; overflow-x: clip; }
+  section { padding: 64px 0; border-top: 3px solid var(--rule); position: relative; }
+  section::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 4px; border-top: 1px solid var(--rule);
+  }
+  h1, h2, h3 { margin: 0; font-weight: 400; }
+
+  /* ── 제호 ── */
+  .mast { padding-top: 22px; }
+  .mast-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; padding-bottom: 14px; }
+  .ear {
+    justify-self: start; border: 2px solid var(--ink); padding: 8px 14px; text-align: center;
+    font-family: var(--label-font); font-size: 15px; line-height: 1.35; color: var(--ink-2);
+  }
+  .ear b { display: block; font-weight: 400; font-size: 22px; color: var(--ink); letter-spacing: .1em; }
+  .mast-name {
+    font-family: var(--head-font); font-size: clamp(30px, 9vw, 108px); line-height: 1;
+    letter-spacing: .06em; text-align: center; white-space: nowrap;
+    text-shadow: 0 0 1px rgba(27,23,18,.5);
+  }
+  .stamp {
+    justify-self: end; width: 104px; height: 104px; border-radius: 50%;
+    border: 4px double var(--red); color: var(--red); display: grid; place-items: center;
+    font-family: var(--head-font); font-size: 40px; line-height: 1; letter-spacing: .02em;
+    transform: rotate(-14deg); opacity: .9; mix-blend-mode: multiply;
+    box-shadow: inset 0 0 0 3px rgba(176,42,32,.12);
+    animation: stamp .55s cubic-bezier(.2,1.6,.4,1) .35s both;
+  }
+  .stamp span { display: block; transform: translateY(2px); }
+  @keyframes stamp { from { opacity: 0; transform: rotate(-30deg) scale(1.9); } to { opacity: .9; transform: rotate(-14deg) scale(1); } }
+  .mast-strip {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 18px;
+    border-top: 4px solid var(--rule); border-bottom: 1px solid var(--rule);
+    box-shadow: 0 -7px 0 -5px var(--rule);
+    padding: 7px 2px 6px; margin-top: 4px;
+    font-family: var(--label-font); font-size: 15px; letter-spacing: .08em; color: var(--ink-2);
+  }
+  .mast-strip .ex { color: var(--red); }
+
+  /* ── 첫 화면 ── */
+  .hero { border-top: 0; padding: 34px 0 56px; }
+  .hero::before { display: none; }
+  .kicker {
+    display: inline-block; font-family: var(--label-font); font-size: 18px; letter-spacing: .04em;
+    background: var(--ink); color: var(--paper-hi); padding: 4px 14px 3px; margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: var(--head-font); font-size: clamp(40px, 7.2vw, 84px); line-height: 1.12;
+    letter-spacing: -.01em; animation: ink 1s ease-out both;
+  }
+  @keyframes ink { from { opacity: 0; filter: blur(3px); } to { opacity: 1; filter: none; } }
+  .hero-rule { height: 0; border-top: 1px solid var(--rule); border-bottom: 4px solid var(--rule); padding-top: 3px; margin: 26px 0 28px; }
+  .hero-body { display: grid; grid-template-columns: auto 1fr 250px; gap: 28px; align-items: start; }
+  .hero-body p.sub {
+    writing-mode: vertical-rl; margin: 0; height: 330px;
+    font-size: clamp(20px, 2.6vw, 28px); line-height: 1.6; font-weight: 800; letter-spacing: .08em;
+    padding: 0 0 0 20px; border-left: 1px solid var(--rule);
+  }
+  figure.halftone { margin: 0; border: 1px solid var(--rule); padding: 8px; background: var(--paper-hi); }
+  figure.halftone svg { display: block; width: 100%; height: auto; }
+  figure.halftone figcaption { font-family: var(--label-font); font-size: 14px; color: var(--ink-2); padding-top: 6px; }
+  .hero-aside { border-left: 1px solid var(--rule); padding-left: 24px; }
+  .hero-aside .tag { font-family: var(--label-font); font-size: 15px; color: var(--red); letter-spacing: .1em; margin-bottom: 10px; }
+  .btn {
+    display: inline-block; background: var(--ink); color: var(--paper-hi); text-decoration: none; text-align: center;
+    font-family: var(--label-font); font-size: 22px; letter-spacing: .06em; padding: 16px 28px;
+    border: 0; cursor: pointer; outline: 2px solid var(--ink); outline-offset: 3px;
+    transition: background .15s;
+  }
+  .btn:hover { background: var(--red); outline-color: var(--red); }
+  .btn:focus-visible { outline: 3px solid var(--red); }
+  .btn:disabled { opacity: .6; cursor: default; }
+  .hero-aside .btn { width: 100%; }
+
+  .section-title { font-family: var(--head-font); font-size: clamp(30px, 4.6vw, 54px); line-height: 1.2; letter-spacing: -.005em; }
+
+  /* ── 받으시는 것 ── */
+  .two { display: grid; grid-template-columns: 1fr 1fr; margin-top: 36px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .card { padding: 28px 32px 30px; }
+  .card + .card { border-left: 1px solid var(--rule); }
+  .card:first-child { padding-left: 0; }
+  .card:last-child { padding-right: 0; }
+  .card .no {
+    display: inline-block; font-family: var(--label-font); font-size: 16px; letter-spacing: .1em;
+    border: 1.5px solid var(--ink); padding: 1px 10px 0;
+  }
+  .card h3 { font-family: var(--head-font); font-size: clamp(26px, 3vw, 34px); line-height: 1.28; margin: 14px 0 14px; }
+  .card p { margin: 0; font-size: 18px; color: var(--ink-2); text-align: left; }
+  .card p::first-letter {
+    float: left; font-family: var(--head-font); font-size: 3.1em; line-height: .9; color: var(--ink);
+    margin: 6px 8px 0 0;
+  }
+
+  /* ── 산식 화면: 지면 속 표 ── */
+  .tabs { display: inline-flex; margin: 32px 0 0; border: 2px solid var(--ink); border-bottom: 0; }
+  .tab {
+    font-family: var(--label-font); font-size: 17px; letter-spacing: .03em; border: 0; background: transparent;
+    color: var(--ink-2); padding: 10px 18px; cursor: pointer;
+  }
+  .tab + .tab { border-left: 2px solid var(--ink); }
+  .tab[aria-selected="true"] { background: var(--ink); color: var(--paper-hi); }
+  .tab:focus-visible { outline: 3px solid var(--red); outline-offset: -3px; }
+  .sheet { border: 6px double var(--ink); background: var(--paper-hi); }
+  .fbar {
+    display: flex; align-items: center; gap: 14px; border-bottom: 2px solid var(--ink);
+    padding: 10px 14px; font-size: 15px; background: var(--paper);
+  }
+  .fbar .ref { font-family: var(--mono); font-weight: 700; min-width: 44px; border-right: 1px solid var(--ink); padding-right: 10px; }
+  .fbar .fx { font-family: var(--mono); font-style: italic; font-weight: 700; color: var(--red); }
+  .fbar code {
+    font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--ink);
+    overflow-x: auto; white-space: nowrap; min-width: 0;
+  }
+  .grid-scroll { overflow-x: auto; }
+  table.xl { border-collapse: collapse; width: 100%; min-width: 940px; table-layout: fixed; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .xl th, .xl td { border: 1px solid var(--cell-line); padding: 10px 12px; white-space: nowrap; overflow: hidden; }
+  .xl th { background: var(--ink); color: var(--paper-hi); font-family: var(--label-font); font-weight: 400; font-size: 16px; letter-spacing: .04em; text-align: center; }
+  .xl th.v { background: var(--ok-ink); }
+  .xl td { background: var(--paper-hi); }
+  .xl td.num { text-align: right; font-family: var(--mono); font-weight: 700; }
+  .xl tr.sub td { background: var(--total); font-weight: 800; border-bottom: 2px solid var(--ink); }
+  .xl tr.sub td.chk, .xl td.chk { background: var(--ok-bg); color: var(--ok-ink); font-weight: 800; text-align: center; }
+  .xl td.empty { background: var(--empty); }
+  .xl td[data-f] { cursor: pointer; }
+  .xl td.sel { outline: 3px solid var(--red); outline-offset: -3px; }
+  .xl tr.block td { background: var(--paper-hi); border-top: 4px double var(--ink); font-weight: 800; color: var(--ink-2); }
+  .note { font-size: 16px; color: var(--ink-2); margin-top: 16px; }
+  #note::before { content: "※ "; color: var(--red); }
+
+  /* ── 숫자 띠 ── */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; }
+  .stats > div { padding: 8px 16px; }
+  .stats > div + div { border-left: 1px solid var(--rule); }
+  .stats b { display: block; font-family: var(--head-font); font-weight: 400; font-size: clamp(42px, 6vw, 76px); line-height: 1.15; }
+  .stats > div:nth-child(2) b { color: var(--red); }
+  .stats span { font-family: var(--label-font); font-size: 20px; letter-spacing: .06em; color: var(--ink-2); }
+  .dots {
+    background-image: radial-gradient(circle, rgba(27,23,18,.16) 1.1px, transparent 1.4px);
+    background-size: 7px 7px;
+  }
+
+  /* ── 만든 사람 ── */
+  .maker { display: grid; grid-template-columns: auto 1fr 1fr; gap: 36px; align-items: start; }
+  .vlabel {
+    writing-mode: vertical-rl; font-family: var(--head-font); font-size: 34px; letter-spacing: .3em; line-height: 1;
+    background: var(--ink); color: var(--paper-hi); padding: 16px 10px; margin: 0;
+  }
+  .maker h3 { font-family: var(--head-font); font-size: clamp(26px, 3.2vw, 38px); line-height: 1.32; }
+  .maker .cred {
+    font-family: var(--label-font); font-size: 19px; letter-spacing: .03em; color: var(--red);
+    margin: 18px 0 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 6px 0 4px;
+  }
+  .maker .col2 { border-left: 1px solid var(--rule); padding-left: 32px; }
+  .maker p.body { margin: 0; font-size: 18px; color: var(--ink-2); text-align: left; }
+  .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink);
+    font-family: var(--label-font); font-size: 18px; letter-spacing: .04em;
+    border: 2px solid var(--ink); padding: 8px 16px; background: var(--paper-hi);
+  }
+  .links a:hover { background: var(--ink); color: var(--paper-hi); }
+  .links a[hidden] { display: none; }
+  .links svg { width: 18px; height: 18px; flex: none; filter: grayscale(1) contrast(1.3); }
+  .links a:hover svg { filter: none; }
+
+  /* ── 신청: 오려 보내는 쿠폰 ── */
+  .coupon {
+    position: relative; margin-top: 8px; border: 3px dashed var(--ink); background: var(--paper-hi);
+    padding: 40px 40px 36px; display: grid; grid-template-columns: auto 1fr; gap: 36px;
+  }
+  .scissors {
+    position: absolute; top: -17px; left: 34px; width: 34px; height: 34px; padding: 2px 4px;
+    background: var(--paper); color: var(--ink); transform: rotate(180deg);
+  }
+  .coupon .vlabel { background: var(--red); }
+  .coupon h2 { font-family: var(--head-font); font-size: clamp(30px, 4.6vw, 54px); line-height: 1.2; }
+  form { max-width: 560px; margin-top: 30px; }
+  label.f { display: block; margin-bottom: 22px; }
+  label.f span { display: block; font-family: var(--label-font); font-size: 18px; letter-spacing: .04em; margin-bottom: 4px; }
+  label.f span em { font-style: normal; color: var(--ink-2); }
+  input[type=text], input[type=email], input[type=tel] {
+    width: 100%; font-family: inherit; font-size: 19px; padding: 10px 4px 8px;
+    border: 0; border-bottom: 2px solid var(--ink); border-radius: 0; background: transparent; color: var(--ink);
+  }
+  input::placeholder { color: #8f8266; }
+  input:focus { outline: 0; background: rgba(176,42,32,.07); border-bottom-color: var(--red); }
+  .agree { display: flex; gap: 10px; align-items: flex-start; font-size: 16px; font-weight: 700; margin: 8px 0 6px; }
+  .agree input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--ink); flex: none; }
+  details { font-size: 14px; color: var(--ink-2); margin: 0 0 28px 30px; }
+  details summary { cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  details table { border-collapse: collapse; margin-top: 10px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  details td { padding: 4px 12px 4px 0; vertical-align: top; }
+  details td:first-child { font-weight: 800; white-space: nowrap; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  form .btn { width: 100%; }
+  .msg { margin-top: 20px; font-size: 18px; font-weight: 800; }
+  .msg.ok { color: var(--ok-ink); }
+  .msg.err { color: var(--red); }
+  .done { border: 2px solid var(--ink); outline: 1px solid var(--ink); outline-offset: 4px; padding: 30px; max-width: 560px; margin-top: 30px; }
+  .done h3 { font-family: var(--head-font); font-size: 30px; margin-bottom: 10px; }
+  .done p { margin: 0; color: var(--ink-2); }
+
+  footer { border-top: 4px solid var(--rule); box-shadow: 0 -7px 0 -5px var(--rule); margin-top: 64px; padding: 20px 0 56px; font-size: 14px; color: var(--ink-2); }
+
+  @media (max-width: 900px) {
+    .hero-body { grid-template-columns: auto 1fr; }
+    .hero-aside { grid-column: 1 / -1; border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 18px; }
+  }
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    .paper { padding: 0 16px; }
+    section { padding: 48px 0; }
+    .mast-row { grid-template-columns: 1fr auto; gap: 10px; }
+    .ear { display: none; }
+    .mast-name { text-align: left; font-size: clamp(30px, 9.4vw, 60px); letter-spacing: .03em; }
+    .stamp { width: 62px; height: 62px; font-size: 23px; border-width: 3px; }
+    .mast-strip { font-size: 13px; letter-spacing: .04em; }
+    .mast-strip span:first-child { display: none; }
+    .hero { padding: 26px 0 44px; }
+    .hero-body { gap: 16px; }
+    .hero-body p.sub { height: 250px; padding-left: 12px; letter-spacing: .04em; }
+    .two { grid-template-columns: 1fr; }
+    .card { padding: 24px 0; }
+    .card + .card { border-left: 0; border-top: 1px solid var(--rule); }
+    .tabs { display: flex; }
+    .tab { flex: 1; padding: 10px 6px; font-size: 15px; }
+    .sheet { border-width: 4px; }
+    .stats { grid-template-columns: 1fr; }
+    .stats > div { padding: 18px 0; }
+    .stats > div + div { border-left: 0; border-top: 1px solid var(--rule); }
+    .maker { grid-template-columns: auto 1fr; gap: 18px; }
+    .maker .vlabel { grid-row: span 2; font-size: 26px; padding: 12px 7px; }
+    .maker .col2 { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 18px; }
+    .coupon { grid-template-columns: 1fr; gap: 14px; padding: 30px 18px 26px; }
+    .coupon .vlabel { writing-mode: horizontal-tb; font-size: 22px; letter-spacing: .3em; padding: 4px 12px 2px; justify-self: start; }
+    details { margin-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://auditfy.co.kr/free/">
+<meta property="og:title" content="감사보고서 무료 변환 — Auditfy">
+<meta property="og:description" content="2025년 감사보고서 검증 엑셀과 2026년 재무제표 및 주석 엑셀 초안을 무료로 만들어 드립니다.">
+<meta property="og:image" content="https://auditfy.co.kr/auditfy-og.png">
+<meta property="og:url" content="https://auditfy.co.kr/free/">
+<link rel="icon" href="/favicon-32.png">
+</head>
+<body>
+<div class="paper">
+
+<header class="mast">
+  <div class="mast-row">
+    <div class="ear" aria-hidden="true"><b>제 1 호</b>2026년 10월 18일<br>일요일</div>
+    <div class="mast-name">감사보고서 일보</div>
+    <div class="stamp" aria-label="호외"><span>호외</span></div>
+  </div>
+  <div class="mast-strip">
+    <span>감사보고서 일보 · 제 1 호</span>
+    <span>2026년 10월 18일 일요일</span>
+    <span class="ex">號外 · 호외</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="kicker">외부감사 대상 회사 회계팀을 위한 무료 서비스</div>
+  <h1>감사보고서 엑셀 작업,<br>저희가 대신 해 드립니다.</h1>
+  <div class="hero-rule"></div>
+  <div class="hero-body">
+    <p class="sub">회사명만 알려 주시면 됩니다.<br>비용은 없습니다.</p>
+    <figure class="halftone">
+      <svg viewBox="0 0 420 300" role="img" aria-label="망점으로 그린 엑셀 장부">
+        <defs>
+          <pattern id="htA" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="3" cy="3" r="0.9" fill="#1b1712"/></pattern>
+          <pattern id="htB" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="3" cy="3" r="1.7" fill="#1b1712"/></pattern>
+          <pattern id="htC" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="3" cy="3" r="2.6" fill="#1b1712"/></pattern>
+          <linearGradient id="htG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#000"/><stop offset=".55" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+          <mask id="htM"><rect width="420" height="300" fill="url(#htG)"/></mask>
+        </defs>
+        <rect width="420" height="300" fill="url(#htA)"/>
+        <rect width="420" height="300" fill="url(#htB)" mask="url(#htM)"/>
+        <g transform="rotate(-4 210 150)">
+          <rect x="80" y="44" width="270" height="214" fill="url(#htC)"/>
+          <rect x="68" y="34" width="270" height="214" fill="#f4ecd6" stroke="#1b1712" stroke-width="2.5"/>
+          <rect x="68" y="34" width="270" height="30" fill="url(#htC)"/>
+          <g stroke="#1b1712" stroke-width="1.2">
+            <line x1="68" y1="94" x2="338" y2="94"/><line x1="68" y1="124" x2="338" y2="124"/>
+            <line x1="68" y1="154" x2="338" y2="154"/><line x1="68" y1="184" x2="338" y2="184"/>
+            <line x1="68" y1="214" x2="338" y2="214"/>
+            <line x1="148" y1="34" x2="148" y2="248"/><line x1="212" y1="34" x2="212" y2="248"/>
+            <line x1="276" y1="34" x2="276" y2="248"/>
+          </g>
+          <rect x="68.6" y="64" width="269" height="30" fill="url(#htB)"/>
+          <rect x="68.6" y="214" width="269" height="33.4" fill="url(#htB)"/>
+          <g fill="#1b1712">
+            <rect x="80" y="104" width="52" height="8"/><rect x="80" y="134" width="40" height="8"/>
+            <rect x="80" y="164" width="58" height="8"/><rect x="80" y="194" width="34" height="8"/>
+            <rect x="166" y="104" width="34" height="8"/><rect x="172" y="134" width="28" height="8"/>
+            <rect x="160" y="164" width="40" height="8"/><rect x="176" y="194" width="24" height="8"/>
+            <rect x="228" y="104" width="34" height="8"/><rect x="234" y="134" width="28" height="8"/>
+            <rect x="222" y="164" width="40" height="8"/><rect x="238" y="194" width="24" height="8"/>
+          </g>
+          <g fill="none" stroke="#1b1712" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M292 106l8 8 16-16"/><path d="M292 136l8 8 16-16"/>
+            <path d="M292 166l8 8 16-16"/><path d="M292 196l8 8 16-16"/>
+          </g>
+        </g>
+        <circle cx="338" cy="214" r="50" fill="url(#htA)" stroke="#1b1712" stroke-width="7"/>
+        <circle cx="338" cy="214" r="40" fill="none" stroke="#1b1712" stroke-width="1.2"/>
+        <path d="M374 250l34 34" stroke="#1b1712" stroke-width="13" stroke-linecap="round"/>
+      </svg>
+      <figcaption>▲ 감사보고서 엑셀</figcaption>
+    </figure>
+    <div class="hero-aside">
+      <div class="tag" aria-hidden="true">■ 호 외</div>
+      <a class="btn" href="#apply">무료로 받아 보기</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">두 개의 엑셀 파일을<br>보내 드립니다.</h2>
+  <div class="two">
+    <div class="card">
+      <div class="no">파일 1</div>
+      <h3>2025년 감사보고서<br>검증 엑셀</h3>
+      <p>합계와 대사를 엑셀 산식으로 검증했습니다. 맞으면 초록, 다르면 빨강으로 표시됩니다.</p>
+    </div>
+    <div class="card">
+      <div class="no">파일 2</div>
+      <h3>2026년 재무제표 및 주석<br>엑셀 초안</h3>
+      <p>전기 숫자와 합계 산식을 미리 넣었습니다. 당기 숫자만 채우시면 됩니다.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">모든 검증은<br>엑셀 산식으로 남습니다.</h2>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-t="y25">파일 1 · 2025년 검증</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="y26">파일 2 · 2026년 초안</button>
+  </div>
+  <div class="sheet">
+    <div class="fbar"><span class="ref" id="ref">E3</span><span class="fx">fx</span><code id="fx"></code></div>
+    <div class="grid-scroll">
+      <table class="xl" id="xl"></table>
+    </div>
+  </div>
+  <p class="note" id="note"></p>
+</section>
+
+<section class="dots">
+  <div class="stats">
+    <div><b>250개사+</b><span>검증 완료</span></div>
+    <div><b>무료</b><span>비용 없음</span></div>
+    <div><b>3영업일</b><span>이내 메일 발송</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="maker">
+    <div class="vlabel">만든 사람</div>
+    <div>
+      <h3>매년 감사보고서를 처음부터 다시 만드는 일,<br>줄이고 싶었습니다.</h3>
+      <p class="cred">공인회계사 · 빅4 회계법인 외부감사 15년</p>
+    </div>
+    <div class="col2">
+      <p class="body">15년 동안 감사 현장에서 회사마다 같은 작업이 반복되는 것을 보았습니다. 작년 보고서를 엑셀로 옮기고, 합계를 맞추고, 주석을 대사하는 일입니다. 이 반복을 코드로 대신하도록 만들었습니다.</p>
+      <div class="links">
+        <a href="https://blog.naver.com/castle_god" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#03C75A"/><text x="12" y="16.4" text-anchor="middle" font-size="8.4" font-weight="600" fill="#fff" font-family="-apple-system,sans-serif">blog</text></svg>블로그</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="apply">
+  <div class="coupon">
+    <svg class="scissors" viewBox="0 0 32 32" aria-hidden="true"><circle cx="7" cy="9" r="4.6" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="7" cy="23" r="4.6" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M10.6 11.6L30 25M10.6 20.4L30 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div class="vlabel" aria-hidden="true">신청서</div>
+    <div>
+      <h2>무료로 받아 보기</h2>
+      <p class="note" style="margin-top:14px">파일을 받으실 곳만 적어 주십시오.</p>
+
+      <form id="form" novalidate>
+        <label class="f"><span>회사명</span>
+          <input type="text" name="company" required autocomplete="organization" placeholder="예: 주식회사 ○○">
+        </label>
+        <label class="f"><span>담당자 성명</span>
+          <input type="text" name="name" required autocomplete="name">
+        </label>
+        <label class="f"><span>직책</span>
+          <input type="text" name="title" required autocomplete="organization-title" placeholder="예: 회계팀장">
+        </label>
+        <label class="f"><span>이메일 <em>· 파일을 받으실 주소</em></span>
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label class="f"><span>연락처</span>
+          <input type="tel" name="phone" required autocomplete="tel" placeholder="예: 010-1234-5678">
+        </label>
+        <label class="hp" aria-hidden="true">웹사이트 <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <input type="hidden" name="page" value="05 신문">
+
+        <label class="agree"><input type="checkbox" name="agree" value="yes" required>
+          <span>개인정보 수집·이용에 동의합니다. (필수)</span></label>
+        <details>
+          <summary>내용 보기</summary>
+          <table>
+            <tr><td>수집 항목</td><td>회사명, 담당자 성명, 직책, 이메일, 연락처</td></tr>
+            <tr><td>이용 목적</td><td>변환 파일 발송 및 관련 안내</td></tr>
+            <tr><td>보유 기간</td><td>신청일로부터 1년 (동의 철회 시 즉시 파기)</td></tr>
+          </table>
+          <p style="margin:8px 0 0">동의를 거부하실 수 있으며, 이 경우 파일을 보내 드릴 수 없습니다.</p>
+        </details>
+
+        <button class="btn" type="submit" id="submit">무료로 받아 보기</button>
+        <div class="msg" id="msg" role="status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  DART에 공시된 감사보고서를 기준으로 작업합니다. 일반기업회계기준과 K-IFRS 모두 가능합니다.
+
+  <p style="margin:14px 0 0;font-size:14px"><a href="/" style="color:inherit;font-weight:700">Auditfy가 만든 서비스입니다 · Auditfy 소개 보기 →</a></p>
+</footer>
+
+</div>
+
+<script src="config.js"></script>
+<script>
+  // Apps Script 웹 앱 주소 — 설치안내.md 2단계에서 받은 주소를 넣는다.
+  const ENDPOINT = (window.LANDING_CONFIG || {}).endpoint || '';
+
+  // 링크드인 주소 — 비어 있으면 버튼을 숨긴다.
+  const LINKEDIN = '';
+  if (LINKEDIN) { const a = document.getElementById('linkedin'); a.href = LINKEDIN; a.hidden = false; }
+
+  // ── 산식 예시(숫자는 예시) ──
+  const SHEETS = {
+    y25: {
+      note: '예시 화면입니다. 칸을 누르시면 산식이 보입니다. 차이가 있으면 「일치」 대신 차이 금액이 빨간색으로 표시됩니다.',
+      head: ['과 목', '제 28(당) 기', '', '제 27(전) 기', '', '검증(당기)', '검증(전기)'],
+      rows: [
+        { cls: 'sub', cells: ['(1) 당좌자산', '', 5_062_000_000, '', 4_729_000_000,
+          { v: '일치', f: '=IF(ROUND(D9-SUM(C10:C13),0)=0,"일치",D9-SUM(C10:C13))', chk: 1 },
+          { v: '일치', f: '=IF(ROUND(F9-SUM(E10:E13),0)=0,"일치",F9-SUM(E10:E13))', chk: 1 }] },
+        { cells: ['현금및현금성자산', 2_223_000_000, '', 1_519_000_000, '', '', ''] },
+        { cells: ['단기금융상품', 280_000_000, '', 375_000_000, '', '', ''] },
+        { cells: ['매출채권', 2_582_000_000, '', 2_859_000_000, '', '', ''] },
+        { cells: ['대손충당금', -23_000_000, '', -24_000_000, '', '', ''] },
+        { cls: 'block', cells: ['■ 주석 대사', '', '', '', '', '', ''] },
+        { cells: ['매출채권 ↔ 주석5', '', '', '', '',
+          { v: '일치', f: "=IF(ROUND(C12-'05'!D8,0)=0,\"일치\",C12-'05'!D8)", chk: 1 },
+          { v: '일치', f: "=IF(ROUND(E12-'05'!E8,0)=0,\"일치\",E12-'05'!E8)", chk: 1 }] },
+      ],
+      sel: [0, 5],
+    },
+    y26: {
+      note: '예시 화면입니다. 당기 칸(노란색)은 비워 두었습니다. 숫자를 채우시면 합계와 검증이 바로 계산됩니다.',
+      head: ['과 목', '제 29(당) 기', '', '제 28(전) 기', '', '검증(당기)', '검증(전기)'],
+      rows: [
+        { cls: 'sub', cells: ['(1) 당좌자산', '', { v: 0, f: '=SUM(C10:C13)' }, '', 5_062_000_000,
+          { v: '일치', f: '=IF(ROUND(D9-SUM(C10:C13),0)=0,"일치",D9-SUM(C10:C13))', chk: 1 },
+          { v: '일치', f: '=IF(ROUND(F9-SUM(E10:E13),0)=0,"일치",F9-SUM(E10:E13))', chk: 1 }] },
+        { cells: ['현금및현금성자산', { empty: 1 }, '', 2_223_000_000, '', '', ''] },
+        { cells: ['단기금융상품', { empty: 1 }, '', 280_000_000, '', '', ''] },
+        { cells: ['매출채권', { empty: 1 }, '', 2_582_000_000, '', '', ''] },
+        { cells: ['대손충당금', { empty: 1 }, '', -23_000_000, '', '', ''] },
+      ],
+      sel: [0, 2],
+    },
+  };
+
+  const COLS = ['B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const fmt = n => n === 0 ? '-' : (n < 0 ? '(' + Math.abs(n).toLocaleString('ko-KR') + ')' : n.toLocaleString('ko-KR'));
+  const xl = document.getElementById('xl'), fx = document.getElementById('fx'), ref = document.getElementById('ref');
+
+  function select(td) {
+    xl.querySelectorAll('td.sel').forEach(c => c.classList.remove('sel'));
+    td.classList.add('sel');
+    ref.textContent = td.dataset.ref;
+    fx.textContent = td.dataset.f;
+  }
+
+  function render(key) {
+    const s = SHEETS[key];
+    const [h0, hc, , hp, , hv1, hv2] = s.head;
+    let html = '<colgroup><col style="width:20%"><col span="4" style="width:15%"><col span="2" style="width:10%"></colgroup>'
+      + `<tr><th>${h0}</th><th colspan="2">${hc}</th><th colspan="2">${hp}</th><th class="v">${hv1}</th><th class="v">${hv2}</th></tr>`;
+    s.rows.forEach((r, ri) => {
+      html += `<tr class="${r.cls || ''}">` + r.cells.map((c, ci) => {
+        const at = COLS[ci] + (9 + ri);
+        if (c && typeof c === 'object') {
+          if (c.empty) return `<td class="num empty" data-ref="${at}" data-f=" "></td>`;
+          const val = typeof c.v === 'number' ? fmt(c.v) : c.v;
+          return `<td class="${c.chk ? 'chk' : 'num'}" data-ref="${at}" data-f='${c.f.replace(/'/g, '&#39;')}'>${val}</td>`;
+        }
+        if (typeof c === 'number') return `<td class="num" data-ref="${at}" data-f="${c}">${fmt(c)}</td>`;
+        return `<td>${c}</td>`;
+      }).join('') + '</tr>';
+    });
+    xl.innerHTML = html;
+    document.getElementById('note').textContent = s.note;
+    const [r, c] = s.sel;
+    select(xl.rows[r + 1].cells[c]);
+  }
+
+  xl.addEventListener('click', e => { const td = e.target.closest('td[data-f]'); if (td) select(td); });
+  document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', x === b));
+    render(b.dataset.t);
+  }));
+  render('y25');
+
+  // ── 신청 ──
+  const form = document.getElementById('form'), msg = document.getElementById('msg'), btn = document.getElementById('submit');
+  const show = (t, ok) => { msg.textContent = t; msg.className = 'msg ' + (ok ? 'ok' : 'err'); };
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form));
+    if (!d.company.trim()) return show('회사명을 적어 주십시오.');
+    if (!d.name.trim()) return show('담당자 성명을 적어 주십시오.');
+    if (!d.title.trim()) return show('직책을 적어 주십시오.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())) return show('이메일 주소를 확인해 주십시오.');
+    if ((d.phone.match(/\d/g) || []).length < 9) return show('연락처를 확인해 주십시오.');
+    if (!d.agree) return show('개인정보 수집·이용에 동의해 주십시오.');
+    if (!ENDPOINT) return show('미리보기 화면입니다. 신청 주소가 아직 연결되지 않았습니다.');
+
+    btn.disabled = true; btn.textContent = '보내는 중…';
+    try {
+      const res = await fetch(ENDPOINT, { method: 'POST', body: new URLSearchParams(d) });
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error || 'fail');
+      form.outerHTML = `<div class="done"><h3>신청되었습니다.</h3><p>3영업일 안에 ${d.email.trim().replace(/[<>&"]/g, '')}(으)로 파일을 보내 드립니다. 접수 확인 메일을 먼저 보내 드렸습니다.</p></div>`;
+    } catch (err) {
+      btn.disabled = false; btn.textContent = '무료로 받아 보기';
+      show('신청을 보내지 못했습니다. 잠시 뒤 다시 시도해 주십시오.');
+    }
+  });
+</script>
+</body>
+</html>

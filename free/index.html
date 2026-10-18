@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>감사보고서 무료 변환 — Auditfy</title>
+<meta name="description" content="2025년 감사보고서 검증 엑셀과 2026년 재무제표 및 주석 엑셀 초안을 무료로 만들어 드립니다.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --ink: #111418;
+    --sub: #5b6470;
+    --line: #e3e6ea;
+    --bg: #ffffff;
+    --soft: #f5f7f9;
+    --accent: #1f4e78;
+    --ok-bg: #c6efce;
+    --ok-ink: #0f5b25;
+    --head: #404040;
+    --total: #d9d9d9;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-size: 18px; line-height: 1.55; word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 104px 0; }
+  h1, h2, h3 { margin: 0; letter-spacing: -0.03em; }
+  .eyebrow { font-size: 15px; font-weight: 700; color: var(--accent); letter-spacing: 0.02em; margin-bottom: 20px; }
+
+  /* 첫 화면 */
+  .hero { padding: 140px 0 120px; }
+  .hero h1 { font-size: clamp(40px, 7.2vw, 80px); line-height: 1.15; font-weight: 800; }
+  .hero p { font-size: clamp(20px, 2.6vw, 28px); color: var(--sub); margin: 28px 0 44px; font-weight: 500; }
+  .btn {
+    display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+    font-size: 20px; font-weight: 700; padding: 20px 36px; border-radius: 12px; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .btn:hover { background: #173d5e; }
+
+  /* 받으시는 것 */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+  .card { background: var(--soft); border-radius: 20px; padding: 40px; }
+  .card .no { font-size: 15px; font-weight: 700; color: var(--accent); }
+  .card h3 { font-size: clamp(26px, 3vw, 34px); line-height: 1.3; margin: 14px 0 16px; font-weight: 800; }
+  .card p { margin: 0; font-size: 19px; color: var(--sub); }
+  .section-title { font-size: clamp(32px, 4.6vw, 52px); line-height: 1.2; font-weight: 800; }
+
+  /* 산식 화면 */
+  .tabs { display: inline-flex; background: var(--soft); border-radius: 12px; padding: 5px; margin: 40px 0 20px; }
+  .tab {
+    font-family: inherit; font-size: 17px; font-weight: 700; border: 0; background: transparent;
+    color: var(--sub); padding: 12px 20px; border-radius: 9px; cursor: pointer;
+  }
+  .tab[aria-selected="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .sheet { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; }
+  .fbar {
+    display: flex; align-items: center; gap: 14px; border-bottom: 1px solid var(--line);
+    padding: 12px 16px; font-size: 15px; background: #fafbfc;
+  }
+  .fbar .ref { font-weight: 700; min-width: 44px; color: var(--sub); }
+  .fbar .fx { font-style: italic; font-weight: 700; color: var(--sub); }
+  .fbar code {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 15px; color: var(--ink);
+    overflow-x: auto; white-space: nowrap;
+  }
+  .grid-scroll { overflow-x: auto; }
+  table.xl { border-collapse: collapse; width: 100%; min-width: 940px; table-layout: fixed; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .xl th, .xl td { border: 1px solid #edf0f2; padding: 11px 12px; white-space: nowrap; overflow: hidden; }
+  .xl th { background: var(--head); color: #fff; font-weight: 600; text-align: center; }
+  .xl th.v { background: var(--accent); }
+  .xl td.num { text-align: right; }
+  .xl tr.sub td { background: var(--total); font-weight: 700; }
+  .xl tr.sub td.chk, .xl td.chk { background: var(--ok-bg); color: var(--ok-ink); font-weight: 700; text-align: center; }
+  .xl td.empty { background: #fff2c4; }
+  .xl td[data-f] { cursor: pointer; }
+  .xl td.sel { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .xl tr.block td { background: #fff; border-top: 2px solid #9aa3ad; font-weight: 700; color: var(--sub); }
+  .note { font-size: 17px; color: var(--sub); margin-top: 18px; }
+
+  /* 숫자 띠 */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center; }
+  .stats b { display: block; font-size: clamp(36px, 5.4vw, 60px); font-weight: 800; letter-spacing: -0.03em; color: var(--accent); }
+  .stats span { font-size: 19px; color: var(--sub); }
+  .band { background: var(--soft); }
+
+  /* 신청 */
+  form { max-width: 560px; margin-top: 40px; }
+  label.f { display: block; margin-bottom: 20px; }
+  label.f span { display: block; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  label.f span em { font-style: normal; font-weight: 500; color: var(--sub); }
+  input[type=text], input[type=email], input[type=tel] {
+    width: 100%; font-family: inherit; font-size: 19px; padding: 16px 18px;
+    border: 1px solid #cfd5db; border-radius: 10px; background: #fff; color: var(--ink);
+  }
+  input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
+  .agree { display: flex; gap: 10px; align-items: flex-start; font-size: 16px; margin: 8px 0 6px; }
+  .agree input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--accent); }
+  details { font-size: 14px; color: var(--sub); margin: 0 0 28px 30px; }
+  details summary { cursor: pointer; }
+  details table { border-collapse: collapse; margin-top: 10px; }
+  details td { padding: 4px 12px 4px 0; vertical-align: top; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  form .btn { width: 100%; }
+  .msg { margin-top: 20px; font-size: 18px; font-weight: 600; }
+  .msg.ok { color: var(--ok-ink); }
+  .msg.err { color: #b42318; }
+  .done { background: var(--soft); border-radius: 20px; padding: 40px; max-width: 560px; margin-top: 40px; }
+  .done h3 { font-size: 28px; margin-bottom: 12px; }
+  .done p { margin: 0; color: var(--sub); }
+
+  /* 만든 사람 */
+  .maker { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-top: 36px; }
+  .maker h3 { font-size: clamp(26px, 3.2vw, 36px); line-height: 1.35; font-weight: 800; }
+  .maker .cred { font-size: 18px; font-weight: 600; color: var(--accent); margin: 18px 0 0; }
+  .maker p.body { margin: 0; font-size: 19px; color: var(--sub); }
+  .links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink);
+    font-size: 16px; font-weight: 600; border: 1px solid var(--line); border-radius: 10px; padding: 10px 16px;
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); }
+  .links a[hidden] { display: none; }
+  .links svg { width: 18px; height: 18px; flex: none; }
+  @media (max-width: 760px) { .maker { grid-template-columns: 1fr; gap: 20px; } }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 56px; font-size: 14px; color: var(--sub); }
+
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    .wrap { padding: 0 16px; }
+    section { padding: 72px 0; }
+    .hero { padding: 88px 0 80px; }
+    .two, .stats { grid-template-columns: 1fr; }
+    .stats { gap: 36px; }
+    .card { padding: 30px 26px; }
+    .tabs { display: flex; }
+    .tab { flex: 1; padding: 12px 8px; font-size: 15px; }
+  }
+</style>
+<link rel="canonical" href="https://auditfy.co.kr/free/">
+<meta property="og:title" content="감사보고서 무료 변환 — Auditfy">
+<meta property="og:description" content="2025년 감사보고서 검증 엑셀과 2026년 재무제표 및 주석 엑셀 초안을 무료로 만들어 드립니다.">
+<meta property="og:image" content="https://auditfy.co.kr/auditfy-og.png">
+<meta property="og:url" content="https://auditfy.co.kr/free/">
+<link rel="icon" href="/favicon-32.png">
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">외부감사 대상 회사 회계팀을 위한 무료 서비스</div>
+    <h1>감사보고서 엑셀 작업,<br>저희가 대신 해 드립니다.</h1>
+    <p>회사명만 알려 주시면 됩니다. 비용은 없습니다.</p>
+    <a class="btn" href="#apply">무료로 받아 보기</a>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2 class="section-title">두 개의 엑셀 파일을<br>보내 드립니다.</h2>
+    <div class="two">
+      <div class="card">
+        <div class="no">파일 1</div>
+        <h3>2025년 감사보고서<br>검증 엑셀</h3>
+        <p>합계와 대사를 엑셀 산식으로 검증했습니다. 맞으면 초록, 다르면 빨강으로 표시됩니다.</p>
+      </div>
+      <div class="card">
+        <div class="no">파일 2</div>
+        <h3>2026년 재무제표 및 주석<br>엑셀 초안</h3>
+        <p>전기 숫자와 합계 산식을 미리 넣었습니다. 당기 숫자만 채우시면 됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2 class="section-title">모든 검증은<br>엑셀 산식으로 남습니다.</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-t="y25">파일 1 · 2025년 검증</button>
+      <button class="tab" role="tab" aria-selected="false" data-t="y26">파일 2 · 2026년 초안</button>
+    </div>
+    <div class="sheet">
+      <div class="fbar"><span class="ref" id="ref">E3</span><span class="fx">fx</span><code id="fx"></code></div>
+      <div class="grid-scroll">
+        <table class="xl" id="xl"></table>
+      </div>
+    </div>
+    <p class="note" id="note"></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stats">
+    <div><b>250개사+</b><span>검증 완료</span></div>
+    <div><b>무료</b><span>비용 없음</span></div>
+    <div><b>3영업일</b><span>이내 메일 발송</span></div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">만든 사람</div>
+    <div class="maker">
+      <div>
+        <h3>매년 감사보고서를 처음부터 다시 만드는 일,<br>줄이고 싶었습니다.</h3>
+        <p class="cred">공인회계사 · 빅4 회계법인 외부감사 15년</p>
+      </div>
+      <div>
+        <p class="body">15년 동안 감사 현장에서 회사마다 같은 작업이 반복되는 것을 보았습니다. 작년 보고서를 엑셀로 옮기고, 합계를 맞추고, 주석을 대사하는 일입니다. 이 반복을 코드로 대신하도록 만들었습니다.</p>
+        <div class="links">
+          <a href="https://blog.naver.com/castle_god" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="5" fill="#03C75A"/><text x="12" y="16.4" text-anchor="middle" font-size="8.4" font-weight="600" fill="#fff" font-family="-apple-system,sans-serif">blog</text></svg>블로그</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="apply">
+  <div class="wrap">
+    <h2 class="section-title">무료로 받아 보기</h2>
+    <p class="note" style="margin-top:14px">파일을 받으실 곳만 적어 주십시오.</p>
+
+    <form id="form" novalidate>
+      <label class="f"><span>회사명</span>
+        <input type="text" name="company" required autocomplete="organization" placeholder="예: 주식회사 ○○">
+      </label>
+      <label class="f"><span>담당자 성명</span>
+        <input type="text" name="name" required autocomplete="name">
+      </label>
+      <label class="f"><span>직책</span>
+        <input type="text" name="title" required autocomplete="organization-title" placeholder="예: 회계팀장">
+      </label>
+      <label class="f"><span>이메일 <em>· 파일을 받으실 주소</em></span>
+        <input type="email" name="email" required autocomplete="email">
+      </label>
+      <label class="f"><span>연락처</span>
+        <input type="tel" name="phone" required autocomplete="tel" placeholder="예: 010-1234-5678">
+      </label>
+      <label class="hp" aria-hidden="true">웹사이트 <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <input type="hidden" name="page" value="01 심플">
+
+      <label class="agree"><input type="checkbox" name="agree" value="yes" required>
+        <span>개인정보 수집·이용에 동의합니다. (필수)</span></label>
+      <details>
+        <summary>내용 보기</summary>
+        <table>
+          <tr><td>수집 항목</td><td>회사명, 담당자 성명, 직책, 이메일, 연락처</td></tr>
+          <tr><td>이용 목적</td><td>변환 파일 발송 및 관련 안내</td></tr>
+          <tr><td>보유 기간</td><td>신청일로부터 1년 (동의 철회 시 즉시 파기)</td></tr>
+        </table>
+        <p style="margin:8px 0 0">동의를 거부하실 수 있으며, 이 경우 파일을 보내 드릴 수 없습니다.</p>
+      </details>
+
+      <button class="btn" type="submit" id="submit">무료로 받아 보기</button>
+      <div class="msg" id="msg" role="status"></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">DART에 공시된 감사보고서를 기준으로 작업합니다. 일반기업회계기준과 K-IFRS 모두 가능합니다.</div>
+
+  <p style="margin:14px 0 0;font-size:14px"><a href="/" style="color:inherit;font-weight:700">Auditfy가 만든 서비스입니다 · Auditfy 소개 보기 →</a></p>
+</footer>
+
+<script src="config.js"></script>
+<script>
+  // Apps Script 웹 앱 주소 — 설치안내.md 2단계에서 받은 주소를 넣는다.
+  const ENDPOINT = (window.LANDING_CONFIG || {}).endpoint || '';
+
+  // 링크드인 주소 — 비어 있으면 버튼을 숨긴다.
+  const LINKEDIN = '';
+  if (LINKEDIN) { const a = document.getElementById('linkedin'); a.href = LINKEDIN; a.hidden = false; }
+
+  // ── 산식 예시(숫자는 예시) ──
+  const SHEETS = {
+    y25: {
+      note: '예시 화면입니다. 칸을 누르시면 산식이 보입니다. 차이가 있으면 「일치」 대신 차이 금액이 빨간색으로 표시됩니다.',
+      head: ['과 목', '제 28(당) 기', '', '제 27(전) 기', '', '검증(당기)', '검증(전기)'],
+      rows: [
+        { cls: 'sub', cells: ['(1) 당좌자산', '', 5_062_000_000, '', 4_729_000_000,
+          { v: '일치', f: '=IF(ROUND(D9-SUM(C10:C13),0)=0,"일치",D9-SUM(C10:C13))', chk: 1 },
+          { v: '일치', f: '=IF(ROUND(F9-SUM(E10:E13),0)=0,"일치",F9-SUM(E10:E13))', chk: 1 }] },
+        { cells: ['현금및현금성자산', 2_223_000_000, '', 1_519_000_000, '', '', ''] },
+        { cells: ['단기금융상품', 280_000_000, '', 375_000_000, '', '', ''] },
+        { cells: ['매출채권', 2_582_000_000, '', 2_859_000_000, '', '', ''] },
+        { cells: ['대손충당금', -23_000_000, '', -24_000_000, '', '', ''] },
+        { cls: 'block', cells: ['■ 주석 대사', '', '', '', '', '', ''] },
+        { cells: ['매출채권 ↔ 주석5', '', '', '', '',
+          { v: '일치', f: "=IF(ROUND(C12-'05'!D8,0)=0,\"일치\",C12-'05'!D8)", chk: 1 },
+          { v: '일치', f: "=IF(ROUND(E12-'05'!E8,0)=0,\"일치\",E12-'05'!E8)", chk: 1 }] },
+      ],
+      sel: [0, 5],
+    },
+    y26: {
+      note: '예시 화면입니다. 당기 칸(노란색)은 비워 두었습니다. 숫자를 채우시면 합계와 검증이 바로 계산됩니다.',
+      head: ['과 목', '제 29(당) 기', '', '제 28(전) 기', '', '검증(당기)', '검증(전기)'],
+      rows: [
+        { cls: 'sub', cells: ['(1) 당좌자산', '', { v: 0, f: '=SUM(C10:C13)' }, '', 5_062_000_000,
+          { v: '일치', f: '=IF(ROUND(D9-SUM(C10:C13),0)=0,"일치",D9-SUM(C10:C13))', chk: 1 },
+          { v: '일치', f: '=IF(ROUND(F9-SUM(E10:E13),0)=0,"일치",F9-SUM(E10:E13))', chk: 1 }] },
+        { cells: ['현금및현금성자산', { empty: 1 }, '', 2_223_000_000, '', '', ''] },
+        { cells: ['단기금융상품', { empty: 1 }, '', 280_000_000, '', '', ''] },
+        { cells: ['매출채권', { empty: 1 }, '', 2_582_000_000, '', '', ''] },
+        { cells: ['대손충당금', { empty: 1 }, '', -23_000_000, '', '', ''] },
+      ],
+      sel: [0, 2],
+    },
+  };
+
+  const COLS = ['B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const fmt = n => n === 0 ? '-' : (n < 0 ? '(' + Math.abs(n).toLocaleString('ko-KR') + ')' : n.toLocaleString('ko-KR'));
+  const xl = document.getElementById('xl'), fx = document.getElementById('fx'), ref = document.getElementById('ref');
+
+  function select(td) {
+    xl.querySelectorAll('td.sel').forEach(c => c.classList.remove('sel'));
+    td.classList.add('sel');
+    ref.textContent = td.dataset.ref;
+    fx.textContent = td.dataset.f;
+  }
+
+  function render(key) {
+    const s = SHEETS[key];
+    const [h0, hc, , hp, , hv1, hv2] = s.head;
+    let html = '<colgroup><col style="width:20%"><col span="4" style="width:15%"><col span="2" style="width:10%"></colgroup>'
+      + `<tr><th>${h0}</th><th colspan="2">${hc}</th><th colspan="2">${hp}</th><th class="v">${hv1}</th><th class="v">${hv2}</th></tr>`;
+    s.rows.forEach((r, ri) => {
+      html += `<tr class="${r.cls || ''}">` + r.cells.map((c, ci) => {
+        const at = COLS[ci] + (9 + ri);
+        if (c && typeof c === 'object') {
+          if (c.empty) return `<td class="num empty" data-ref="${at}" data-f=" "></td>`;
+          const val = typeof c.v === 'number' ? fmt(c.v) : c.v;
+          return `<td class="${c.chk ? 'chk' : 'num'}" data-ref="${at}" data-f='${c.f.replace(/'/g, '&#39;')}'>${val}</td>`;
+        }
+        if (typeof c === 'number') return `<td class="num" data-ref="${at}" data-f="${c}">${fmt(c)}</td>`;
+        return `<td>${c}</td>`;
+      }).join('') + '</tr>';
+    });
+    xl.innerHTML = html;
+    document.getElementById('note').textContent = s.note;
+    const [r, c] = s.sel;
+    select(xl.rows[r + 1].cells[c]);
+  }
+
+  xl.addEventListener('click', e => { const td = e.target.closest('td[data-f]'); if (td) select(td); });
+  document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', x === b));
+    render(b.dataset.t);
+  }));
+  render('y25');
+
+  // ── 신청 ──
+  const form = document.getElementById('form'), msg = document.getElementById('msg'), btn = document.getElementById('submit');
+  const show = (t, ok) => { msg.textContent = t; msg.className = 'msg ' + (ok ? 'ok' : 'err'); };
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(form));
+    if (!d.company.trim()) return show('회사명을 적어 주십시오.');
+    if (!d.name.trim()) return show('담당자 성명을 적어 주십시오.');
+    if (!d.title.trim()) return show('직책을 적어 주십시오.');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email.trim())) return show('이메일 주소를 확인해 주십시오.');
+    if ((d.phone.match(/\d/g) || []).length < 9) return show('연락처를 확인해 주십시오.');
+    if (!d.agree) return show('개인정보 수집·이용에 동의해 주십시오.');
+    if (!ENDPOINT) return show('미리보기 화면입니다. 신청 주소가 아직 연결되지 않았습니다.');
+
+    btn.disabled = true; btn.textContent = '보내는 중…';
+    try {
+      const res = await fetch(ENDPOINT, { method: 'POST', body: new URLSearchParams(d) });
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error || 'fail');
+      form.outerHTML = `<div class="done"><h3>신청되었습니다.</h3><p>3영업일 안에 ${d.email.trim().replace(/[<>&"]/g, '')}(으)로 파일을 보내 드립니다. 접수 확인 메일을 먼저 보내 드렸습니다.</p></div>`;
+    } catch (err) {
+      btn.disabled = false; btn.textContent = '무료로 받아 보기';
+      show('신청을 보내지 못했습니다. 잠시 뒤 다시 시도해 주십시오.');
+    }
+  });
+</script>
+</body>
+</html>
