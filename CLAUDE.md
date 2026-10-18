@@ -73,6 +73,9 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **http
   3. `subject:([감사보고서 변환])` → 02 무료진단 신청 라벨 + 별표
   4. `from:(web3forms.com)` → 02 무료진단 신청 라벨 + 별표 + 중요 표시 +
      **절대 스팸으로 신고하지 않음** + **기본(Primary) 카테고리로 강제 분류**
+     (Web3Forms 는 제거됐지만 과거 메일이 걸리므로 남겨 둔다)
+  5. `subject:([새 신청])` → 02 무료진단 신청 라벨 + 별표 + 중요 + 스팸 제외
+     — **이게 Apps Script 가 보내는 실제 리드 알림이다.** 알림 제목 형식을 바꾸면 같이 고칠 것
   3번은 /free 퍼널의 Apps Script 자동응답 제목 접두사에 의존한다 —
   **Apps Script에서 제목 형식을 바꾸면 필터가 깨지므로 같이 수정할 것.**
   MCP로는 필터를 만들 수 없어 브라우저(Chrome)로 직접 설정했다.
