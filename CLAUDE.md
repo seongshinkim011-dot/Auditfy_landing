@@ -27,7 +27,8 @@ Pricing 섹션은 삭제됨.
 ⚠ 본 페이지 #apply(Web3Forms)와 /free(Apps Script) 두 곳에서 신청을 받는다 — 하나로 모을지 미정.
 
 ## 배포
-로컬 상설 사본: `~/Claude/Projects/랜딩페이지/` — 랜딩(메인·/free) 수정은 여기서만 한다(2026-10-18 사장님 지시).
+로컬 작업 사본: `~/Desktop/AIrryn/100. Work/2. Auditfy_project/1. 랜딩페이지/auditfy-site-261018/` — 「1. 랜딩페이지」 세션에서 랜딩(메인·/free)을 모두 관리한다(2026-10-18 사장님 지시).
+옆의 `auditfy-site-260726` 은 원격보다 20여 커밋 뒤처진 옛 사본이고 커밋 안 한 수정이 남아 있다 — 손대기 전에 사장님께 확인.
 GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **https://www.auditfy.co.kr** (2026-10-18 연결 · 가비아 DNS: A `@` 216.198.79.1 · CNAME `www` 166c97bc31a85d92.vercel-dns-017.com. · auditfy.co.kr 은 www 로 308 · 예전 주소 auditfy-landing.vercel.app 도 계속 열림)
 폼 전송: Web3Forms (access key는 `index.html` 내 `W3F_ACCESS_KEY`)
 2026-09-08 실전송 검증 완료 — 제목 `[Auditfy] 무료 진단 신청`, 발신 `Auditfy 랜딩페이지`,
@@ -56,6 +57,13 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **http
 `python3 -m http.server 8899` 후 http://127.0.0.1:8899
 
 ## 열려있는 항목
+- **메일: ImprovMX 무료 포워딩** (2026-10-18 설정). hello@auditfy.co.kr →
+  seongshinkim011@gmail.com 으로 전달. catch-all(*@auditfy.co.kr)이라 모든 주소가 전달됨.
+  **무료 플랜은 수신 전용** — 발신은 여전히 개인 Gmail에서 나간다.
+  아웃바운드 시작 전에 발신 주소를 hello@ 로 바꿀 것 (ImprovMX Premium $9/월의 SMTP,
+  또는 메일함 서비스 + Gmail "다른 주소에서 메일 보내기").
+  가비아 DNS: MX 2개(mx1/mx2.improvmx.com) · SPF · DMARC(p=none) 설정 완료.
+  DKIM은 발신을 안 하므로 미설정. 웹용 A(216.198.79.1)·CNAME(www→vercel)은 그대로 유지.
 - **Vercel 커스텀 이벤트는 Pro 플랜에서만 기록된다.** 2026-09-10 이벤트 6종(cta_click,
   section_view, demo_play, faq_open, form_submit, form_error) 삽입 완료. Hobby 플랜이면
   전송은 되나 대시보드에 안 쌓이므로 플랜 확인 필요. 이벤트에는 개인정보(회사명·이메일·연락처)를
