@@ -18,6 +18,20 @@
   vs.src = '/_vercel/insights/script.js';
   document.head.appendChild(vs);
 
+  // Google Analytics 4 — /config.js 의 gaId 에 값이 있을 때만 켜진다.
+  // Vercel Hobby 는 커스텀 이벤트를 보여주지 않으므로, 이벤트 7종은 GA4 를 켜야 실제로 조회된다.
+  var gaId = (window.LANDING_CONFIG || {}).gaId || '';
+  if (gaId) {
+    var gs = document.createElement('script');
+    gs.async = true;
+    gs.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaId);
+    document.head.appendChild(gs);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', gaId);
+  }
+
   // ── ① 유입 경로 수집 ────────────────────────────────────────────────
   var KEY = 'af_attrib';
 

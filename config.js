@@ -3,4 +3,9 @@
 // (기존 배포를 '배포 관리 → 수정 → 버전: 새 버전'으로 갱신하면 URL 은 그대로다.)
 window.LANDING_CONFIG = {
   endpoint: 'https://script.google.com/macros/s/AKfycbypZyUrwwd5VQ8cjIvS2PhTZItQfD8hQB63uRkhJtlbdV7nt3A5Kl8k88-3rHp91Qo/exec',
+
+  // Google Analytics 4 측정 ID. 'G-' 로 시작하는 값을 넣으면 여덟 페이지 전부에서 바로 켜진다.
+  // 비워 두면 GA4 는 로드되지 않는다 (지금 상태).
+  // ★ 켜기 전에 개인정보 처리방침의 '쿠키·분석 도구' 항목을 먼저 게시할 것 — GA4 는 쿠키를 쓴다.
+  gaId: '',
 };
