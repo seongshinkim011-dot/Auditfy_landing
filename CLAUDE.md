@@ -18,8 +18,14 @@
 2026-09-10 재배치: 방문자가 문제 공감 → 해결(Before&After) → 제품 설명 순으로 읽도록 Before&After를 앞으로 승격, 후기는 제품 설명 뒤로 이동.
 Pricing 섹션은 삭제됨.
 
+### /free — 감사보고서 무료 변환 퍼널 (2026-10-18)
+`free/` 에 컨셉 일곱 장(index 심플이 대표 · fancy · retro · gungseo · newspaper · terminal · receipt — 나머지 여섯은 noindex, canonical 은 /free/).
+원본은 「감사보고서 변환」 저장소에서 만들었다. 신청은 Web3Forms 가 아니라 **Apps Script → 사장님 구글 시트 「감사보고서 변환 신청」**(주소는 `free/config.js` 한 곳), 숨은 `page` 칸으로 컨셉을 구분한다.
+링크드인 버튼은 익명 원칙 때문에 뺐다. 메뉴 「무료 변환」·배너 「받으실 엑셀 파일 미리 보기」가 /free 로, /free 바닥글이 / 로 잇는다.
+⚠ 본 페이지 #apply(Web3Forms)와 /free(Apps Script) 두 곳에서 신청을 받는다 — 하나로 모을지 미정.
+
 ## 배포
-GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → https://auditfy-landing.vercel.app
+GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **https://www.auditfy.co.kr** (2026-10-18 연결 · 가비아 DNS: A `@` 216.198.79.1 · CNAME `www` 166c97bc31a85d92.vercel-dns-017.com. · auditfy.co.kr 은 www 로 308 · 예전 주소 auditfy-landing.vercel.app 도 계속 열림)
 폼 전송: Web3Forms (access key는 `index.html` 내 `W3F_ACCESS_KEY`)
 2026-09-08 실전송 검증 완료 — 제목 `[Auditfy] 무료 진단 신청`, 발신 `Auditfy 랜딩페이지`,
 한글 필드명(회사명/이메일/연락처) 정상 수신 확인.
@@ -32,7 +38,7 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → https:
   (`git log --oneline origin/main..HEAD`)
 - 되돌리기: Vercel 대시보드 → Deployments → Instant Rollback (커밋 단위로 복구 가능)
 - **배포를 마치면 답변 끝에 라이브 링크를 항상 함께 전달한다**
-  https://auditfy-landing.vercel.app/ — 사용자가 바로 눌러서 확인할 수 있도록
+  https://www.auditfy.co.kr/ — 사용자가 바로 눌러서 확인할 수 있도록
 
 ## 수정 후 검증 체크리스트
 1. 태그 균형 / CSS 중괄호 / JS 괄호 균형
