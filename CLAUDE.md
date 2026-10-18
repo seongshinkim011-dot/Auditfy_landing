@@ -57,6 +57,17 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **http
 `python3 -m http.server 8899` 후 http://127.0.0.1:8899
 
 ## 열려있는 항목
+- **유입 경로 추적** (2026-10-18). `/track.js` 가 메인·/free 여덟 페이지 공용으로
+  ① 측정 도구(현재 Vercel Web Analytics)를 주입하고 ② UTM·referrer 를 세션에 저장해
+  신청 폼에 `attrib` 로 실어 보낸다 → 시트「신청」의 '유입 경로' 칸.
+  **측정 도구를 바꾸거나 뺄 때 고칠 곳은 `/track.js` 한 파일뿐이다.**
+  index.html 의 인라인 Vercel 태그는 제거했고, /free 일곱 페이지에는 숨은 칸
+  `<input name="attrib" id="af_attrib">` 이 들어가 FormData 가 자동으로 싣는다.
+  UTM 규칙은 `docs/UTM-규칙.md`. **링크에 UTM 을 안 붙이면 referrer 도메인까지만 남는다.**
+- Apps Script HEADER 가 11칸이 됐다('유입 페이지' 다음에 '유입 경로'). 배포 버전 3.
+  열 구성을 바꾸면 **에디터에서 `setup()` 을 한 번 실행**해 머리줄을 맞춰야 한다.
+- 스크립트 사본이 두 곳에 있다: `apps-script/Code.gs` 가 **현재 배포본**,
+  `docs/free/Code.gs` 는 2026-10-18 수정 전 원본(공백까지 정확한 쪽). docs 는 .vercelignore 대상이다.
 - **검색·AI 노출 자산** (2026-10-18 추가).
   `index.html` 과 `free/index.html` 에 JSON-LD(@graph) — Organization·WebSite·WebPage·Service,
   메인에는 FAQPage 8문항까지. **FAQ 문구를 고치면 JSON-LD 의 FAQPage 도 같이 고칠 것**
@@ -120,7 +131,12 @@ GitHub(`seongshinkim011-dot/Auditfy_landing`) → Vercel 자동배포 → **http
   겸업금지·독립성 때문에 익명 유지가 필요한 원칙과 어긋난다. 표시 이름만 바꿔도
   주소는 개인 Gmail이라 `Auditfy <seongshinkim011@gmail.com>` 불일치가 남는다 —
   아웃바운드 전에 발신 주소까지 함께 해결할 것
-- **Vercel 커스텀 이벤트는 Pro 플랜에서만 기록된다.** 2026-09-10 이벤트 6종(cta_click,
+- **[확인 완료 2026-10-18] Vercel 플랜은 Hobby 이고, 커스텀 이벤트는 대시보드에 안 보인다.**
+  Analytics → Events 패널이 "No custom events … Upgrade to a Pro team to access this feature".
+  이벤트 7종은 전송되고 사용량(Web Analytics Events)에는 잡히지만 **조회가 안 된다.**
+  페이지뷰·방문자·국가·기기·Referrer·UTM Parameters 는 Hobby 에서도 다 보인다.
+  **`/free` 에는 Vercel Analytics 스크립트가 아예 없어 측정이 0이다** — Pages 에 `/` 만 찍힌다.
+- (이전 기록) Vercel 커스텀 이벤트는 Pro 플랜에서만 기록된다. 2026-09-10 이벤트 6종(cta_click,
   section_view, demo_play, faq_open, form_submit, form_error) 삽입 완료. Hobby 플랜이면
   전송은 되나 대시보드에 안 쌓이므로 플랜 확인 필요. 이벤트에는 개인정보(회사명·이메일·연락처)를
   절대 넣지 않는다 — form_submit은 선택한 신청 항목명만 보낸다

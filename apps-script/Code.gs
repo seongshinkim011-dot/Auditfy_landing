@@ -10,7 +10,7 @@
 const SHEET_NAME = '신청';
 const SENDER_NAME = '감사보고서 변환';
 const REPLY_DAYS = 3;
-const HEADER = ['신청일시', '회사명', '담당자', '직책', '이메일', '연락처', '유입 페이지', '상태', '발송일', '메모'];
+const HEADER = ['신청일시', '회사명', '담당자', '직책', '이메일', '연락처', '유입 페이지', '유입 경로', '상태', '발송일', '메모'];
 
 // 메인 랜딩페이지(auditfy.co.kr)에서 들어온 신청은 page 값이 '메인 · …' 으로 시작한다.
 // /free 컨셉 페이지들은 '01 심플' 처럼 들어오므로 아래 분기에 걸리지 않는다.
@@ -30,6 +30,7 @@ function doPost(e) {
   const email = clean_(p.email, 120).toLowerCase();
   const phone = clean_(p.phone, 30);
   const page = clean_(p.page, 30);           // 어느 컨셉 페이지에서 신청했는지
+  const attrib = clean_(p.attrib, 120);      // 어디서 들어왔는지 — /track.js 가 채운다 (UTM / referrer)
   if (!company || !name || !title || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
       (phone.match(/\d/g) || []).length < 9 || p.agree !== 'yes') {
     return json_({ ok: false, error: 'invalid' });
@@ -38,14 +39,14 @@ function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
-    sheet_().appendRow([new Date(), safe_(company), safe_(name), safe_(title), safe_(email), safe_(phone), safe_(page), '접수', '', '']);
+    sheet_().appendRow([new Date(), safe_(company), safe_(name), safe_(title), safe_(email), safe_(phone), safe_(page), safe_(attrib), '접수', '', '']);
   } finally {
     lock.releaseLock();
   }
 
   try {
     sendReceipt_(company, name, email, page);
-    notifyOwner_(company, name, title, email, phone, page);
+    notifyOwner_(company, name, title, email, phone, page, attrib);
   } catch (err) {
     console.error(err);                                      // 메일이 실패해도 신청은 시트에 남았다
   }
@@ -102,13 +103,13 @@ function convertBody_(company, name) {
   ];
 }
 
-function notifyOwner_(company, name, title, email, phone, page) {
+function notifyOwner_(company, name, title, email, phone, page, attrib) {
   const owner = Session.getEffectiveUser().getEmail();
   const url = SpreadsheetApp.getActiveSpreadsheet().getUrl();
   MailApp.sendEmail({
     to: owner,
     subject: `[새 신청] ${company}`,
-    body: `회사명: ${company}\n담당자: ${name} (${title})\n이메일: ${email}\n연락처: ${phone}\n유입 페이지: ${page || '-'}\n\n${url}`,
+    body: `회사명: ${company}\n담당자: ${name} (${title})\n이메일: ${email}\n연락처: ${phone}\n유입 페이지: ${page || '-'}\n유입 경로: ${attrib || '-'}\n\n${url}`,
     replyTo: email,
   });
 }

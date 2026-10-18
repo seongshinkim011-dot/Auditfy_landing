@@ -1128,6 +1128,7 @@ vetax-style) ===== */
 </div>
 
 <script src="/config.js"></script>
+<script src="/track.js"></script>
 <script>
 (function(){
   // ── 진단 신청 폼 → Apps Script(구글 시트) 전송 ──
@@ -1192,6 +1193,7 @@ vetax-style) ===== */
         body:new URLSearchParams({
           company:co, name:nm, title:ti, email:em, phone:ph,
           page:'메인 · '+svc.join('+'),          // Apps Script 가 이 값으로 접수 메일을 분기한다
+          attrib:(window.AF ? window.AF.label() : ''), // 어디서 들어온 신청인지 — 시트 '유입 경로' 칸
           website:(hp && hp.checked) ? 'bot' : '', // 스팸 봇이 채우는 숨은 칸
           agree:'yes'
         })
@@ -1294,11 +1296,7 @@ vetax-style) ===== */
   <style>.rv,.rv-zoom,.stg>*{opacity:1 !important; transform:none !important}</style>
 </noscript>
 
-<!-- Vercel Web Analytics (프로젝트 설정에서 Web Analytics 활성화 필요) -->
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
+<!-- 측정 도구와 유입 추적은 /track.js 한 곳에서 주입한다 (메인·/free 공용) -->
 
 <!-- 커스텀 이벤트 — 개인정보(회사명·이메일·연락처)는 절대 전송하지 않음 -->
 <script>

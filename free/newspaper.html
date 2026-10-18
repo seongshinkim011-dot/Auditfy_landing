@@ -444,6 +444,7 @@
         </label>
         <label class="hp" aria-hidden="true">웹사이트 <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
       <input type="hidden" name="page" value="05 신문">
+      <input type="hidden" name="attrib" id="af_attrib">
 
         <label class="agree"><input type="checkbox" name="agree" value="yes" required>
           <span>개인정보 수집·이용에 동의합니다. (필수)</span></label>
@@ -473,6 +474,7 @@
 </div>
 
 <script src="/config.js"></script>
+<script src="/track.js"></script>
 <script>
   // Apps Script 웹 앱 주소 — 설치안내.md 2단계에서 받은 주소를 넣는다.
   const ENDPOINT = (window.LANDING_CONFIG || {}).endpoint || '';
